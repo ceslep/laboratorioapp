@@ -7,7 +7,8 @@ import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-const String titleApp = 'laboratorioapp';
+const String titleApp = 'Laboratorio';
+const Color colorTheme = Colors.purple;
 void main() {
   try {} catch (e) {
     print(e);
@@ -42,14 +43,15 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: titleApp,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: colorTheme),
         useMaterial3: true,
       ),
-      home: const Homelaboratorioapp(title: titleApp),
+      home: const Homelaboratorioapp(
+        title: titleApp,
+      ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('es'),

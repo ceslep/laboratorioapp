@@ -9,6 +9,9 @@ import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma
 import 'package:laboratorioapp/providers/hrayto_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/modals/floating_modal.dart';
+import '../../../widgets/modals/modal_fit.dart';
+
 class ViewHemogramaRayto extends StatefulWidget {
   final HemogramaRayto hemograma;
   final String identificacion;
@@ -93,6 +96,12 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
             child: IconButton(
               onPressed: () {
                 guardarHemograma(context, hraytoProvider.hrayto);
+                showFloatingModalBottomSheet(
+                  context: context,
+                  builder: (context) => const ModalFit(
+                    title: 'Hemograma almacenado',
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.save,

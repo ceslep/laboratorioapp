@@ -110,8 +110,17 @@ Future<HemogramaRayto> getHemogramaRayto(
 }
 
 Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
-  /* final urlProvider = Provider.of<UrlProvider>(context, listen: false);
-  final Uri url = Uri.parse('${urlProvider.url}getExamenesPaciente.php');
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}saveHemogramaRayto.php');
   late final http.Response response;
-  final String bodyData = json.encode(hrayto.toJson()); */
+  final String bodyData = json.encode(hrayto.toJson());
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
 }

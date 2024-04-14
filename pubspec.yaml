@@ -38,13 +38,13 @@ dependencies:
   provider: ^6.1.2
   desktop_window: ^0.4.0
   http: ^1.2.1
-  flutter_splash_screen: ^3.0.0
-  flutter_localizations:
-    sdk: flutter
-  fluttertoast: ^8.2.4
+  fluttertoast: ^8.2.5
   flutter_text_form_field: ^1.0.5
   material_design_icons_flutter: ^7.0.7296
   intl: ^0.18.1
+  modal_bottom_sheet: ^3.0.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
