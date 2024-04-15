@@ -13,6 +13,7 @@ void main() {
   try {} catch (e) {
     print(e);
   }
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:laboratorioapp/pages/lista_pacientes.dart';
@@ -38,6 +40,18 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
               },
               icon: Icon(
                 MdiIcons.listBox,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: () {
+                exit(0);
+              },
+              icon: Icon(
+                MdiIcons.exitToApp,
                 color: Colors.white,
               ),
             ),

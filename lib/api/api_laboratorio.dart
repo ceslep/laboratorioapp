@@ -10,6 +10,7 @@ import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 Future<Paciente> getInfoPaciente(
   BuildContext context, {
@@ -123,4 +124,32 @@ Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
   } catch (e) {
     print('Error al enviar los datos del hemograma: $e');
   }
+}
+
+Future<bool> _launchInBrowser(Uri url) async {
+  bool result = false;
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    result = false;
+    throw Exception('Could not launch $url');
+  } else {
+    result = true;
+  }
+  return result;
+}
+
+Future<void> downloadPDFFile(
+    BuildContext context,
+    String urlprint,
+    String fileName,
+    String identificacion,
+    String fecha,
+    String nombres) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse(
+      '${urlProvider.url}printphp/$urlprint.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres');
+  final bool result = await _launchInBrowser(url);
+  print(result);
 }

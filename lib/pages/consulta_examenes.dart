@@ -57,15 +57,18 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
   FToast fToast = FToast();
   String fechae = '';
   late final List<DropdownMenuItem> _fechas;
+  bool mirando = false;
   @override
   void initState() {
     super.initState();
     fToast.init(context);
     //  pacientes = await getPacientes(context) as List<Paciente>;
+    setState(() => mirando = !mirando);
     examenesPaciente(context, criterio: widget.paciente).then((value) {
       if (value != null) {
         examenes = value;
         examenesFilter = examenes;
+        setState(() => mirando = !mirando);
         Set<String> listafechas =
             Set.from(examenes.map((Examenes examen) => examen.fecha));
         print(listafechas);
@@ -183,15 +186,29 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                         radius: 25, // Ajusta el tamaño del avatar
                         backgroundImage: AssetImage(imageLab(examen)),
                       ),
-                      trailing: IconButton(
-                        onPressed: () {
-                          viewExam(context, codexamen, ind, fecha);
-                        },
-                        icon: const Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.blue,
-                        ),
-                      ),
+                      trailing: !mirando
+                          ? IconButton(
+                              onPressed: () async {
+                                setState(() {
+                                  mirando = !mirando;
+                                });
+                                await viewExam(context, codexamen, ind, fecha);
+                                setState(() {
+                                  mirando = !mirando;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.blue,
+                              ),
+                            )
+                          : const SizedBox(
+                              width: 15,
+                              height: 15,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
+                              ),
+                            ),
                       title: Text(
                         examen,
                         style: const TextStyle(
@@ -226,9 +243,11 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     );
   }
 
-  void viewExam(BuildContext context, String codigo, String ind, String fecha) {
+  Future<void> viewExam(
+      BuildContext context, String codigo, String ind, String fecha) async {
     if (codigo == '3000' || codigo == '3001') {
-      hemogramas(context, ind, fecha, widget.paciente, fToast);
+      await hemogramas(
+          context, ind, fecha, widget.paciente, widget.nombres, fToast);
     }
   }
 }

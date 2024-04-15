@@ -21,15 +21,17 @@ class _ListaPacientesState extends State<ListaPacientes> {
   bool cargado = false;
   final TextEditingController _controller =
       TextEditingController(text: '9695141');
-
+  bool buscando = false;
   @override
   void initState() {
     super.initState();
     fToast.init(context);
     //  pacientes = await getPacientes(context) as List<Paciente>;
+    setState(() => buscando = !buscando);
     getPacientes(context, criterio: _controller.text).then((value) {
       if (value != null) {
         pacientes = value;
+        setState(() => buscando = !buscando);
         if (pacientes.isEmpty) {
           showToastB(
             fToast,
@@ -77,7 +79,21 @@ class _ListaPacientesState extends State<ListaPacientes> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Lista de Pacientes'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Lista de Pacientes'),
+            !buscando
+                ? const Icon(Icons.star_border)
+                : const SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
+                  ),
+          ],
+        ),
       ),
       body: ListView.builder(
         itemCount: pacientes.length + 1,

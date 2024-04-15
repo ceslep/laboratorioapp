@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
@@ -16,11 +17,13 @@ class ViewHemogramaRayto extends StatefulWidget {
   final HemogramaRayto hemograma;
   final String identificacion;
   final String fecha;
+  final String nombres;
   const ViewHemogramaRayto({
     super.key,
     required this.hemograma,
     required this.identificacion,
     required this.fecha,
+    required this.nombres,
   });
 
   @override
@@ -94,13 +97,38 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
           Padding(
             padding: const EdgeInsets.all(8),
             child: IconButton(
-              onPressed: () {
-                guardarHemograma(context, hraytoProvider.hrayto);
-                showFloatingModalBottomSheet(
-                  context: context,
-                  builder: (context) => const ModalFit(
-                    title: 'Hemograma almacenado',
-                  ),
+              onPressed: () async {
+                guardarHemograma(context, hraytoProvider.hrayto).then(
+                  (value) {
+                    downloadPDFFile(
+                        context,
+                        'print_hemograma',
+                        "hemograma_${widget.identificacion}_${widget.fecha}.pdf",
+                        widget.identificacion,
+                        widget.fecha,
+                        widget.nombres);
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.print,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: IconButton(
+              onPressed: () async {
+                guardarHemograma(context, hraytoProvider.hrayto).then(
+                  (value) {
+                    showFloatingModalBottomSheet(
+                      context: context,
+                      builder: (context) => const ModalFit(
+                        title: 'Hemograma almacenado',
+                      ),
+                    );
+                  },
                 );
               },
               icon: const Icon(
@@ -114,7 +142,8 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
       body: FormHemograma(
         hemograma: dataHemograma,
         identificacion: widget.identificacion,
-        fecha: widget.hemograma.fecha ?? '',
+        fecha: widget.hemograma.fecha ??
+            DateFormat('yyyy-MM-dd').format(DateTime.now()),
       ),
     );
   }
