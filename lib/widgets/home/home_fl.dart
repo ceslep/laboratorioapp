@@ -67,20 +67,22 @@ class BodyHome extends StatelessWidget {
             child:
                 buildDatePicker(context, _fechaController, 'Fecha de Exámenes'),
           ),
-          SizedBox(
-            height: 0.7 * MediaQuery.of(context).size.height,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Image.asset(
-                      'images/logo.png',
-                      scale: 0.5,
+          Expanded(
+            child: SizedBox(
+              height: 0.7 * MediaQuery.of(context).size.height,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        'images/logo.png',
+                        scale: 0.5,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           )

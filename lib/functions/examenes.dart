@@ -6,17 +6,30 @@ import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-Future<void> hemogramas(BuildContext context, String ind, String fecha,
-    String paciente, String nombres, FToast fToast) async {
-  getHemogramaRayto(context, ind: ind).then((HemogramaRayto value) async {
+Future<void> hemogramas(BuildContext context, String identificacion,
+    String fecha, String nombres, FToast fToast) async {
+  getHemogramaRayto(context, identificacion: identificacion, fecha: fecha)
+      .then((HemogramaRayto value) async {
     HemogramaRayto hemograma = value;
-    if (hemograma.identificacion != '') {
+    if (hemograma.identificacion != '' && hemograma.identificacion != 'Error') {
       await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ViewHemogramaRayto(
             hemograma: hemograma,
-            identificacion: paciente,
+            identificacion: identificacion,
+            fecha: fecha,
+            nombres: nombres,
+          ),
+        ),
+      );
+    } else if (hemograma.identificacion == 'Error') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewHemogramaRayto(
+            hemograma: HemogramaRayto(),
+            identificacion: identificacion,
             fecha: fecha,
             nombres: nombres,
           ),

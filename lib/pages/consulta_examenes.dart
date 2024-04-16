@@ -55,7 +55,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
   List<Examenes> examenesFilter = [];
   List<String> listaFechas = [];
   FToast fToast = FToast();
-  String fechae = '';
+  String fechae = '2012-08-23';
   late final List<DropdownMenuItem> _fechas;
   bool mirando = false;
   @override
@@ -68,6 +68,12 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       if (value != null) {
         examenes = value;
         examenesFilter = examenes;
+        examenesFilter = examenes
+            .where((Examenes element) => element.fecha.contains('-')
+                ? element.fecha == fechae
+                : element.fecha != '')
+            .toList();
+        setState(() {});
         setState(() => mirando = !mirando);
         Set<String> listafechas =
             Set.from(examenes.map((Examenes examen) => examen.fecha));
@@ -141,7 +147,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
           : ListView.builder(
               itemCount: examenesFilter.length + 1,
               itemBuilder: (context, index) {
-                late String ind;
+                late String identificacion;
                 late String examen;
                 late String codexamen;
                 late String fecha;
@@ -171,7 +177,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                     ),
                   );
                 } else {
-                  ind = examenesFilter[indexx].ind;
+                  identificacion = examenesFilter[indexx].identificacion;
                   examen = examenesFilter[indexx].examen;
                   codexamen = examenesFilter[indexx].codexamen;
                   fecha = examenesFilter[indexx].fecha;
@@ -192,7 +198,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                                 setState(() {
                                   mirando = !mirando;
                                 });
-                                await viewExam(context, codexamen, ind, fecha);
+                                await viewExam(
+                                    context, codexamen, identificacion, fecha);
                                 setState(() {
                                   mirando = !mirando;
                                 });
@@ -243,11 +250,10 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     );
   }
 
-  Future<void> viewExam(
-      BuildContext context, String codigo, String ind, String fecha) async {
+  Future<void> viewExam(BuildContext context, String codigo,
+      String identificacion, String fecha) async {
     if (codigo == '3000' || codigo == '3001') {
-      await hemogramas(
-          context, ind, fecha, widget.paciente, widget.nombres, fToast);
+      await hemogramas(context, identificacion, fecha, widget.nombres, fToast);
     }
   }
 }

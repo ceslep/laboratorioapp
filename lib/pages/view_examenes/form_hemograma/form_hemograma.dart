@@ -189,6 +189,8 @@ class _FormHemogramaState extends State<FormHemograma> {
   @override
   Widget build(BuildContext context) {
     return Formulario(
+        identificacion: widget.identificacion,
+        fecha: widget.fecha,
         hrayto: hrayto,
         wbcController: wbcController,
         lymNumberController: lymNumberController,
@@ -236,6 +238,8 @@ class _FormHemogramaState extends State<FormHemograma> {
 }
 
 class Formulario extends StatelessWidget {
+  final String identificacion;
+  final String fecha;
   const Formulario({
     super.key,
     required this.hrayto,
@@ -262,6 +266,8 @@ class Formulario extends StatelessWidget {
     required this.hraytoProvider,
     required GlobalKey<FormState> formKey,
     required this.formFields,
+    required this.identificacion,
+    required this.fecha,
   }) : _formKey = formKey;
 
   final HRayto hrayto;
@@ -315,6 +321,8 @@ class Formulario extends StatelessWidget {
         hrayto.pDW = pdwController.text;
         hrayto.pCT = pctController.text;
         hrayto.pLCR = pLcrController.text;
+        hrayto.identificacion = identificacion;
+        hrayto.fecha = fecha;
         hraytoProvider.setData(hrayto);
       },
       key: _formKey,
