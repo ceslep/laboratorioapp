@@ -50,4 +50,6 @@ class Paciente {
         "genero": genero,
         "entidad": entidad,
       };
+
+  String get nombreCompleto => '${nombres ?? ''} ${apellidos ?? ''}';
 }

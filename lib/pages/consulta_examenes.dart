@@ -6,15 +6,14 @@ import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/examenes.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/examenes.dart';
+import 'package:laboratorioapp/models/paciente.dart';
 
 class ConsultaExamenes extends StatefulWidget {
-  final String paciente;
-  final String nombres;
+  final Paciente paciente;
 
   const ConsultaExamenes({
     super.key,
     required this.paciente,
-    required this.nombres,
   });
 
   @override
@@ -64,7 +63,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     fToast.init(context);
     //  pacientes = await getPacientes(context) as List<Paciente>;
     setState(() => mirando = !mirando);
-    examenesPaciente(context, criterio: widget.paciente).then((value) {
+    examenesPaciente(context, criterio: widget.paciente.identificacion!)
+        .then((value) {
       if (value != null) {
         examenes = value;
         examenesFilter = examenes;
@@ -138,7 +138,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         title: Text(
-          widget.nombres,
+          widget.paciente.nombres!,
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
         ),
       ),
@@ -147,7 +147,6 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
           : ListView.builder(
               itemCount: examenesFilter.length + 1,
               itemBuilder: (context, index) {
-                late String identificacion;
                 late String examen;
                 late String codexamen;
                 late String fecha;
@@ -177,7 +176,6 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                     ),
                   );
                 } else {
-                  identificacion = examenesFilter[indexx].identificacion;
                   examen = examenesFilter[indexx].examen;
                   codexamen = examenesFilter[indexx].codexamen;
                   fecha = examenesFilter[indexx].fecha;
@@ -199,7 +197,11 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                                   mirando = !mirando;
                                 });
                                 await viewExam(
-                                    context, codexamen, identificacion, fecha);
+                                  context,
+                                  widget.paciente,
+                                  codexamen,
+                                  fecha,
+                                );
                                 setState(() {
                                   mirando = !mirando;
                                 });
@@ -250,10 +252,16 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     );
   }
 
-  Future<void> viewExam(BuildContext context, String codigo,
-      String identificacion, String fecha) async {
+  Future<void> viewExam(
+    BuildContext context,
+    Paciente paciente,
+    String codigo,
+    String fecha,
+  ) async {
     if (codigo == '3000' || codigo == '3001') {
-      await hemogramas(context, identificacion, fecha, widget.nombres, fToast);
+      await hemogramas(context, paciente, fecha, fToast);
+    } else if (codigo == '1000') {
+      await parcialOrina(context, paciente, fecha, fToast);
     }
   }
 }

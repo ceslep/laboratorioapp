@@ -98,6 +98,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
       body: ListView.builder(
         itemCount: pacientes.length + 1,
         itemBuilder: (context, index) {
+          late final Paciente paciente;
           late final String? identificacion;
           late final String? nombres;
           late final String? apellidos;
@@ -108,6 +109,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
           late int edad;
           int iindex = index - 1;
           if (index > 0) {
+            paciente = pacientes[iindex];
             identificacion = pacientes[iindex].identificacion;
             nombres = pacientes[iindex].nombres;
             apellidos = pacientes[iindex].apellidos?.replaceAll('\ufffd', 'Ñ');
@@ -152,8 +154,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ConsultaExamenes(
-                                  paciente: identificacion!,
-                                  nombres: '$nombres $apellidos',
+                                  paciente: paciente,
                                 ),
                               ));
                         },
@@ -161,7 +162,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
                             color: Colors.blueAccent),
                       ),
                       title: Text(
-                        "${apellidos!} ${nombres!}",
+                        paciente.nombreCompleto,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.green),
                       ),

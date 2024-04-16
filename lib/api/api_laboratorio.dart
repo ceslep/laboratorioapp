@@ -100,6 +100,50 @@ Future<HemogramaRayto> getHemogramaRayto(BuildContext context,
       if (datosHemograma['msg']) {
         return HemogramaRayto.fromJson(datosHemograma['data']);
       }
+    } else {
+      return HemogramaRayto(identificacion: 'Error');
+    }
+    return HemogramaRayto(identificacion: 'Error');
+  } catch (e) {
+    return HemogramaRayto(identificacion: 'ErrorInternet');
+  }
+}
+
+Future<HRayto> getHemogramaRaytoNew(BuildContext context,
+    {String identificacion = '', String fecha = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getHemogramaRaytoNew.php');
+  final String bodyData =
+      json.encode({'identificacion': identificacion, 'fecha': fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosHemograma = json.decode(decodedResponse);
+      if (datosHemograma['msg']) {
+        return HRayto.fromJson(datosHemograma['data']);
+      }
+    } else {}
+    return HRayto(identificacion: 'Error');
+  } catch (e) {
+    return HRayto(identificacion: 'ErrorInternet');
+  }
+}
+
+Future<HemogramaRayto> getParcialOrina(BuildContext context,
+    {String identificacion = '', String fecha = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getParcialOrina.php');
+  final String bodyData =
+      json.encode({'identificacion': identificacion, 'fecha': fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosHemograma = json.decode(decodedResponse);
+      if (datosHemograma['msg']) {
+        return HemogramaRayto.fromJson(datosHemograma['data']);
+      }
     } else {}
     return HemogramaRayto(identificacion: 'Error');
   } catch (e) {

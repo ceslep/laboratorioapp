@@ -8,9 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
+import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/pages/printpdf/print_pdf.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma.dart';
+import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma_new.dart';
 import 'package:laboratorioapp/providers/hrayto_provider.dart';
 import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -20,12 +22,12 @@ import 'package:open_share_plus/open.dart';
 import '../../../widgets/modals/floating_modal.dart';
 import '../../../widgets/modals/modal_fit.dart';
 
-class ViewHemogramaRayto extends StatefulWidget {
-  final HemogramaRayto hemograma;
+class ViewHemogramaRaytoNew extends StatefulWidget {
+  final HRayto hemograma;
   final Paciente paciente;
   final String fecha;
 
-  const ViewHemogramaRayto({
+  const ViewHemogramaRaytoNew({
     super.key,
     required this.hemograma,
     required this.fecha,
@@ -33,30 +35,10 @@ class ViewHemogramaRayto extends StatefulWidget {
   });
 
   @override
-  State<ViewHemogramaRayto> createState() => _ViewHemogramaRaytoState();
+  State<ViewHemogramaRaytoNew> createState() => _ViewHemogramaRaytoNewState();
 }
 
-List<Map<String, dynamic>> parseText(String text) {
-  final lines = text.split('\n');
-  final List<Map<String, dynamic>> results = [];
-
-  for (final line in lines) {
-    if (line == '') continue;
-    final parts = line.split(':');
-    final key = parts[0].trim();
-    final value = parts[1].trim();
-
-    // Convertir a tipos de datos específicos
-
-    results.add({
-      key: value,
-    });
-  }
-
-  return results;
-}
-
-class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
+class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
   void onFormHemogramaChange(FormHemograma formState) {}
 
   bool imprimiendo_ = false;
@@ -74,23 +56,6 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
     hraytoProvider = Provider.of<HRaytoProvider>(context, listen: false);
     urlProvider = Provider.of<UrlProvider>(context, listen: false);
     fToast.init(context);
-    try {
-      String resultadoExamen = widget.hemograma.sistematizado!;
-      print(resultadoExamen);
-      dataHemograma = parseText(resultadoExamen);
-      print(dataHemograma);
-    } catch (_) {
-      showToastB(
-        fToast,
-        "Error al cargar los campos del hemograma o no existe.",
-        bacgroundColor: Colors.red,
-        frontColor: Colors.yellow,
-        icon: const Icon(
-          Icons.dangerous_outlined,
-          color: Colors.lightGreenAccent,
-        ),
-      );
-    }
   }
 
   @override
@@ -113,13 +78,6 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                   whatsAppNumber: widget.paciente.telefono,
                   text:
                       '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombres}');
-
-              /* final file =
-                  await FilePicker.platform.pickFiles(type: FileType.any);
-              if (file != null) {
-                final path = file.files.single.path;
-                await _shareFile(path!);
-              } */
             },
             icon: Icon(
               MdiIcons.whatsapp,
@@ -242,8 +200,8 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
           ),
         ],
       ),
-      body: FormHemograma(
-        hemograma: dataHemograma,
+      body: FormHemogramaNew(
+        hemograma: widget.hemograma,
         identificacion: widget.paciente.identificacion!,
         fecha: widget.hemograma.fecha ??
             DateFormat('yyyy-MM-dd').format(DateTime.now()),
