@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
-import 'package:laboratorioapp/functions/show_toast.dart';
-import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/pages/printpdf/print_pdf.dart';
@@ -74,10 +72,10 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
           IconButton(
             tooltip: 'Compartir via whatsapp',
             onPressed: () async {
+              String url =
+                  '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}';
               Open.whatsApp(
-                  whatsAppNumber: widget.paciente.telefono,
-                  text:
-                      '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombres}');
+                  whatsAppNumber: widget.paciente.telefono, text: url);
             },
             icon: Icon(
               MdiIcons.whatsapp,
@@ -87,11 +85,12 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
           IconButton(
             tooltip: 'Enviar por correo',
             onPressed: () async {
+              String url =
+                  '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}';
               Open.mail(
                   toAddress: widget.paciente.correo!,
                   subject: "hemograma",
-                  body:
-                      '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombres}');
+                  body: url);
             },
             icon: const Icon(
               Icons.email,
@@ -122,7 +121,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                                     identificacion:
                                         widget.paciente.identificacion!,
                                     fecha: widget.fecha,
-                                    nombres: widget.paciente.nombres!),
+                                    nombres: widget.paciente.nombreCompleto),
                               ),
                             );
                           } else if (Platform.isWindows) {

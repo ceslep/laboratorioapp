@@ -63,41 +63,40 @@ class _PDFRemoteViewerState extends State<PDFRemoteViewer> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter PDF View',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(child: Builder(
-          builder: (BuildContext context) {
-            return Column(
-              children: <Widget>[
-                TextButton(
-                  child: const Text("Remote PDF"),
-                  onPressed: () {
-                    if (remotePDFpath.isNotEmpty) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PDFScreen(path: remotePDFpath),
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.nombres)),
+      body: Center(child: Builder(
+        builder: (BuildContext context) {
+          return Column(
+            children: <Widget>[
+              TextButton(
+                child: const Text("Abrir PDF"),
+                onPressed: () {
+                  if (remotePDFpath.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PDFScreen(
+                          path: remotePDFpath,
+                          nombres: widget.nombres,
                         ),
-                      );
-                    }
-                  },
-                ),
-              ],
-            );
-          },
-        )),
-      ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          );
+        },
+      )),
     );
   }
 }
 
 class PDFScreen extends StatefulWidget {
   final String? path;
-
-  const PDFScreen({super.key, this.path});
+  final String nombres;
+  const PDFScreen({super.key, this.path, required this.nombres});
 
   @override
   State<PDFScreen> createState() => _PDFScreenState();
@@ -115,7 +114,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Document"),
+        title: Text(widget.nombres),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.share),
