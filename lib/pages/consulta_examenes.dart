@@ -132,6 +132,12 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     return result;
   }
 
+  Future<void> espera() async {
+    // Simulate an asynchronous data fetch (e.g., network request)
+    await Future.delayed(const Duration(seconds: 1));
+    print('Listo!');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,110 +150,127 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       ),
       body: examenes.isEmpty
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: examenesFilter.length + 1,
-              itemBuilder: (context, index) {
-                late String examen;
-                late String codexamen;
-                late String fecha;
-                late String bacteriologo;
-                late String doctor;
-                int indexx = index - 1;
-                if (index == 0) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                        18.0,
-                      ),
-                      child: DropdownButton(
-                        value: fechae,
-                        items: _fechas,
-                        onChanged: (value) {
-                          fechae = value;
-                          examenesFilter = examenes
-                              .where((element) => value.contains('-')
-                                  ? element.fecha == fechae
-                                  : element.fecha != '')
-                              .toList();
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  );
-                } else {
-                  examen = examenesFilter[indexx].examen;
-                  codexamen = examenesFilter[indexx].codexamen;
-                  fecha = examenesFilter[indexx].fecha;
-                  bacteriologo = examenesFilter[indexx].bacteriologo;
-                  doctor = examenesFilter[indexx].doctor;
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8),
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 25, // Ajusta el tamaño del avatar
-                        backgroundImage: AssetImage(imageLab(examen)),
-                      ),
-                      trailing: !mirando
-                          ? IconButton(
-                              onPressed: () async {
-                                setState(() {
-                                  mirando = !mirando;
-                                });
-                                await viewExam(
-                                  context,
-                                  widget.paciente,
-                                  codexamen,
-                                  fecha,
-                                );
-                                setState(() {
-                                  mirando = !mirando;
-                                });
-                              },
-                              icon: const Icon(
-                                Icons.remove_red_eye,
-                                color: Colors.blue,
-                              ),
-                            )
-                          : const SizedBox(
-                              width: 15,
-                              height: 15,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1,
-                              ),
-                            ),
-                      title: Text(
-                        examen,
-                        style: const TextStyle(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.bold,
+          : Stack(
+              children: [
+                ListView.builder(
+                  itemCount: examenesFilter.length + 1,
+                  itemBuilder: (context, index) {
+                    late String examen;
+                    late String codexamen;
+                    late String fecha;
+                    late String bacteriologo;
+                    late String doctor;
+                    int indexx = index - 1;
+                    if (index == 0) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                            18.0,
+                          ),
+                          child: DropdownButton(
+                            value: fechae,
+                            items: _fechas,
+                            onChanged: (value) {
+                              fechae = value;
+                              examenesFilter = examenes
+                                  .where((element) => value.contains('-')
+                                      ? element.fecha == fechae
+                                      : element.fecha != '')
+                                  .toList();
+                              setState(() {});
+                            },
+                          ),
                         ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            fecha,
+                      );
+                    } else {
+                      examen = examenesFilter[indexx].examen;
+                      codexamen = examenesFilter[indexx].codexamen;
+                      fecha = examenesFilter[indexx].fecha;
+                      bacteriologo = examenesFilter[indexx].bacteriologo;
+                      doctor = examenesFilter[indexx].doctor;
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 25, // Ajusta el tamaño del avatar
+                            backgroundImage: AssetImage(imageLab(examen)),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () async {
+                              mirando = true;
+                              setState(() {});
+                              await espera();
+                              await viewExam(
+                                // ignore: use_build_context_synchronously
+                                context,
+                                widget.paciente,
+                                codexamen,
+                                fecha,
+                              );
+                              mirando = false;
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          title: Text(
+                            examen,
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: Colors.blueGrey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            'Bacteriólogo: $bacteriologo',
-                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                fecha,
+                                style: const TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Bacteriólogo: $bacteriologo',
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic),
+                              ),
+                              Text(
+                                'C.C.: $doctor',
+                              ),
+                            ],
                           ),
-                          Text(
-                            'C.C.: $doctor',
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+                mirando
+                    ? Center(
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(168.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
             ),
     );
   }

@@ -5,8 +5,10 @@ import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
+import 'package:laboratorioapp/models/parcial_orina.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto_new.dart';
+import 'package:laboratorioapp/pages/view_examenes/parcialOrina/parcial_orina.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 Future<void> hemogramas(BuildContext context, Paciente paciente, String fecha,
@@ -64,26 +66,27 @@ Future<void> parcialOrina(BuildContext context, Paciente paciente, String fecha,
     FToast fToast) async {
   getParcialOrina(context,
           identificacion: paciente.identificacion!, fecha: fecha)
-      .then((HemogramaRayto value) async {
-    HemogramaRayto hemograma = value;
-    if (hemograma.identificacion != '' && hemograma.identificacion != 'Error') {
+      .then((ParcialOrina value) async {
+    ParcialOrina parcialOrina = value;
+    if (parcialOrina.identificacion != '' &&
+        parcialOrina.identificacion != 'Error') {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ViewHemogramaRayto(
-            hemograma: hemograma,
+          builder: (context) => ViewParcialOrina(
+            parcialOrina: parcialOrina,
             fecha: fecha,
             paciente: paciente,
           ),
         ),
       );
-    } else if (hemograma.identificacion == 'Error') {
+    } else if (parcialOrina.identificacion == 'Error') {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ViewHemogramaRayto(
+          builder: (context) => ViewParcialOrina(
             paciente: paciente,
-            hemograma: HemogramaRayto(),
+            parcialOrina: ParcialOrina(),
             fecha: fecha,
           ),
         ),

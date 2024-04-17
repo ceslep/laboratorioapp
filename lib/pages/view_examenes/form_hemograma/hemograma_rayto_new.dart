@@ -75,7 +75,9 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
               String url =
                   '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}';
               Open.whatsApp(
-                  whatsAppNumber: widget.paciente.telefono, text: url);
+                  whatsAppNumber: widget.paciente.telefono,
+                  text: url,
+                  mode: OpenMode.externalApplication);
             },
             icon: Icon(
               MdiIcons.whatsapp,

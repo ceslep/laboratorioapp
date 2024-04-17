@@ -3,10 +3,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/functions/examenes.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
+import 'package:laboratorioapp/models/parcial_orina.dart';
 import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -130,7 +132,7 @@ Future<HRayto> getHemogramaRaytoNew(BuildContext context,
   }
 }
 
-Future<HemogramaRayto> getParcialOrina(BuildContext context,
+Future<ParcialOrina> getParcialOrina(BuildContext context,
     {String identificacion = '', String fecha = ''}) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   Uri url = Uri.parse('${urlProvider.url}getParcialOrina.php');
@@ -140,14 +142,14 @@ Future<HemogramaRayto> getParcialOrina(BuildContext context,
     final response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
       final decodedResponse = utf8.decode(response.bodyBytes);
-      final dynamic datosHemograma = json.decode(decodedResponse);
-      if (datosHemograma['msg']) {
-        return HemogramaRayto.fromJson(datosHemograma['data']);
+      final dynamic datosParcialOrina = json.decode(decodedResponse);
+      if (datosParcialOrina['msg']) {
+        return ParcialOrina.fromJson(datosParcialOrina['data']);
       }
     } else {}
-    return HemogramaRayto(identificacion: 'Error');
+    return ParcialOrina(identificacion: 'Error');
   } catch (e) {
-    return HemogramaRayto(identificacion: 'ErrorInternet');
+    return ParcialOrina(identificacion: 'ErrorInternet');
   }
 }
 
@@ -156,6 +158,23 @@ Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
   final Uri url = Uri.parse('${urlProvider.url}saveHemogramaRayto.php');
   late final http.Response response;
   final String bodyData = json.encode(hrayto.toJson());
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+}
+
+Future<void> guardarParcialOrina(
+    BuildContext context, ParcialOrina parcialOrina) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}saveParcialOrina.php');
+  late final http.Response response;
+  final String bodyData = json.encode(parcialOrina.toJson());
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {

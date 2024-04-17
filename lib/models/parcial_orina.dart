@@ -78,7 +78,7 @@ class ParcialOrina {
     this.fechahora,
   });
 
-  factory ParcialOrina.fromJson(Map<String, String> json) => ParcialOrina(
+  factory ParcialOrina.fromJson(Map<String, dynamic> json) => ParcialOrina(
         ind: json["ind"].toString(),
         identificacion: json["identificacion"].toString(),
         fecha: json["fecha"].toString(),
