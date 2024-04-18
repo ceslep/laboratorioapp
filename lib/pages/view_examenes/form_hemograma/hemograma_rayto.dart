@@ -133,7 +133,7 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                   toAddress: widget.paciente.correo!,
                   subject: "hemograma",
                   body:
-                      '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombres}');
+                      '${urlProvider.url}printphp/print_examen.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}&info=${'Hemograma sistematizado'}&tabla=${'hemogramaRayto'}');
             },
             icon: const Icon(
               Icons.email,

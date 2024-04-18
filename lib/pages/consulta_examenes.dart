@@ -7,6 +7,7 @@ import 'package:laboratorioapp/functions/examenes.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/paciente.dart';
+import 'package:laboratorioapp/pages/loading.dart';
 
 class ConsultaExamenes extends StatefulWidget {
   final Paciente paciente;
@@ -50,6 +51,7 @@ String formatDate(String dateString) {
 }
 
 class _ConsultaExamenesState extends State<ConsultaExamenes> {
+  late final GlobalKey keyL;
   List<Examenes> examenes = [];
   List<Examenes> examenesFilter = [];
   List<String> listaFechas = [];
@@ -60,6 +62,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
   @override
   void initState() {
     super.initState();
+    keyL = GlobalKey<State<StatefulWidget>>();
     fToast.init(context);
     //  pacientes = await getPacientes(context) as List<Paciente>;
     setState(() => mirando = !mirando);
@@ -205,14 +208,14 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                             onPressed: () async {
                               mirando = true;
                               setState(() {});
-                              await espera();
+                              //   await espera();
                               await viewExam(
-                                // ignore: use_build_context_synchronously
-                                context,
-                                widget.paciente,
-                                codexamen,
-                                fecha,
-                              );
+                                  // ignore: use_build_context_synchronously
+                                  context,
+                                  widget.paciente,
+                                  codexamen,
+                                  fecha,
+                                  keyL);
                               mirando = false;
                               setState(() {});
                             },
@@ -278,16 +281,21 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     );
   }
 
-  Future<void> viewExam(
-    BuildContext context,
-    Paciente paciente,
-    String codigo,
-    String fecha,
-  ) async {
+  Future<void> viewExam(BuildContext context, Paciente paciente, String codigo,
+      String fecha, final keyL) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Loading(
+                key: keyL,
+              )),
+    );
     if (codigo == '3000' || codigo == '3001') {
-      await hemogramas(context, paciente, fecha, fToast);
+      await hemogramas2(context, paciente, fecha, fToast);
+      Navigator.pop(keyL.currentState!.context);
     } else if (codigo == '1000') {
-      await parcialOrina(context, paciente, fecha, fToast);
+      await parcialOrina2(context, paciente, fecha, fToast);
+      Navigator.pop(keyL.currentState!.context);
     }
   }
 }
