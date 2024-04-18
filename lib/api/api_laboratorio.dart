@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:laboratorioapp/functions/examenes.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
@@ -155,9 +154,10 @@ Future<ParcialOrina> getParcialOrina(BuildContext context,
 
 Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
-  final Uri url = Uri.parse('${urlProvider.url}saveHemogramaRayto.php');
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
-  final String bodyData = json.encode(hrayto.toJson());
+  final String bodyData =
+      json.encode({...hrayto.toJson(), "tabla": "hemogramaRayto"});
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
@@ -172,9 +172,10 @@ Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
 Future<void> guardarParcialOrina(
     BuildContext context, ParcialOrina parcialOrina) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
-  final Uri url = Uri.parse('${urlProvider.url}saveParcialOrina.php');
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
-  final String bodyData = json.encode(parcialOrina.toJson());
+  final String bodyData =
+      json.encode({...parcialOrina.toJson(), "tabla": "parcialOrina"});
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
@@ -202,14 +203,15 @@ Future<bool> _launchInBrowser(Uri url) async {
 
 Future<void> downloadPDFFile(
     BuildContext context,
-    String urlprint,
+    String tabla,
+    String info,
     String fileName,
     String identificacion,
     String fecha,
     String nombres) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse(
-      '${urlProvider.url}printphp/$urlprint.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres');
+      '${urlProvider.url}printphp/print_examen.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres&tabla=$tabla&info=$info');
   final bool result = await _launchInBrowser(url);
   print(result);
 }

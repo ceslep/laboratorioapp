@@ -117,7 +117,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
 
   String imageLab(String examen) {
     String result = '';
-    if (examen.toLowerCase().contains('hema')) {
+    if (examen.toLowerCase().contains('hemo') ||
+        examen.toLowerCase().contains('hema')) {
       result = 'images/hemat.png';
       // ignore: curly_braces_in_flow_control_structures
     } else if (examen.toLowerCase().contains('coles') ||
@@ -126,6 +127,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     // ignore: curly_braces_in_flow_control_structures
     {
       result = 'images/hdl.png';
+    } else if (examen.toLowerCase().contains('orina')) {
+      result = 'images/porina.png';
     } else {
       result = 'images/lab.png';
     }

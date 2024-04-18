@@ -170,11 +170,12 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                           } else if (Platform.isWindows) {
                             downloadPDFFile(
                                 context,
-                                'print_hemograma',
+                                "hemogramaRayto",
+                                "Hemograma Sistematizado",
                                 "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
                                 widget.fecha,
-                                widget.paciente.nombres!);
+                                widget.paciente.nombreCompleto);
                           }
                         },
                       );
@@ -213,6 +214,7 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                             context: context,
                             builder: (context) => const ModalFit(
                               title: 'Hemograma almacenado',
+                              asset: 'images/hemat.png',
                             ),
                           );
                           setState(() {

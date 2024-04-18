@@ -129,11 +129,12 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                           } else if (Platform.isWindows) {
                             downloadPDFFile(
                                 context,
-                                'print_hemograma',
+                                "hemogramaRayto",
+                                "Hemograma",
                                 "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
                                 widget.fecha,
-                                widget.paciente.nombres!);
+                                widget.paciente.nombreCompleto);
                           }
                         },
                       );
@@ -163,20 +164,17 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                 ? IconButton(
                     tooltip: 'Guardar',
                     onPressed: () async {
-                      setState(() {
-                        guardando_ = !guardando_;
-                      });
+                      setState(() => guardando_ = !guardando_);
                       guardarHemograma(context, hraytoProvider.hrayto).then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,
                             builder: (context) => const ModalFit(
                               title: 'Hemograma almacenado',
+                              asset: 'images/hemat.png',
                             ),
                           );
-                          setState(() {
-                            guardando_ = !guardando_;
-                          });
+                          setState(() => guardando_ = !guardando_);
                         },
                       );
                     },

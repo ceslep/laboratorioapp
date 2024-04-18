@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
+import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 
 class ViewParcialOrina extends StatefulWidget {
   final Paciente paciente;
@@ -18,6 +23,7 @@ class ViewParcialOrina extends StatefulWidget {
 
 class _ParcialOrinaState extends State<ViewParcialOrina> {
   ParcialOrina parcialOrinaS = ParcialOrina();
+  bool guardando_ = false;
   late final TextEditingController densidadController;
   late final TextEditingController colorController;
   late final TextEditingController aspectoController;
@@ -149,13 +155,82 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.save,
-                color: Colors.white,
-              ),
-            ),
+            child: !guardando_
+                ? IconButton(
+                    onPressed: () async {
+                      setState(() => guardando_ = !guardando_);
+                      guardarParcialOrina(context, parcialOrinaS).then(
+                        (value) {
+                          if (Platform.isWindows) {
+                            downloadPDFFile(
+                                context,
+                                "parcialOrina",
+                                "Parcial de Orina",
+                                "parcialOrina_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                                widget.paciente.identificacion!,
+                                widget.fecha,
+                                widget.paciente.nombreCompleto);
+                          }
+                          setState(() => guardando_ = !guardando_);
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.print,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    child: SizedBox(
+                      width: 13,
+                      height: 13,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: !guardando_
+                ? IconButton(
+                    onPressed: () async {
+                      setState(() => guardando_ = !guardando_);
+                      guardarParcialOrina(context, parcialOrinaS).then(
+                        (value) {
+                          showFloatingModalBottomSheet(
+                            context: context,
+                            builder: (context) => const ModalFit(
+                              title: 'Parcial de Orina almacenado',
+                              asset: 'images/porina.png',
+                            ),
+                          );
+                          setState(() => guardando_ = !guardando_);
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.save,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    child: SizedBox(
+                      width: 13,
+                      height: 13,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

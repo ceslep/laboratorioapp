@@ -100,8 +100,6 @@ class _ListaPacientesState extends State<ListaPacientes> {
         itemBuilder: (context, index) {
           late final Paciente paciente;
           late final String? identificacion;
-          late final String? nombres;
-          late final String? apellidos;
           late final String? fecnac;
           late final String? sexo;
           late final String? telefono;
@@ -111,8 +109,8 @@ class _ListaPacientesState extends State<ListaPacientes> {
           if (index > 0) {
             paciente = pacientes[iindex];
             identificacion = pacientes[iindex].identificacion;
-            nombres = pacientes[iindex].nombres;
-            apellidos = pacientes[iindex].apellidos?.replaceAll('\ufffd', 'Ñ');
+            //          pacientes[iindex].nombreCompleto.replaceAll('\ufffd', 'Ñ');
+
             fecnac = pacientes[iindex].fecnac;
             sexo = pacientes[iindex].genero;
             telefono = pacientes[iindex].telefono;

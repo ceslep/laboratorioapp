@@ -73,7 +73,8 @@ flutter:
     -  images/hemat.png
     -  images/colesterol.png
     -  images/lab.png
-    -  images/hdl.png 
+    -  images/hdl.png
+    -  images/porina.png
     -  documents/blank.pdf
 
   # The following line ensures that the Material Icons font is
