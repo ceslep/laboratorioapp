@@ -98,34 +98,43 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.error,
-        title: const Text(
-          'Hemograma Rayto 7600',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const CircleAvatar(
+              backgroundImage: AssetImage('images/hemat.png'),
+            ),
+            const SizedBox(width: 5),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Hemograma Rayto 7600',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(
+                      widget.paciente.nombreCompleto,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.fecha,
+                      style:
+                          const TextStyle(color: Colors.yellow, fontSize: 10),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
-          IconButton(
-            tooltip: 'Compartir via whatsapp',
-            onPressed: () async {
-              Open.whatsApp(
-                  whatsAppNumber: widget.paciente.telefono,
-                  text:
-                      '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombres}');
-
-              /* final file =
-                  await FilePicker.platform.pickFiles(type: FileType.any);
-              if (file != null) {
-                final path = file.files.single.path;
-                await _shareFile(path!);
-              } */
-            },
-            icon: Icon(
-              MdiIcons.whatsapp,
-              color: Colors.lightGreenAccent,
-            ),
-          ),
           IconButton(
             tooltip: 'Enviar por correo',
             onPressed: () async {

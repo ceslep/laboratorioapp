@@ -133,23 +133,32 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            const Text('Parcial de Orina'),
-            Row(
+            const CircleAvatar(
+              backgroundImage: AssetImage('images/porina.png'),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.paciente.nombreCompleto,
-                  style: const TextStyle(fontSize: 10),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  widget.fecha,
-                  style: const TextStyle(fontSize: 10),
+                const Text('Parcial de Orina'),
+                Row(
+                  children: [
+                    Text(
+                      widget.paciente.nombreCompleto,
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.fecha,
+                      style: const TextStyle(
+                          fontSize: 10, color: Colors.yellowAccent),
+                    )
+                  ],
                 )
               ],
-            )
+            ),
           ],
         ),
         actions: [

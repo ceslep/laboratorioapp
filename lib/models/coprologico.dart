@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final coprologico = coprologicoFromJson(jsonString);
+//      coprologico = coprologicoFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -10,49 +10,49 @@ Coprologico coprologicoFromJson(String str) =>
 String coprologicoToJson(Coprologico data) => json.encode(data.toJson());
 
 class Coprologico {
-  final String? ind;
-  final String? identificacion;
-  final DateTime? fecha;
-  final String? consistencia;
-  final String? color;
-  final String? sangre;
-  final String? moco;
-  final String? otrosMacroscopicos;
-  final String? ph;
-  final String? endamoebaHistoliticaQuistes;
-  final String? endamoebaColiQuistes;
-  final String? endolimaxQuistes;
-  final String? iodamoebaQuistes;
-  final String? giardaLambliaQuistes;
-  final String? chilomastixMesniliQuistes;
-  final String? trichomonaHominisQuistes;
-  final String? balantidiumColiQuistes;
-  final String? endamoebaHistoliticaTrofozoitos;
-  final String? endamoebaColiTrofozoitos;
-  final String? endolimaxTrofozoitos;
-  final String? iodamoebaTrofozoitos;
-  final String? giardaLambliaTrofozoitos;
-  final String? chilomastixMesniliTrofozoitos;
-  final String? trichomonaHominisTrofozoitos;
-  final String? balantidiumColiTrofozoitos;
-  final String? blastocystisHominisQuistes;
-  final String? blastocystisHominisTrofozoitos;
-  final String? ascaris;
-  final String? tricocefalos;
-  final String? uncinaria;
-  final String? teniaSaginata;
-  final String? teniaSolium;
-  final String? himenolepsis;
-  final String? strongiloidesLarva;
-  final String? oxiurosHuevos;
-  final String? sangreOculta;
-  final String? lecucocitos;
-  final String? observaciones;
-  final String? doctor;
-  final String? fechahora;
+  String? id;
+  String? identificacion;
+  String? fecha;
+  String? consistencia;
+  String? color;
+  String? sangre;
+  String? moco;
+  String? otrosMacroscopicos;
+  String? ph;
+  String? endamoebaHistoliticaQuistes;
+  String? endamoebaColiQuistes;
+  String? endolimaxQuistes;
+  String? iodamoebaQuistes;
+  String? giardaLambliaQuistes;
+  String? chilomastixMesniliQuistes;
+  String? trichomonaHominisQuistes;
+  String? balantidiumColiQuistes;
+  String? endamoebaHistoliticaTrofozoitos;
+  String? endamoebaColiTrofozoitos;
+  String? endolimaxTrofozoitos;
+  String? iodamoebaTrofozoitos;
+  String? giardaLambliaTrofozoitos;
+  String? chilomastixMesniliTrofozoitos;
+  String? trichomonaHominisTrofozoitos;
+  String? balantidiumColiTrofozoitos;
+  String? blastocystisHominisQuistes;
+  String? blastocystisHominisTrofozoitos;
+  String? ascaris;
+  String? tricocefalos;
+  String? uncinaria;
+  String? teniaSaginata;
+  String? teniaSolium;
+  String? himenolepsis;
+  String? strongiloidesLarva;
+  String? oxiurosHuevos;
+  String? sangreOculta;
+  String? lecucocitos;
+  String? observaciones;
+  String? doctor;
+  String? fechahora;
 
   Coprologico({
-    this.ind,
+    this.id,
     this.identificacion,
     this.fecha,
     this.consistencia,
@@ -95,9 +95,9 @@ class Coprologico {
   });
 
   factory Coprologico.fromJson(Map<String, dynamic> json) => Coprologico(
-        ind: json["ind"].toString(),
+        id: json["ind"].toString(),
         identificacion: json["identificacion"].toString(),
-        fecha: json["fecha"] == null ? null : DateTime.parse(json["fecha"]),
+        fecha: json["fecha"].toString(),
         consistencia: json["consistencia"].toString(),
         color: json["color"].toString(),
         sangre: json["sangre"].toString(),
@@ -146,10 +146,9 @@ class Coprologico {
       );
 
   Map<String, dynamic> toJson() => {
-        "ind": ind,
+        "id": id,
         "identificacion": identificacion,
-        "fecha":
-            "${fecha!.year.toString().padLeft(4, '0')}-${fecha!.month.toString().padLeft(2, '0')}-${fecha!.day.toString().padLeft(2, '0')}",
+        "fecha": fecha,
         "consistencia": consistencia,
         "color": color,
         "sangre": sangre,

@@ -188,23 +188,34 @@ class _CoprologicoState extends State<ViewCoprologico> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inverseSurface,
         foregroundColor: Colors.white,
-        title: Column(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Coprológico'),
-            Row(
+            const CircleAvatar(
+              backgroundImage: AssetImage('images/coprologico.png'),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.paciente.nombreCompleto,
-                  style: const TextStyle(fontSize: 10),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  widget.fecha,
-                  style: const TextStyle(fontSize: 10),
+                const Text('Exámen Coprológico'),
+                Row(
+                  children: [
+                    Text(
+                      widget.paciente.nombreCompleto,
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.fecha,
+                      style:
+                          const TextStyle(fontSize: 10, color: Colors.yellow),
+                    )
+                  ],
                 )
               ],
-            )
+            ),
           ],
         ),
         actions: [
@@ -219,9 +230,9 @@ class _CoprologicoState extends State<ViewCoprologico> {
                           if (Platform.isWindows) {
                             downloadPDFFile(
                                 context,
-                                "parcialOrina",
-                                "Parcial de Orina",
-                                "parcialOrina_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                                "Coprologico",
+                                "Exámen Coprológico",
+                                "coprologico_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
                                 widget.fecha,
                                 widget.paciente.nombreCompleto);
@@ -260,8 +271,8 @@ class _CoprologicoState extends State<ViewCoprologico> {
                           showFloatingModalBottomSheet(
                             context: context,
                             builder: (context) => const ModalFit(
-                              title: 'Parcial de Orina almacenado',
-                              asset: 'images/porina.png',
+                              title: 'Exámen Coprológico almacenado',
+                              asset: 'images/coprologico.png',
                             ),
                           );
                           setState(() => guardando_ = !guardando_);
@@ -291,7 +302,60 @@ class _CoprologicoState extends State<ViewCoprologico> {
       ),
       body: Form(
         autovalidateMode: AutovalidateMode.always,
-        onChanged: () {},
+        onChanged: () {
+          coprologicoS.consistencia = _consistenciaController.text;
+          coprologicoS.color = _colorController.text;
+          coprologicoS.sangre = _sangreController.text;
+          coprologicoS.moco = _mocoController.text;
+          coprologicoS.otrosMacroscopicos = _otrosMacroscopicosController.text;
+          coprologicoS.ph = _phController.text;
+          coprologicoS.endamoebaHistoliticaQuistes =
+              _endamoebaHistoliticaQuistesController.text;
+          coprologicoS.endamoebaColiQuistes =
+              _endamoebaColiQuistesController.text;
+          coprologicoS.endolimaxQuistes = _endolimaxQuistesController.text;
+          coprologicoS.iodamoebaQuistes = _iodamoebaQuistesController.text;
+          coprologicoS.giardaLambliaQuistes =
+              _giardaLambliaQuistesController.text;
+          coprologicoS.chilomastixMesniliQuistes =
+              _chilomastixMesniliQuistesController.text;
+          coprologicoS.trichomonaHominisQuistes =
+              _trichomonaHominisQuistesController.text;
+          coprologicoS.balantidiumColiQuistes =
+              _balantidiumColiQuistesController.text;
+          coprologicoS.endamoebaHistoliticaTrofozoitos =
+              _endamoebaHistoliticaTrofozoitosController.text;
+          coprologicoS.endamoebaColiTrofozoitos =
+              _endamoebaColiTrofozoitosController.text;
+          coprologicoS.endolimaxTrofozoitos =
+              _endolimaxTrofozoitosController.text;
+          coprologicoS.iodamoebaTrofozoitos =
+              _iodamoebaTrofozoitosController.text;
+          coprologicoS.giardaLambliaTrofozoitos =
+              _giardaLambliaTrofozoitosController.text;
+          coprologicoS.chilomastixMesniliTrofozoitos =
+              _chilomastixMesniliTrofozoitosController.text;
+          coprologicoS.trichomonaHominisTrofozoitos =
+              _trichomonaHominisTrofozoitosController.text;
+          coprologicoS.balantidiumColiTrofozoitos =
+              _balantidiumColiTrofozoitosController.text;
+          coprologicoS.blastocystisHominisQuistes =
+              _blastocystisHominisQuistesController.text;
+          coprologicoS.blastocystisHominisTrofozoitos =
+              _blastocystisHominisTrofozoitosController.text;
+          coprologicoS.ascaris = _ascarisController.text;
+          coprologicoS.tricocefalos = _tricocefalosController.text;
+          coprologicoS.uncinaria = _uncinariaController.text;
+          coprologicoS.teniaSaginata = _teniaSaginataController.text;
+          coprologicoS.teniaSolium = _teniaSoliumController.text;
+          coprologicoS.himenolepsis = _himenolepsisController.text;
+          coprologicoS.strongiloidesLarva = _strongiloidesLarvaController.text;
+          coprologicoS.oxiurosHuevos = _oxiurosHuevosController.text;
+          coprologicoS.sangreOculta = _sangreOcultaController.text;
+          coprologicoS.lecucocitos = _leucocitosController.text;
+          coprologicoS.identificacion = widget.paciente.identificacion;
+          coprologicoS.fecha = widget.fecha;
+        },
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(

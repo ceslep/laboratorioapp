@@ -61,29 +61,42 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.error,
-        title: const Text(
-          'Hemograma Rayto 7600',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const CircleAvatar(
+              backgroundImage: AssetImage('images/hemat.png'),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Hemograma Rayto 7600',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(
+                      widget.paciente.nombreCompleto,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.fecha,
+                      style:
+                          const TextStyle(color: Colors.yellow, fontSize: 10),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
-          IconButton(
-            tooltip: 'Compartir via whatsapp',
-            onPressed: () async {
-              String url =
-                  '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}';
-              Open.whatsApp(
-                  whatsAppNumber: widget.paciente.telefono,
-                  text: url,
-                  mode: OpenMode.externalApplication);
-            },
-            icon: Icon(
-              MdiIcons.whatsapp,
-              color: Colors.lightGreenAccent,
-            ),
-          ),
           IconButton(
             tooltip: 'Enviar por correo',
             onPressed: () async {
