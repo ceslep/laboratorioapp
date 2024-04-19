@@ -132,6 +132,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       result = 'images/hdl.png';
     } else if (examen.toLowerCase().contains('orina')) {
       result = 'images/porina.png';
+    } else if (examen.toLowerCase().contains('copro')) {
+      result = 'images/coprologico.png';
     } else {
       result = 'images/lab.png';
     }
@@ -290,11 +292,18 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                 key: keyL,
               )),
     );
+    List<String> codCoprologico = ['2000', '2002', '2003', '2004', '0171'];
     if (codigo == '3000' || codigo == '3001') {
       await hemogramas2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (codigo == '1000') {
       await parcialOrina2(context, paciente, fecha, fToast);
+      Navigator.pop(keyL.currentState!.context);
+    } else if (codCoprologico
+        .where((codel) => codel == codigo)
+        .toList()
+        .isNotEmpty) {
+      await coprologico2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
     }
   }

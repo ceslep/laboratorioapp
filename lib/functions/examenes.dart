@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
+import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+import 'package:laboratorioapp/pages/view_examenes/coprologico/coprologico.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto_new.dart';
 import 'package:laboratorioapp/pages/view_examenes/parcialOrina/parcial_orina.dart';
@@ -185,6 +187,52 @@ Future<bool> parcialOrina2(BuildContext context, Paciente paciente,
         builder: (context) => ViewParcialOrina(
           paciente: paciente,
           parcialOrina: ParcialOrina(),
+          fecha: fecha,
+        ),
+      ),
+    );
+    return true;
+  } else {
+    showToastB(
+      fToast,
+      'Sin Internet. Ha ocurrido un error obteniendo los datos del servidor',
+      bacgroundColor: Colors.red,
+      frontColor: Colors.yellow,
+      icon: Icon(
+        MdiIcons.networkOff,
+        color: Colors.yellow,
+      ),
+      milliseconds: 10,
+    );
+  }
+  return false;
+}
+
+Future<bool> coprologico2(BuildContext context, Paciente paciente, String fecha,
+    FToast fToast) async {
+  Coprologico coprologico = await getCoprologico(context,
+      identificacion: paciente.identificacion!, fecha: fecha);
+
+  if (coprologico.identificacion != '' &&
+      coprologico.identificacion != 'Error') {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewCoprologico(
+          coprologico: coprologico,
+          fecha: fecha,
+          paciente: paciente,
+        ),
+      ),
+    );
+    return true;
+  } else if (coprologico.identificacion == 'Error') {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewCoprologico(
+          paciente: paciente,
+          coprologico: Coprologico(),
           fecha: fecha,
         ),
       ),

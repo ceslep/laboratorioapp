@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
@@ -152,6 +153,29 @@ Future<ParcialOrina> getParcialOrina(BuildContext context,
   }
 }
 
+Future<Coprologico> getCoprologico(BuildContext context,
+    {String identificacion = '', String fecha = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getCoprologico.php');
+  final String bodyData =
+      json.encode({'identificacion': identificacion, 'fecha': fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosCoprologico = json.decode(decodedResponse);
+      if (datosCoprologico['msg']) {
+        return Coprologico.fromJson(datosCoprologico['data']);
+      }
+    } else {
+      return Coprologico(identificacion: 'Error');
+    }
+    return Coprologico(identificacion: 'Error');
+  } catch (e) {
+    return Coprologico(identificacion: 'ErrorInternet');
+  }
+}
+
 Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
@@ -176,6 +200,24 @@ Future<void> guardarParcialOrina(
   late final http.Response response;
   final String bodyData =
       json.encode({...parcialOrina.toJson(), "tabla": "parcialOrina"});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+}
+
+Future<void> guardarCoprologico(
+    BuildContext context, Coprologico coprologico) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({...coprologico.toJson(), "tabla": "coprologico"});
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
