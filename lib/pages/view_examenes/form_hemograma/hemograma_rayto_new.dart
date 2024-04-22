@@ -13,9 +13,7 @@ import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma_new.dart';
 import 'package:laboratorioapp/providers/hrayto_provider.dart';
 import 'package:laboratorioapp/providers/url_provider.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:open_share_plus/open.dart';
 
 import '../../../widgets/modals/floating_modal.dart';
 import '../../../widgets/modals/modal_fit.dart';
@@ -60,7 +58,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -97,21 +95,6 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
           ],
         ),
         actions: [
-          IconButton(
-            tooltip: 'Enviar por correo',
-            onPressed: () async {
-              String url =
-                  '${urlProvider.url}printphp/print_hemograma.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}';
-              Open.mail(
-                  toAddress: widget.paciente.correo!,
-                  subject: "hemograma",
-                  body: url);
-            },
-            icon: const Icon(
-              Icons.email,
-              color: Colors.lightBlueAccent,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8),
             child: !imprimiendo_
@@ -140,7 +123,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                               ),
                             );
                           } else if (Platform.isWindows) {
-                            downloadPDFFile(
+                            printPDFFile(
                                 context,
                                 "hemogramaRayto",
                                 "Hemograma",

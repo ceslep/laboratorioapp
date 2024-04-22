@@ -46,7 +46,7 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
   TextEditingController pdwController = TextEditingController();
   TextEditingController pctController = TextEditingController();
   TextEditingController pLcrController = TextEditingController();
-
+  TextEditingController observacionesController = TextEditingController();
   HRayto getHemograma() {
     return hrayto;
   }
@@ -100,6 +100,7 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
     hraytoProvider.hrayto.pLCR = pLcrController.text;
     hraytoProvider.hrayto.identificacion = widget.identificacion;
     hraytoProvider.hrayto.fecha = widget.fecha;
+    hraytoProvider.hrayto.observaciones = observacionesController.text;
     setState(() {});
 
     formFields = [
@@ -183,38 +184,44 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
         'P-LCR',
         pLcrController,
       ),
+      _buildTextField(
+        'Observaciones',
+        pLcrController,
+      ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Formulario(
-        identificacion: widget.identificacion,
-        fecha: widget.fecha,
-        hrayto: hrayto,
-        wbcController: wbcController,
-        lymNumberController: lymNumberController,
-        midNumberController: midNumberController,
-        graNumberController: graNumberController,
-        lymPercentController: lymPercentController,
-        midPercentController: midPercentController,
-        graPercentController: graPercentController,
-        rbcController: rbcController,
-        hgbController: hgbController,
-        mchcController: mchcController,
-        mchController: mchController,
-        mcvController: mcvController,
-        rdwCvController: rdwCvController,
-        rdwSdController: rdwSdController,
-        hctController: hctController,
-        pltController: pltController,
-        mpvController: mpvController,
-        pdwController: pdwController,
-        pctController: pctController,
-        pLcrController: pLcrController,
-        hraytoProvider: hraytoProvider,
-        formKey: _formKey,
-        formFields: formFields);
+      identificacion: widget.identificacion,
+      fecha: widget.fecha,
+      hrayto: hrayto,
+      wbcController: wbcController,
+      lymNumberController: lymNumberController,
+      midNumberController: midNumberController,
+      graNumberController: graNumberController,
+      lymPercentController: lymPercentController,
+      midPercentController: midPercentController,
+      graPercentController: graPercentController,
+      rbcController: rbcController,
+      hgbController: hgbController,
+      mchcController: mchcController,
+      mchController: mchController,
+      mcvController: mcvController,
+      rdwCvController: rdwCvController,
+      rdwSdController: rdwSdController,
+      hctController: hctController,
+      pltController: pltController,
+      mpvController: mpvController,
+      pdwController: pdwController,
+      pctController: pctController,
+      pLcrController: pLcrController,
+      hraytoProvider: hraytoProvider,
+      formKey: _formKey,
+      formFields: formFields,
+      observacionesController: observacionesController,
+    );
   }
 
   Widget _buildTextField(String labelText, TextEditingController controller) {
@@ -268,6 +275,7 @@ class Formulario extends StatelessWidget {
     required this.formFields,
     required this.identificacion,
     required this.fecha,
+    required this.observacionesController,
   }) : _formKey = formKey;
 
   final HRayto hrayto;
@@ -291,6 +299,7 @@ class Formulario extends StatelessWidget {
   final TextEditingController pdwController;
   final TextEditingController pctController;
   final TextEditingController pLcrController;
+  final TextEditingController observacionesController;
   final HRaytoProvider hraytoProvider;
   final GlobalKey<FormState> _formKey;
   final List<Widget> formFields;
@@ -321,6 +330,7 @@ class Formulario extends StatelessWidget {
         hrayto.pDW = pdwController.text;
         hrayto.pCT = pctController.text;
         hrayto.pLCR = pLcrController.text;
+        hrayto.observaciones = observacionesController.text;
         hrayto.identificacion = identificacion;
         hrayto.fecha = fecha;
         hraytoProvider.setData(hrayto);

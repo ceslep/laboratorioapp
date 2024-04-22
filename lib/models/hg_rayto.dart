@@ -28,6 +28,8 @@ class HRayto {
   String? pDW;
   String? pCT;
   String? pLCR;
+  String? observaciones;
+  String? bacteriologo;
   String? fechahora;
 
   HRayto(
@@ -54,6 +56,8 @@ class HRayto {
       this.pDW,
       this.pCT,
       this.pLCR,
+      this.observaciones,
+      this.bacteriologo,
       this.fechahora});
 
   List<dynamic> get publicProperties => [
@@ -80,6 +84,8 @@ class HRayto {
         pDW,
         pCT,
         pLCR,
+        observaciones,
+        bacteriologo,
         fechahora
       ];
 
@@ -107,6 +113,8 @@ class HRayto {
         pDW: json['PDW'].toString(),
         pCT: json['PCT'].toString(),
         pLCR: json['PLCR'].toString(),
+        observaciones: json['observaciones'].toString(),
+        bacteriologo: json['bacteriologo'].toString(),
         fechahora: json['fechahora'].toString(),
       );
 
@@ -134,6 +142,8 @@ class HRayto {
         'PDW': pDW,
         'PCT': pCT,
         'PLCR': pLCR,
+        'observaciones': observaciones,
+        'bacteriologo': bacteriologo,
         'fechahora': fechahora,
       };
 }

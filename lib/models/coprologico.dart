@@ -48,7 +48,7 @@ class Coprologico {
   String? sangreOculta;
   String? lecucocitos;
   String? observaciones;
-  String? doctor;
+  String? bacteriologo;
   String? fechahora;
 
   Coprologico({
@@ -90,7 +90,7 @@ class Coprologico {
     this.sangreOculta,
     this.lecucocitos,
     this.observaciones,
-    this.doctor,
+    this.bacteriologo,
     this.fechahora,
   });
 
@@ -141,7 +141,7 @@ class Coprologico {
         sangreOculta: json["sangre_oculta"].toString(),
         lecucocitos: json["lecucocitos"].toString(),
         observaciones: json["observaciones"].toString(),
-        doctor: json["doctor"].toString(),
+        bacteriologo: json["bacteriologo"].toString(),
         fechahora: json["fechahora"].toString(),
       );
 
@@ -184,7 +184,7 @@ class Coprologico {
         "sangre_oculta": sangreOculta,
         "lecucocitos": lecucocitos,
         "observaciones": observaciones,
-        "doctor": doctor,
+        "bacteriologo": bacteriologo,
         "fechahora": fechahora,
       };
 }

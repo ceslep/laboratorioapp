@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
@@ -58,6 +56,7 @@ class _CoprologicoState extends State<ViewCoprologico> {
   late final TextEditingController _oxiurosHuevosController;
   late final TextEditingController _sangreOcultaController;
   late final TextEditingController _leucocitosController;
+  late final TextEditingController _observacionesController;
 
   bool guardando_ = false;
 
@@ -157,6 +156,8 @@ class _CoprologicoState extends State<ViewCoprologico> {
 
     _leucocitosController =
         TextEditingController(text: widget.coprologico.lecucocitos);
+    _observacionesController =
+        TextEditingController(text: widget.coprologico.observaciones);
   }
 
   Widget _buildTextField(String labelText, TextEditingController controller) {
@@ -195,22 +196,33 @@ class _CoprologicoState extends State<ViewCoprologico> {
             const CircleAvatar(
               backgroundImage: AssetImage('images/coprologico.png'),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 2),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Exámen Coprológico'),
+                const Text(
+                  'Exámen Coprológico',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
                 Row(
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(
+                        fontSize: 8,
+                      ),
                     ),
-                    const SizedBox(width: 5),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     Text(
                       widget.fecha,
-                      style:
-                          const TextStyle(fontSize: 10, color: Colors.yellow),
+                      style: const TextStyle(
+                        fontSize: 8,
+                        color: Colors.yellow,
+                      ),
                     )
                   ],
                 )
@@ -227,10 +239,10 @@ class _CoprologicoState extends State<ViewCoprologico> {
                       setState(() => guardando_ = !guardando_);
                       guardarCoprologico(context, coprologicoS).then(
                         (value) {
-                          if (Platform.isWindows) {
-                            downloadPDFFile(
+                          if (true) {
+                            printPDFFile(
                                 context,
-                                "Coprologico",
+                                "coprologico",
                                 "Exámen Coprológico",
                                 "coprologico_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
@@ -353,6 +365,7 @@ class _CoprologicoState extends State<ViewCoprologico> {
           coprologicoS.oxiurosHuevos = _oxiurosHuevosController.text;
           coprologicoS.sangreOculta = _sangreOcultaController.text;
           coprologicoS.lecucocitos = _leucocitosController.text;
+          coprologicoS.observaciones = _observacionesController.text;
           coprologicoS.identificacion = widget.paciente.identificacion;
           coprologicoS.fecha = widget.fecha;
         },
@@ -412,6 +425,7 @@ class _CoprologicoState extends State<ViewCoprologico> {
               _buildTextField('Oxiuros Huevos', _oxiurosHuevosController),
               _buildTextField('sangre Oculta', _sangreOcultaController),
               _buildTextField('leucocitos', _leucocitosController),
+              _buildTextField('observaciones', _observacionesController),
             ],
           ),
         ),

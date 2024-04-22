@@ -8,13 +8,15 @@ import 'package:provider/provider.dart';
 class FormHemograma extends StatefulWidget {
   final String identificacion;
   final String fecha;
+  final String observaciones;
   final List<Map<String, dynamic>> hemograma;
 
   const FormHemograma(
       {super.key,
       required this.hemograma,
       required this.identificacion,
-      required this.fecha});
+      required this.fecha,
+      required this.observaciones});
 
   @override
   State<FormHemograma> createState() => _FormHemogramaState();
@@ -46,6 +48,7 @@ class _FormHemogramaState extends State<FormHemograma> {
   TextEditingController pdwController = TextEditingController();
   TextEditingController pctController = TextEditingController();
   TextEditingController pLcrController = TextEditingController();
+  TextEditingController observacionesController = TextEditingController();
 
   HRayto getHemograma() {
     return hrayto;
@@ -97,6 +100,7 @@ class _FormHemogramaState extends State<FormHemograma> {
       pctController.text = widget.hemograma[18]['PCT'].toString();
       hraytoProvider.hrayto.pCT = pctController.text;
       pLcrController.text = widget.hemograma[19]['P-LCR'].toString();
+      observacionesController.text = widget.observaciones;
       hraytoProvider.hrayto.pLCR = pLcrController.text;
       hraytoProvider.hrayto.identificacion = widget.identificacion;
       hraytoProvider.hrayto.fecha = widget.fecha;
@@ -183,6 +187,10 @@ class _FormHemogramaState extends State<FormHemograma> {
         'P-LCR',
         pLcrController,
       ),
+      _buildTextField(
+        'Observaciones',
+        observacionesController,
+      ),
     ];
   }
 
@@ -213,12 +221,14 @@ class _FormHemogramaState extends State<FormHemograma> {
         pctController: pctController,
         pLcrController: pLcrController,
         hraytoProvider: hraytoProvider,
+        observacionesController: observacionesController,
         formKey: _formKey,
         formFields: formFields);
   }
 
   Widget _buildTextField(String labelText, TextEditingController controller) {
     return TextFormField(
+      maxLines: labelText.contains('obser') ? 3 : 1,
       validator: (value) {
         if (value == '') return 'Falta el valor de este campo';
         return null;
@@ -268,6 +278,7 @@ class Formulario extends StatelessWidget {
     required this.formFields,
     required this.identificacion,
     required this.fecha,
+    required this.observacionesController,
   }) : _formKey = formKey;
 
   final HRayto hrayto;
@@ -291,6 +302,7 @@ class Formulario extends StatelessWidget {
   final TextEditingController pdwController;
   final TextEditingController pctController;
   final TextEditingController pLcrController;
+  final TextEditingController observacionesController;
   final HRaytoProvider hraytoProvider;
   final GlobalKey<FormState> _formKey;
   final List<Widget> formFields;
@@ -322,6 +334,7 @@ class Formulario extends StatelessWidget {
         hrayto.pCT = pctController.text;
         hrayto.pLCR = pLcrController.text;
         hrayto.identificacion = identificacion;
+        hrayto.observaciones = observacionesController.text;
         hrayto.fecha = fecha;
         hraytoProvider.setData(hrayto);
       },

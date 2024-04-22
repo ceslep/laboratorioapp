@@ -10,7 +10,7 @@ ParcialOrina parcialOrinaFromJson(String str) =>
 String? parcialOrinaToJson(ParcialOrina data) => json.encode(data.toJson());
 
 class ParcialOrina {
-  String? ind;
+  String? id;
   String? identificacion;
   String? fecha;
   String? densidad;
@@ -40,11 +40,11 @@ class ParcialOrina {
   String? cilindrosHialinos;
   String? cilindrosGranulosos;
   String? observaciones;
-  String? doctor;
+  String? bacteriologo;
   String? fechahora;
 
   ParcialOrina({
-    this.ind,
+    this.id,
     this.identificacion,
     this.fecha,
     this.densidad,
@@ -74,12 +74,12 @@ class ParcialOrina {
     this.cilindrosHialinos,
     this.cilindrosGranulosos,
     this.observaciones,
-    this.doctor,
+    this.bacteriologo,
     this.fechahora,
   });
 
   factory ParcialOrina.fromJson(Map<String, dynamic> json) => ParcialOrina(
-        ind: json["ind"].toString(),
+        id: json["id"].toString(),
         identificacion: json["identificacion"].toString(),
         fecha: json["fecha"].toString(),
         densidad: json["densidad"].toString(),
@@ -109,12 +109,12 @@ class ParcialOrina {
         cilindrosHialinos: json["cilindros_hialinos"].toString(),
         cilindrosGranulosos: json["cilindros_granulosos"].toString(),
         observaciones: json["observaciones"].toString(),
-        doctor: json["doctor"].toString(),
+        bacteriologo: json["doctor"].toString(),
         fechahora: json["fechahora"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
-        "ind": ind,
+        "id": id,
         "identificacion": identificacion,
         "fecha": fecha,
         "densidad": densidad,
@@ -144,7 +144,7 @@ class ParcialOrina {
         "cilindros_hialinos": cilindrosHialinos,
         "cilindros_granulosos": cilindrosGranulosos,
         "observaciones": observaciones,
-        "doctor": doctor,
+        "bacteriologo": bacteriologo,
         "fechahora": fechahora
       };
 }

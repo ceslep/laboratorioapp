@@ -152,8 +152,11 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         title: Text(
-          widget.paciente.nombres!,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          widget.paciente.nombreCompleto,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: examenes.isEmpty

@@ -50,6 +50,7 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
   late final TextEditingController bacteriasController;
   late final TextEditingController cilindrosHialinosController;
   late final TextEditingController cilindrosGranulososController;
+  late final TextEditingController observacionesController;
 
   @override
   void initState() {
@@ -102,6 +103,8 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
         TextEditingController(text: widget.parcialOrina.cilindrosHialinos);
     cilindrosGranulososController =
         TextEditingController(text: widget.parcialOrina.cilindrosGranulosos);
+    observacionesController =
+        TextEditingController(text: widget.parcialOrina.observaciones);
   }
 
   Widget _buildTextField(String labelText, TextEditingController controller) {
@@ -142,12 +145,19 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Parcial de Orina'),
+                const Text(
+                  'Parcial de Orina',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
                 Row(
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(
+                        fontSize: 8,
+                      ),
                     ),
                     const SizedBox(width: 5),
                     Text(
@@ -171,7 +181,7 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                       guardarParcialOrina(context, parcialOrinaS).then(
                         (value) {
                           if (Platform.isWindows) {
-                            downloadPDFFile(
+                            printPDFFile(
                                 context,
                                 "parcialOrina",
                                 "Parcial de Orina",
@@ -246,6 +256,8 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
       body: Form(
         autovalidateMode: AutovalidateMode.always,
         onChanged: () {
+          parcialOrinaS.densidad = densidadController.text;
+          parcialOrinaS.color = colorController.text;
           parcialOrinaS.aspecto = aspectoController.text;
           parcialOrinaS.color = colorController.text;
           parcialOrinaS.aspecto = aspectoController.text;
@@ -273,6 +285,7 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
           parcialOrinaS.cilindrosHialinos = cilindrosHialinosController.text;
           parcialOrinaS.cilindrosGranulosos =
               cilindrosGranulososController.text;
+          parcialOrinaS.observaciones = observacionesController.text;
           parcialOrinaS.identificacion = widget.paciente.identificacion;
           parcialOrinaS.fecha = widget.fecha;
         },
@@ -310,6 +323,7 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                   'Cilindros Hialinos', cilindrosHialinosController),
               _buildTextField(
                   'Cilindros Granulosos', cilindrosGranulososController),
+              _buildTextField('Observaciones', observacionesController),
             ],
           ),
         ),

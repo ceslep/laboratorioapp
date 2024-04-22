@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,13 +8,10 @@ import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
-import 'package:laboratorioapp/pages/printpdf/print_pdf.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma.dart';
 import 'package:laboratorioapp/providers/hrayto_provider.dart';
 import 'package:laboratorioapp/providers/url_provider.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:open_share_plus/open.dart';
 
 import '../../../widgets/modals/floating_modal.dart';
 import '../../../widgets/modals/modal_fit.dart';
@@ -97,14 +93,15 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             const CircleAvatar(
               backgroundImage: AssetImage('images/hemat.png'),
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 1),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,7 +109,7 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                   'Hemograma Rayto 7600',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -120,13 +117,18 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
                     ),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 3),
                     Text(
                       widget.fecha,
-                      style:
-                          const TextStyle(color: Colors.yellow, fontSize: 10),
+                      style: const TextStyle(
+                        color: Colors.yellow,
+                        fontSize: 8,
+                      ),
                     )
                   ],
                 ),
@@ -135,20 +137,6 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
           ],
         ),
         actions: [
-          IconButton(
-            tooltip: 'Enviar por correo',
-            onPressed: () async {
-              Open.mail(
-                  toAddress: widget.paciente.correo!,
-                  subject: "hemograma",
-                  body:
-                      '${urlProvider.url}printphp/print_examen.php?identificacion=${widget.paciente.identificacion}&fecha=${widget.fecha}&nombres=${widget.paciente.nombreCompleto}&info=${'Hemograma sistematizado'}&tabla=${'hemogramaRayto'}');
-            },
-            icon: const Icon(
-              Icons.email,
-              color: Colors.lightBlueAccent,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8),
             child: !imprimiendo_
@@ -163,7 +151,7 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                           setState(() {
                             imprimiendo_ = !imprimiendo_;
                           });
-                          if (Platform.isAndroid) {
+                          /*  if (Platform.isAndroid) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -176,8 +164,9 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                                     nombres: widget.paciente.nombres!),
                               ),
                             );
-                          } else if (Platform.isWindows) {
-                            downloadPDFFile(
+                          } else  */
+                          if (true) {
+                            printPDFFile(
                                 context,
                                 "hemogramaRayto",
                                 "Hemograma Sistematizado",
@@ -258,6 +247,7 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
         identificacion: widget.paciente.identificacion!,
         fecha: widget.hemograma.fecha ??
             DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        observaciones: widget.hemograma.observaciones!,
       ),
     );
   }

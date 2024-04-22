@@ -243,7 +243,7 @@ Future<bool> _launchInBrowser(Uri url) async {
   return result;
 }
 
-Future<void> downloadPDFFile(
+Future<void> printPDFFile(
     BuildContext context,
     String tabla,
     String info,
@@ -252,8 +252,13 @@ Future<void> downloadPDFFile(
     String fecha,
     String nombres) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
-  final Uri url = Uri.parse(
-      '${urlProvider.url}printphp/print_examen.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres&tabla=$tabla&info=$info');
+  /* final Uri url = Uri.parse(
+      '${urlProvider.url}printphp/print_examen.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres&tabla=$tabla&info=$info'); */
+  String ile =
+      '${urlProvider.url}listaExamenes.php?identificacion=$identificacion&fecha=$fecha&tabla=$tabla&info=$info&embedido=1&nombres=$nombres';
+  print(ile);
+  final Uri url = Uri.parse(ile);
+  print(url);
   final bool result = await _launchInBrowser(url);
   print(result);
 }
