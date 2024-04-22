@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:laboratorioapp/pages/configuracion/configuracion.dart';
 import 'package:laboratorioapp/pages/lista_pacientes.dart';
 import '../widgets/home/home_fl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -31,6 +32,22 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
             child: IconButton(
               onPressed: () {
                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Configuracion()),
+                );
+              },
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.blueGrey,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const ListaPacientes(),
@@ -38,7 +55,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
               },
               icon: Icon(
                 MdiIcons.listBox,
-                color: Colors.white,
+                color: Colors.deepPurpleAccent,
               ),
             ),
           ),

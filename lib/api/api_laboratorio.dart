@@ -3,12 +3,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/models/configuracion_model.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+
 import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -261,4 +263,41 @@ Future<void> printPDFFile(
   print(url);
   final bool result = await _launchInBrowser(url);
   print(result);
+}
+
+Future<bool> guardarConfiguracion(
+    BuildContext context, ConfiguracionModel configuracion) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarConfiguracion.php');
+  final String bodyData = configuracionToJson(configuracion);
+  late final http.Response response;
+  try {
+    response = await http.post(url, body: bodyData);
+    return response.statusCode == 200;
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+  return false;
+}
+
+Future<ConfiguracionModel> getConfiguracion(BuildContext context) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}getConfiguracion.php');
+  final String bodyData = json.encode({"id": "1"});
+  late final http.Response response;
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosConfiguracion = json.decode(decodedResponse);
+      if (datosConfiguracion['msg']) {
+        return ConfiguracionModel.fromJson(datosConfiguracion['data']);
+      }
+    } else {
+      return ConfiguracionModel();
+    }
+  } catch (e) {
+    print(e);
+  }
+  return ConfiguracionModel();
 }
