@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class TextFieldI extends StatefulWidget {
+class TextFieldI extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
+  final Color? colort;
   const TextFieldI(
-      {super.key, required this.labelText, required this.controller});
+      {super.key,
+      required this.labelText,
+      required this.controller,
+      this.colort = Colors.blue});
 
-  @override
-  State<TextFieldI> createState() => _TextFieldIState();
-}
-
-class _TextFieldIState extends State<TextFieldI> {
-  Widget _buildTextFieldI(String labelText, TextEditingController controller) {
+  Widget _buildTextFieldI(
+      String labelText, TextEditingController controller, Color color) {
     String value = controller.text;
     value = value != 'null' ? value : '';
     controller.text = value;
@@ -20,9 +20,7 @@ class _TextFieldIState extends State<TextFieldI> {
         if (value == '') return 'Falta el valor de este campo';
         return null;
       },
-      onChanged: (value) {
-        setState(() {});
-      },
+      onChanged: (value) {},
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
@@ -30,12 +28,12 @@ class _TextFieldIState extends State<TextFieldI> {
           color: Colors.blueGrey,
         ),
       ),
-      style: const TextStyle(color: Colors.blue),
+      style: TextStyle(color: color),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildTextFieldI(widget.labelText, widget.controller);
+    return _buildTextFieldI(labelText, controller, colort!);
   }
 }

@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_window
   open_share_plus
   url_launcher_windows
 )

@@ -5,16 +5,11 @@ import 'package:laboratorioapp/pages/lista_pacientes.dart';
 import '../widgets/home/home_fl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class Homelaboratorioapp extends StatefulWidget {
-  const Homelaboratorioapp({super.key, required this.title});
+class Homelaboratorioapp extends StatelessWidget {
+  Homelaboratorioapp({super.key, required this.title});
 
   final String title;
 
-  @override
-  State<Homelaboratorioapp> createState() => _HomelaboratorioappState();
-}
-
-class _HomelaboratorioappState extends State<Homelaboratorioapp> {
   final TextEditingController _fechaController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
@@ -24,7 +19,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(
-          widget.title,
+          title,
         ),
         actions: [
           Padding(

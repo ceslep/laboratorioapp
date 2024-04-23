@@ -11,17 +11,17 @@ String configuracionToJson(ConfiguracionModel data) =>
     json.encode(data.toJson());
 
 class ConfiguracionModel {
-  final String? id;
-  final String? nit;
-  final String? nombreLaboratorio;
-  final String? direccionLaboratorio;
-  final String? telefonosLaboratorio;
-  final String? correoLaboratorio;
-  final String? webLaboratorio;
-  final String? bacteriologoLaboratorio;
-  final String? tarjetaPLaboratorio;
-  final String? urFirmaLaboratorio;
-  final String? urlLogoLaboratorio;
+  String? id;
+  String? nit;
+  String? nombreLaboratorio;
+  String? direccionLaboratorio;
+  String? telefonosLaboratorio;
+  String? correoLaboratorio;
+  String? webLaboratorio;
+  String? bacteriologoLaboratorio;
+  String? tarjetaPLaboratorio;
+  String? urlFirmaLaboratorio;
+  String? urlLogoLaboratorio;
 
   ConfiguracionModel({
     this.id,
@@ -33,7 +33,7 @@ class ConfiguracionModel {
     this.webLaboratorio,
     this.bacteriologoLaboratorio,
     this.tarjetaPLaboratorio,
-    this.urFirmaLaboratorio,
+    this.urlFirmaLaboratorio,
     this.urlLogoLaboratorio,
   });
 
@@ -48,7 +48,7 @@ class ConfiguracionModel {
         webLaboratorio: json["webLaboratorio"].toString(),
         bacteriologoLaboratorio: json["bacteriologoLaboratorio"].toString(),
         tarjetaPLaboratorio: json["tarjetaPLaboratorio"].toString(),
-        urFirmaLaboratorio: json["urFirmaLaboratorio"].toString(),
+        urlFirmaLaboratorio: json["urFirmaLaboratorio"].toString(),
         urlLogoLaboratorio: json["urlLogoLaboratorio"].toString(),
       );
 
@@ -62,7 +62,7 @@ class ConfiguracionModel {
         "webLaboratorio": webLaboratorio,
         "bacteriologoLaboratorio": bacteriologoLaboratorio,
         "tarjetaPLaboratorio": tarjetaPLaboratorio,
-        "urFirmaLaboratorio": urFirmaLaboratorio,
+        "urFirmaLaboratorio": urlFirmaLaboratorio,
         "urlLogoLaboratorio": urlLogoLaboratorio,
       };
 }

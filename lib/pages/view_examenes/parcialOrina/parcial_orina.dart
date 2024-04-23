@@ -180,7 +180,7 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                       setState(() => guardando_ = !guardando_);
                       guardarParcialOrina(context, parcialOrinaS).then(
                         (value) {
-                          if (Platform.isWindows) {
+                          if (true) {
                             printPDFFile(
                                 context,
                                 "parcialOrina",

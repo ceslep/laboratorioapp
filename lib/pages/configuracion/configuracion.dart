@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
+import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
+import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 import 'package:laboratorioapp/widgets/text_field.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -17,8 +19,12 @@ class Configuracion extends StatefulWidget {
 
 class _ConfiguracionState extends State<Configuracion> {
   bool cargando = false;
+  bool guardando = false;
   FToast fToast = FToast();
-  late ConfiguracionModel configuracion;
+  Color colort = Colors.amber;
+  ConfiguracionModel configuracion = ConfiguracionModel();
+  late final TextEditingController nitLaboratorioController =
+      TextEditingController();
   late final TextEditingController nombreLaboratorioController =
       TextEditingController();
   late final TextEditingController direccionLaboratorioController =
@@ -50,6 +56,7 @@ class _ConfiguracionState extends State<Configuracion> {
     try {
       getConfiguracion(context).then((value) {
         configuracion = value;
+        nitLaboratorioController.text = configuracion.nit!;
         nombreLaboratorioController.text = configuracion.nombreLaboratorio!;
         direccionLaboratorioController.text =
             configuracion.direccionLaboratorio!;
@@ -60,8 +67,9 @@ class _ConfiguracionState extends State<Configuracion> {
         bacteriologoLaboratorioController.text =
             configuracion.bacteriologoLaboratorio!;
         tarjetaPLaboratorioController.text = configuracion.tarjetaPLaboratorio!;
-        urlFirmaLaboratorioController.text = configuracion.urFirmaLaboratorio!;
+        urlFirmaLaboratorioController.text = configuracion.urlFirmaLaboratorio!;
         urlLogoLaboratorioController.text = configuracion.urlLogoLaboratorio!;
+
         setState(
           () => cargando = !cargando,
         );
@@ -86,104 +94,167 @@ class _ConfiguracionState extends State<Configuracion> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  guardando = !guardando;
+                });
+                guardarConfiguracion(context, configuracion).then(
+                  (value) {
+                    showFloatingModalBottomSheet(
+                      context: context,
+                      builder: (context) => const ModalFit(
+                        title: 'Configuración almacenada',
+                        asset: 'images/logo.png',
+                      ),
+                    );
+                    setState(() {
+                      guardando = !guardando;
+                    });
+                  },
+                );
+              },
               icon: const Icon(Icons.save),
             ),
           ),
         ],
       ),
       body: Stack(children: [
-        Form(
-          child: Column(
-            children: [
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'Laboratorio',
-                    controller: nombreLaboratorioController,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'Dirección Laboratorio',
-                    controller: direccionLaboratorioController,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'Telefonos Laboratorio',
-                    controller: telefonosLaboratorioController,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'Correo Electrónico Laboratorio',
-                    controller: correoLaboratorioController,
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'Sitio Web Laboratorio',
-                    controller: webLaboratorioController,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 0.7 * MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFieldI(
-                        labelText: 'Bacteriólogo',
-                        controller: bacteriologoLaboratorioController,
-                      ),
+        SingleChildScrollView(
+          child: Form(
+            onChanged: () {
+              if (!cargando) {
+                configuracion.nit = nitLaboratorioController.text;
+                configuracion.nombreLaboratorio =
+                    nombreLaboratorioController.text;
+                configuracion.direccionLaboratorio =
+                    direccionLaboratorioController.text;
+                configuracion.telefonosLaboratorio =
+                    telefonosLaboratorioController.text;
+                configuracion.correoLaboratorio =
+                    correoLaboratorioController.text;
+                configuracion.webLaboratorio = webLaboratorioController.text;
+                configuracion.bacteriologoLaboratorio =
+                    bacteriologoLaboratorioController.text;
+                configuracion.tarjetaPLaboratorio =
+                    tarjetaPLaboratorioController.text;
+                configuracion.urlFirmaLaboratorio =
+                    urlFirmaLaboratorioController.text;
+                configuracion.urlLogoLaboratorio =
+                    urlLogoLaboratorioController.text;
+              }
+            },
+            child: Column(
+              children: [
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Nit',
+                      controller: nitLaboratorioController,
+                      colort: colort,
                     ),
                   ),
-                  SizedBox(
-                    width: 0.3 * MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFieldI(
-                        labelText: 'Tarjeta Profesional',
-                        controller: tarjetaPLaboratorioController,
-                      ),
+                ),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Laboratorio',
+                      controller: nombreLaboratorioController,
+                      colort: colort,
                     ),
                   ),
-                ],
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'URL Firma Bacteriólogo Laboratorio',
-                    controller: urlFirmaLaboratorioController,
+                ),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Dirección Laboratorio',
+                      controller: direccionLaboratorioController,
+                      colort: colort,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFieldI(
-                    labelText: 'URL Logo Laboratorio',
-                    controller: urlFirmaLaboratorioController,
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Telefonos Laboratorio',
+                      controller: telefonosLaboratorioController,
+                      colort: colort,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Correo Electrónico Laboratorio',
+                      controller: correoLaboratorioController,
+                      colort: colort,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'Sitio Web Laboratorio',
+                      controller: webLaboratorioController,
+                      colort: colort,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 0.7 * MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFieldI(
+                          labelText: 'Bacteriólogo',
+                          controller: bacteriologoLaboratorioController,
+                          colort: colort,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 0.3 * MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFieldI(
+                          labelText: 'T.P.',
+                          controller: tarjetaPLaboratorioController,
+                          colort: colort,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 0.95 * MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'URL Firma Bacteriólogo Laboratorio',
+                      controller: urlFirmaLaboratorioController,
+                      colort: colort,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 0.95 * MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFieldI(
+                      labelText: 'URL Logo Laboratorio',
+                      controller: urlLogoLaboratorioController,
+                      colort: colort,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         cargando

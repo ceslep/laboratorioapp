@@ -283,10 +283,9 @@ Future<bool> guardarConfiguracion(
 Future<ConfiguracionModel> getConfiguracion(BuildContext context) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}getConfiguracion.php');
-  final String bodyData = json.encode({"id": "1"});
   late final http.Response response;
   try {
-    response = await http.post(url, body: bodyData);
+    response = await http.get(url);
     if (response.statusCode == 200) {
       final decodedResponse = utf8.decode(response.bodyBytes);
       final dynamic datosConfiguracion = json.decode(decodedResponse);

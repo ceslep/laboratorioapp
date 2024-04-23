@@ -10,9 +10,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 const String titleApp = 'Laboratorio';
 const Color colorTheme = Colors.purple;
 void main() {
-  try {} catch (e) {
-    print(e);
-  }
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
@@ -34,11 +31,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -47,10 +39,11 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: colorTheme),
         useMaterial3: true,
       ),
-      home: const Homelaboratorioapp(
+      home: Homelaboratorioapp(
         title: titleApp,
       ),
       localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
