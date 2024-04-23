@@ -21,6 +21,7 @@ class Examenes {
   final String doctor;
   final String bacteriologo;
   final String examen;
+  final String tipo;
 
   Examenes({
     required this.ind,
@@ -39,6 +40,7 @@ class Examenes {
     required this.doctor,
     required this.bacteriologo,
     required this.examen,
+    required this.tipo,
   });
 
   factory Examenes.fromJson(Map<String, dynamic> json) => Examenes(
@@ -58,6 +60,7 @@ class Examenes {
         doctor: json["doctor"].toString(),
         bacteriologo: json["bacteriologo"].toString(),
         examen: json["examen"].toString(),
+        tipo: json["tipo"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,6 +79,7 @@ class Examenes {
         "pyp": pyp,
         "doctor": doctor,
         "bacteriologo": bacteriologo,
-        "examen": examen
+        "examen": examen,
+        "tipo": tipo
       };
 }

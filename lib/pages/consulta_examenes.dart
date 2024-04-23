@@ -56,7 +56,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
   List<Examenes> examenesFilter = [];
   List<String> listaFechas = [];
   FToast fToast = FToast();
-  String fechae = '2012-08-23';
+  String fechae = '';
   late final List<DropdownMenuItem> _fechas;
   bool mirando = false;
   @override
@@ -66,56 +66,62 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     fToast.init(context);
     //  pacientes = await getPacientes(context) as List<Paciente>;
     setState(() => mirando = !mirando);
-    examenesPaciente(context, criterio: widget.paciente.identificacion!)
-        .then((value) {
-      if (value != null) {
-        examenes = value;
-        examenesFilter = examenes;
-        examenesFilter = examenes
-            .where((Examenes element) => element.fecha.contains('-')
-                ? element.fecha == fechae
-                : element.fecha != '')
-            .toList();
-        setState(() {});
-        setState(() => mirando = !mirando);
-        Set<String> listafechas =
-            Set.from(examenes.map((Examenes examen) => examen.fecha));
-        print(listafechas);
-        listaFechas.addAll(listafechas);
-        listaFechas = ['Fecha del o de los examenes', 'Todos'] + listaFechas;
-        int idx = 0;
-        _fechas = listaFechas.map((e) {
-          idx++;
-          return DropdownMenuItem(
-            value: e.contains('Fecha') ? '' : e,
-            enabled: e != '',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  e,
-                  style: TextStyle(
-                    color: e.contains('Fecha') || e.contains('Todos')
-                        ? Colors.grey
-                        : idx % 2 == 0
-                            ? Colors.green
-                            : Colors.amber,
+    try {
+      examenesPaciente(context, criterio: widget.paciente.identificacion!)
+          .then((value) {
+        if (value != null) {
+          examenes = value;
+          examenesFilter = examenes;
+          if (fechae != "") {
+            examenesFilter = examenes
+                .where((Examenes element) => element.fecha.contains('-')
+                    ? element.fecha == fechae
+                    : element.fecha != '')
+                .toList();
+          }
+          setState(() {});
+          setState(() => mirando = !mirando);
+          Set<String> listafechas =
+              Set.from(examenes.map((Examenes examen) => examen.fecha));
+          print(listafechas);
+          listaFechas.addAll(listafechas);
+          listaFechas = ['Fecha del o de los examenes', 'Todos'] + listaFechas;
+          int idx = 0;
+          _fechas = listaFechas.map((e) {
+            idx++;
+            return DropdownMenuItem(
+              value: e.contains('Fecha') ? '' : e,
+              enabled: e != '',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    e,
+                    style: TextStyle(
+                      color: e.contains('Fecha') || e.contains('Todos')
+                          ? Colors.grey
+                          : idx % 2 == 0
+                              ? Colors.green
+                              : Colors.amber,
+                    ),
                   ),
-                ),
-                Text(
-                  e.contains('-') ? formatDate(e) : '',
-                  style: const TextStyle(
-                      fontSize: 10, fontStyle: FontStyle.italic),
-                ),
-              ],
-            ),
-          );
-        }).toList();
-      } else {
-        showToastB(fToast, 'Error en el sevidor');
-      }
-      setState(() {});
-    });
+                  Text(
+                    e.contains('-') ? formatDate(e) : '',
+                    style: const TextStyle(
+                        fontSize: 10, fontStyle: FontStyle.italic),
+                  ),
+                ],
+              ),
+            );
+          }).toList();
+        } else {
+          showToastB(fToast, 'Error en el sevidor');
+        }
+        setState(() {});
+      });
+    } catch (e) {
+      showToastB(fToast, 'Error de Conexión a internet');
+    }
   }
 
   String imageLab(String examen) {
@@ -171,6 +177,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                     late String fecha;
                     late String bacteriologo;
                     late String doctor;
+                    late String tipo;
                     int indexx = index - 1;
                     if (index == 0) {
                       return SizedBox(
@@ -200,6 +207,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                       fecha = examenesFilter[indexx].fecha;
                       bacteriologo = examenesFilter[indexx].bacteriologo;
                       doctor = examenesFilter[indexx].doctor;
+                      tipo = examenesFilter[indexx].tipo;
                     }
                     return Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -220,6 +228,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                                   widget.paciente,
                                   codexamen,
                                   fecha,
+                                  tipo,
+                                  codexamen,
                                   keyL);
                               mirando = false;
                               setState(() {});
@@ -287,7 +297,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
   }
 
   Future<void> viewExam(BuildContext context, Paciente paciente, String codigo,
-      String fecha, final keyL) async {
+      String fecha, String tipo, codexamen, final keyL) async {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -295,17 +305,16 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                 key: keyL,
               )),
     );
-    List<String> codCoprologico = ['2000', '2002', '2003', '2004', '0171'];
-    if (codigo == '3000' || codigo == '3001') {
+    if (tipo == '1') {
+      await examentipo_1(context, paciente, fecha, codexamen, fToast);
+      Navigator.pop(keyL.currentState!.context);
+    } else if (tipo == '5') {
       await hemogramas2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
-    } else if (codigo == '1000') {
+    } else if (tipo == '3') {
       await parcialOrina2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
-    } else if (codCoprologico
-        .where((codel) => codel == codigo)
-        .toList()
-        .isNotEmpty) {
+    } else if (tipo == '4') {
       await coprologico2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
     }

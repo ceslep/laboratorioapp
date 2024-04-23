@@ -5,11 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
+import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
 import 'package:laboratorioapp/pages/view_examenes/coprologico/coprologico.dart';
+import 'package:laboratorioapp/pages/view_examenes/examenTipo1/view_examen_tipo1.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto_new.dart';
 import 'package:laboratorioapp/pages/view_examenes/parcialOrina/parcial_orina.dart';
@@ -233,6 +235,53 @@ Future<bool> coprologico2(BuildContext context, Paciente paciente, String fecha,
         builder: (context) => ViewCoprologico(
           paciente: paciente,
           coprologico: Coprologico(),
+          fecha: fecha,
+        ),
+      ),
+    );
+    return true;
+  } else {
+    showToastB(
+      fToast,
+      'Sin Internet. Ha ocurrido un error obteniendo los datos del servidor',
+      bacgroundColor: Colors.red,
+      frontColor: Colors.yellow,
+      icon: Icon(
+        MdiIcons.networkOff,
+        color: Colors.yellow,
+      ),
+      milliseconds: 10,
+    );
+  }
+  return false;
+}
+
+Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
+    String codexamen, FToast fToast) async {
+  ExamenTipo1 examen = await getTipo1(context,
+      identificacion: paciente.identificacion!,
+      fecha: fecha,
+      codexamen: codexamen);
+
+  if (examen.identificacion != '' && examen.identificacion != 'Error') {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewExamenTipo1(
+          examen: examen,
+          fecha: fecha,
+          paciente: paciente,
+        ),
+      ),
+    );
+    return true;
+  } else if (examen.identificacion == 'Error') {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewExamenTipo1(
+          paciente: paciente,
+          examen: ExamenTipo1(),
           fecha: fecha,
         ),
       ),

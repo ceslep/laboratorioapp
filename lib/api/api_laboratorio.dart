@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
+import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
@@ -299,4 +300,33 @@ Future<ConfiguracionModel> getConfiguracion(BuildContext context) async {
     print(e);
   }
   return ConfiguracionModel();
+}
+
+Future<ExamenTipo1> getTipo1(BuildContext context,
+    {String identificacion = '',
+    String fecha = '',
+    String codexamen = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}getTipo1.php');
+  final String bodyData = json.encode({
+    'identificacion': identificacion,
+    'fecha': fecha,
+    'codexamen': codexamen
+  });
+  late final http.Response response;
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosExamen = json.decode(decodedResponse);
+      if (datosExamen['msg']) {
+        return ExamenTipo1.fromJson(datosExamen['data']);
+      }
+    } else {
+      return ExamenTipo1(identificacion: 'Error');
+    }
+  } catch (e) {
+    print(e);
+  }
+  return ExamenTipo1(identificacion: 'Error');
 }
