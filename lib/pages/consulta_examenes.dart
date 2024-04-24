@@ -67,7 +67,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     //  pacientes = await getPacientes(context) as List<Paciente>;
     setState(() => mirando = !mirando);
     try {
-      examenesPaciente(context, criterio: widget.paciente.identificacion!)
+      examenesPaciente(context, fToast,
+              criterio: widget.paciente.identificacion!)
           .then((value) {
         if (value != null) {
           examenes = value;
@@ -230,6 +231,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                                   fecha,
                                   tipo,
                                   codexamen,
+                                  examen,
                                   keyL);
                               mirando = false;
                               setState(() {});
@@ -296,8 +298,15 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     );
   }
 
-  Future<void> viewExam(BuildContext context, Paciente paciente, String codigo,
-      String fecha, String tipo, codexamen, final keyL) async {
+  Future<void> viewExam(
+      BuildContext context,
+      Paciente paciente,
+      String codigo,
+      String fecha,
+      String tipo,
+      String codexamen,
+      String nombreExamen,
+      final keyL) async {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -306,7 +315,12 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
               )),
     );
     if (tipo == '1') {
-      await examentipo_1(context, paciente, fecha, codexamen, fToast);
+      await examentipo_1(
+          context, paciente, fecha, codexamen, nombreExamen, fToast);
+      Navigator.pop(keyL.currentState!.context);
+    } else if (tipo == '2') {
+      await examentipo_2(
+          context, paciente, fecha, codexamen, nombreExamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '5') {
       await hemogramas2(context, paciente, fecha, fToast);

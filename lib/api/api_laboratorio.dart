@@ -3,9 +3,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
+import 'package:laboratorioapp/models/examen_tipo2_model.dart';
 import 'package:laboratorioapp/models/examenes.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
@@ -66,7 +69,7 @@ Future<List<Paciente>?> getPacientes(BuildContext context,
   }
 }
 
-Future<List<Examenes>?> examenesPaciente(BuildContext context,
+Future<List<Examenes>?> examenesPaciente(BuildContext context, FToast fToast,
     {String criterio = ''}) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}getExamenesPaciente.php');
@@ -85,6 +88,7 @@ Future<List<Examenes>?> examenesPaciente(BuildContext context,
       throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
     }
   } catch (e) {
+    showToastB(fToast, 'Error al Obtener el Listado de Examenes');
     print('Error al obtener el listado: $e');
 
     return [];
@@ -331,6 +335,35 @@ Future<ExamenTipo1> getTipo1(BuildContext context,
   return ExamenTipo1(identificacion: 'Error');
 }
 
+Future<ExamenTipo2> getTipo2(BuildContext context,
+    {String identificacion = '',
+    String fecha = '',
+    String codexamen = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}getTipo2.php');
+  final String bodyData = json.encode({
+    'identificacion': identificacion,
+    'fecha': fecha,
+    'codexamen': codexamen
+  });
+  late final http.Response response;
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosExamen = json.decode(decodedResponse);
+      if (datosExamen['msg']) {
+        return ExamenTipo2.fromJson(datosExamen['data']);
+      }
+    } else {
+      return ExamenTipo2(identificacion: 'Error');
+    }
+  } catch (e) {
+    print(e);
+  }
+  return ExamenTipo2(identificacion: 'Error');
+}
+
 Future<void> guardarTipo1(BuildContext context, ExamenTipo1 examen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
@@ -344,6 +377,23 @@ Future<void> guardarTipo1(BuildContext context, ExamenTipo1 examen) async {
       print({"error de response ": response.statusCode});
     }
   } catch (e) {
-    print('Error al enviar los datos del hemograma: $e');
+    print('Error al enviar los datos del examen: $e');
+  }
+}
+
+Future<void> guardarTipo2(BuildContext context, ExamenTipo2 examen) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({...examen.toJson(), "tabla": "examen_tipo_2"});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del examen: $e');
   }
 }

@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final examenTipo1 = examenTipo1FromJson(jsonString);
+//     final examenTipo2 = examenTipo2FromJson(jsonString?);
 
 import 'dart:convert';
 
-ExamenTipo1 examenTipo1FromJson(String str) =>
-    ExamenTipo1.fromJson(json.decode(str));
+ExamenTipo2 examenTipo2FromJson(String? str) =>
+    ExamenTipo2.fromJson(json.decode(str!));
 
-String examenTipo1ToJson(ExamenTipo1 data) => json.encode(data.toJson());
+String? examenTipo2ToJson(ExamenTipo2 data) => json.encode(data.toJson());
 
-class ExamenTipo1 {
+class ExamenTipo2 {
   String? ind;
   String? identificacion;
   String? examen;
@@ -21,17 +21,16 @@ class ExamenTipo1 {
   String? citasind;
   String? indice;
   String? entidad;
-  String? observaciones;
-  String? panel2;
   String? departamento;
-  String? constante;
   String? hora;
+  String? observaciones;
+  String? bacteriologo;
   String? pyp;
   String? nombreExamen;
   String? constant;
   String? unidades;
 
-  ExamenTipo1({
+  ExamenTipo2({
     this.ind,
     this.identificacion,
     this.examen,
@@ -43,18 +42,17 @@ class ExamenTipo1 {
     this.citasind,
     this.indice,
     this.entidad,
-    this.observaciones,
-    this.panel2,
     this.departamento,
-    this.constante,
     this.hora,
+    this.observaciones,
+    this.bacteriologo,
     this.pyp,
     this.nombreExamen,
     this.constant,
     this.unidades,
   });
 
-  factory ExamenTipo1.fromJson(Map<String?, dynamic> json) => ExamenTipo1(
+  factory ExamenTipo2.fromJson(Map<String?, dynamic> json) => ExamenTipo2(
         ind: json["ind"].toString(),
         identificacion: json["identificacion"].toString(),
         examen: json["examen"].toString(),
@@ -66,18 +64,17 @@ class ExamenTipo1 {
         citasind: json["citasind"].toString(),
         indice: json["indice"].toString(),
         entidad: json["entidad"].toString(),
-        observaciones: json["observaciones"].toString(),
-        panel2: json["panel2"].toString(),
         departamento: json["departamento"].toString(),
-        constante: json["constante"].toString(),
         hora: json["hora"].toString(),
+        observaciones: json["observaciones"].toString(),
+        bacteriologo: json["bacteriologo"].toString(),
         pyp: json["pyp"].toString(),
         nombreExamen: json["nombreExamen"].toString(),
         constant: json["constant"].toString(),
         unidades: json["unidades"].toString(),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String?, dynamic> toJson() => {
         "ind": ind,
         "identificacion": identificacion,
         "examen": examen,
@@ -89,11 +86,10 @@ class ExamenTipo1 {
         "citasind": citasind,
         "indice": indice,
         "entidad": entidad,
-        "observaciones": observaciones,
-        "panel2": panel2,
         "departamento": departamento,
-        "constante": constante,
         "hora": hora,
+        "observaciones": observaciones,
+        "bacteriologo": bacteriologo,
         "pyp": pyp,
         "nombreExamen": nombreExamen,
         "constant": constant,

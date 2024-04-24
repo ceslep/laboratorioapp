@@ -1,19 +1,16 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
-import 'package:laboratorioapp/models/examen_tipo1_model.dart';
+import 'package:laboratorioapp/models/examen_tipo2_model.dart';
 import 'package:laboratorioapp/models/paciente.dart';
-import 'package:laboratorioapp/pages/webview/web_view.dart';
 import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
 import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 import 'package:laboratorioapp/widgets/text_field.dart';
 
-class ViewExamenTipo1 extends StatefulWidget {
-  final ExamenTipo1 examen;
+class ViewExamenTipo2 extends StatefulWidget {
+  final ExamenTipo2 examen;
   final Paciente paciente;
   final String fecha;
-  const ViewExamenTipo1({
+  const ViewExamenTipo2({
     super.key,
     required this.examen,
     required this.paciente,
@@ -21,26 +18,25 @@ class ViewExamenTipo1 extends StatefulWidget {
   });
 
   @override
-  State<ViewExamenTipo1> createState() => _ViewExamenTipo1State();
+  State<ViewExamenTipo2> createState() => _ViewExamenTipo2State();
 }
 
-class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
+class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
   bool guardando_ = false;
-  ExamenTipo1 examenS = ExamenTipo1();
+  ExamenTipo2 examenS = ExamenTipo2();
   late TextEditingController valoracionController;
   late TextEditingController observacionesController;
   @override
   void initState() {
     super.initState();
-    try {
+    if (widget.examen.valoracion != null) {
       valoracionController =
           TextEditingController(text: widget.examen.valoracion!);
+    }
+    if (widget.examen.observaciones != null) {
       observacionesController =
           TextEditingController(text: widget.examen.observaciones!);
-    } catch (e) {
-      print(e);
     }
-
     examenS = widget.examen;
   }
 
@@ -107,12 +103,12 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarTipo1(context, examenS).then(
+                      guardarTipo2(context, examenS).then(
                         (value) {
                           if (true) {
                             printPDFFile(
                                 context,
-                                "examen_tipo_1",
+                                "examen_tipo_2",
                                 widget.examen.nombreExamen!,
                                 "${widget.examen.nombreExamen!}_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
@@ -148,14 +144,14 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarTipo1(context, examenS).then(
+                      guardarTipo2(context, examenS).then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,
                             builder: (context) => ModalFit(
                               title:
                                   '${examenS.nombreExamen!} almacenada con éxito',
-                              asset: 'images/porina.png',
+                              asset: 'images/lab.png',
                             ),
                           );
                           setState(() => guardando_ = !guardando_);

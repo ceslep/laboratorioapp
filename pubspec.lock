@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  desktop_window:
+    dependency: "direct main"
+    description:
+      name: desktop_window
+      sha256: "6256fb6feb7b5ec1311c76a3503f89202825bfe92c0458ec5fe7a728ffa216d5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   easy_pdf_viewer:
     dependency: "direct main"
     description:
@@ -594,6 +602,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  webview_flutter_platform_interface:
+    dependency: "direct main"
+    description:
+      name: webview_flutter_platform_interface
+      sha256: d937581d6e558908d7ae3dc1989c4f87b786891ab47bb9df7de548a151779d8d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.10.0"
+  webview_flutter_web:
+    dependency: "direct main"
+    description:
+      name: webview_flutter_web
+      sha256: "7f7cb8cfe5a5dee3b55d660a367c00838be56540ccb4097e84601bb6cb354af3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2+4"
   win32:
     dependency: transitive
     description:

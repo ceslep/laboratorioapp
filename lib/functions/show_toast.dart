@@ -23,6 +23,8 @@ Future<void> showToastB(FToast fToast, String message,
   fToast.showToast(
     child: toast,
     gravity: gravity,
-    toastDuration: const Duration(seconds: 2),
+    toastDuration: Duration(
+        seconds:
+            message.contains('conexi') || message.contains('rror') ? 60 : 4),
   );
 }

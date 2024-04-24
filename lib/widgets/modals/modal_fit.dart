@@ -25,13 +25,20 @@ class ModalFit extends StatelessWidget {
           SizedBox(
             width: 0.6 * MediaQuery.of(context).size.width,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Center(
-                  child: Text(
-                    title,
-                    style: const TextStyle(fontSize: 18),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.green,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
