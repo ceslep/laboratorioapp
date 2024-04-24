@@ -330,3 +330,20 @@ Future<ExamenTipo1> getTipo1(BuildContext context,
   }
   return ExamenTipo1(identificacion: 'Error');
 }
+
+Future<void> guardarTipo1(BuildContext context, ExamenTipo1 examen) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({...examen.toJson(), "tabla": "examen_tipo_1"});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+}
