@@ -57,50 +57,51 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
   void initState() {
     super.initState();
     hraytoProvider = Provider.of<HRaytoProvider>(context, listen: false);
-
-    wbcController.text = widget.hemograma.wBC!;
-    hraytoProvider.hrayto.wBC = wbcController.text;
-    lymNumberController.text = widget.hemograma.lYMn!;
-    hraytoProvider.hrayto.lYMn = lymNumberController.text;
-    midNumberController.text = widget.hemograma.mIDn!;
-    hraytoProvider.hrayto.mIDn = midNumberController.text;
-    graNumberController.text = widget.hemograma.gRAn!;
-    hraytoProvider.hrayto.gRAn = graNumberController.text;
-    lymPercentController.text = widget.hemograma.lYMp!;
-    hraytoProvider.hrayto.lYMp = lymPercentController.text;
-    midPercentController.text = widget.hemograma.mIDp!;
-    hraytoProvider.hrayto.mIDp = midPercentController.text;
-    graPercentController.text = widget.hemograma.gRAp!;
-    hraytoProvider.hrayto.gRAp = graPercentController.text;
-    rbcController.text = widget.hemograma.rBC!;
-    hraytoProvider.hrayto.rBC = rbcController.text;
-    hgbController.text = widget.hemograma.hGB!;
-    hraytoProvider.hrayto.hGB = hgbController.text;
-    mchcController.text = widget.hemograma.mCHC!;
-    hraytoProvider.hrayto.mCHC = mchcController.text;
-    mchController.text = widget.hemograma.mCH!;
-    hraytoProvider.hrayto.mCH = mchController.text;
-    mcvController.text = widget.hemograma.mCV!;
-    hraytoProvider.hrayto.mCV = mcvController.text;
-    rdwCvController.text = widget.hemograma.rDWCV!;
-    hraytoProvider.hrayto.rDWCV = rdwCvController.text;
-    rdwSdController.text = widget.hemograma.rDWSD!;
-    hraytoProvider.hrayto.rDWSD = rdwSdController.text;
-    hctController.text = widget.hemograma.hCT!;
-    hraytoProvider.hrayto.hCT = hctController.text;
-    pltController.text = widget.hemograma.pLT!;
-    hraytoProvider.hrayto.pLT = pltController.text;
-    mpvController.text = widget.hemograma.mPV!;
-    hraytoProvider.hrayto.mPV = mpvController.text;
-    pdwController.text = widget.hemograma.pDW!;
-    hraytoProvider.hrayto.pDW = pdwController.text;
-    pctController.text = widget.hemograma.pCT!;
-    hraytoProvider.hrayto.pCT = pctController.text;
-    pLcrController.text = widget.hemograma.pLCR!;
-    hraytoProvider.hrayto.pLCR = pLcrController.text;
-    hraytoProvider.hrayto.identificacion = widget.identificacion;
-    hraytoProvider.hrayto.fecha = widget.fecha;
-    hraytoProvider.hrayto.observaciones = observacionesController.text;
+    if (widget.hemograma.identificacion != 'Error') {
+      wbcController.text = widget.hemograma.wBC!;
+      hraytoProvider.hrayto.wBC = wbcController.text;
+      lymNumberController.text = widget.hemograma.lYMn!;
+      hraytoProvider.hrayto.lYMn = lymNumberController.text;
+      midNumberController.text = widget.hemograma.mIDn!;
+      hraytoProvider.hrayto.mIDn = midNumberController.text;
+      graNumberController.text = widget.hemograma.gRAn!;
+      hraytoProvider.hrayto.gRAn = graNumberController.text;
+      lymPercentController.text = widget.hemograma.lYMp!;
+      hraytoProvider.hrayto.lYMp = lymPercentController.text;
+      midPercentController.text = widget.hemograma.mIDp!;
+      hraytoProvider.hrayto.mIDp = midPercentController.text;
+      graPercentController.text = widget.hemograma.gRAp!;
+      hraytoProvider.hrayto.gRAp = graPercentController.text;
+      rbcController.text = widget.hemograma.rBC!;
+      hraytoProvider.hrayto.rBC = rbcController.text;
+      hgbController.text = widget.hemograma.hGB!;
+      hraytoProvider.hrayto.hGB = hgbController.text;
+      mchcController.text = widget.hemograma.mCHC!;
+      hraytoProvider.hrayto.mCHC = mchcController.text;
+      mchController.text = widget.hemograma.mCH!;
+      hraytoProvider.hrayto.mCH = mchController.text;
+      mcvController.text = widget.hemograma.mCV!;
+      hraytoProvider.hrayto.mCV = mcvController.text;
+      rdwCvController.text = widget.hemograma.rDWCV!;
+      hraytoProvider.hrayto.rDWCV = rdwCvController.text;
+      rdwSdController.text = widget.hemograma.rDWSD!;
+      hraytoProvider.hrayto.rDWSD = rdwSdController.text;
+      hctController.text = widget.hemograma.hCT!;
+      hraytoProvider.hrayto.hCT = hctController.text;
+      pltController.text = widget.hemograma.pLT!;
+      hraytoProvider.hrayto.pLT = pltController.text;
+      mpvController.text = widget.hemograma.mPV!;
+      hraytoProvider.hrayto.mPV = mpvController.text;
+      pdwController.text = widget.hemograma.pDW!;
+      hraytoProvider.hrayto.pDW = pdwController.text;
+      pctController.text = widget.hemograma.pCT!;
+      hraytoProvider.hrayto.pCT = pctController.text;
+      pLcrController.text = widget.hemograma.pLCR!;
+      hraytoProvider.hrayto.pLCR = pLcrController.text;
+      hraytoProvider.hrayto.identificacion = widget.identificacion;
+      hraytoProvider.hrayto.fecha = widget.fecha;
+      hraytoProvider.hrayto.observaciones = observacionesController.text;
+    }
     setState(() {});
 
     formFields = [
@@ -186,7 +187,7 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
       ),
       _buildTextField(
         'Observaciones',
-        pLcrController,
+        observacionesController,
       ),
     ];
   }

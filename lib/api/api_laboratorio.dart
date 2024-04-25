@@ -15,6 +15,7 @@ import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+import 'package:laboratorioapp/models/perfil_lipidico_model.dart';
 import 'package:laboratorioapp/models/uni_constd.dart';
 
 import 'package:laboratorioapp/providers/url_provider.dart';
@@ -451,6 +452,47 @@ Future<void> guardarFrotisVaginal(
   late final http.Response response;
   final String bodyData =
       json.encode({...frotisVaginal.toJson(), "tabla": "frotisVaginal"});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+}
+
+Future<PerfilLipidico> getPerfilLipidico(BuildContext context,
+    {String identificacion = '', String fecha = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getPerfilLipidico.php');
+  final String bodyData =
+      json.encode({'identificacion': identificacion, 'fecha': fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosPerfil = json.decode(decodedResponse);
+      if (datosPerfil['msg']) {
+        return PerfilLipidico.fromJson(datosPerfil['data']);
+      }
+    } else {
+      return PerfilLipidico(identificacion: 'Error');
+    }
+    return PerfilLipidico(identificacion: 'Error');
+  } catch (e) {
+    return PerfilLipidico(identificacion: 'ErrorInternet');
+  }
+}
+
+Future<void> guardarPerfilLipidico(
+    BuildContext context, PerfilLipidico perfilLipidico) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({...perfilLipidico.toJson(), "tabla": "perfilLipidico"});
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {

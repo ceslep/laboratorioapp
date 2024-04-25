@@ -133,7 +133,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       // ignore: curly_braces_in_flow_control_structures
     } else if (examen.toLowerCase().contains('coles') ||
         examen.toLowerCase().contains('trigli') ||
-        examen.toLowerCase().contains('lipi'))
+        examen.toLowerCase().contains('lip'))
     // ignore: curly_braces_in_flow_control_structures
     {
       result = 'images/hdl.png';
@@ -141,6 +141,8 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       result = 'images/porina.png';
     } else if (examen.toLowerCase().contains('copro')) {
       result = 'images/coprologico.png';
+    } else if (examen.toLowerCase().contains('frotis')) {
+      result = 'images/frotis.png';
     } else {
       result = 'images/lab.png';
     }
@@ -158,12 +160,21 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-        title: Text(
-          widget.paciente.nombreCompleto,
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.paciente.nombreCompleto,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              widget.paciente.identificacion!,
+              style: const TextStyle(fontSize: 10),
+            ),
+          ],
         ),
       ),
       body: examenes.isEmpty
@@ -333,6 +344,9 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '6') {
       await frotisVaginal(context, paciente, fecha, fToast);
+      Navigator.pop(keyL.currentState!.context);
+    } else if (tipo == '8') {
+      await perfilLipidico(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
     }
   }
