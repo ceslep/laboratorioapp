@@ -69,22 +69,28 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
                 ),
                 Row(
                   children: [
-                    Text(
-                      widget.paciente.nombreCompleto,
-                      style: const TextStyle(
-                        fontSize: 10,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.paciente.nombreCompleto,
+                          style: const TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          widget.fecha,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.blueGrey,
+                          ),
+                        )
+                      ],
                     ),
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      widget.fecha,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.blueGrey,
-                      ),
-                    )
                   ],
                 )
               ],

@@ -63,7 +63,9 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                     fontSize: 14,
                   ),
                 ),
-                Row(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
@@ -82,7 +84,7 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                       ),
                     )
                   ],
-                )
+                ),
               ],
             ),
           ],

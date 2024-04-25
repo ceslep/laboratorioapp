@@ -10,10 +10,12 @@ import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/examen_tipo2_model.dart';
 import 'package:laboratorioapp/models/examenes.dart';
+import 'package:laboratorioapp/models/frotis_vaginal_model.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+import 'package:laboratorioapp/models/uni_constd.dart';
 
 import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
@@ -395,5 +397,67 @@ Future<void> guardarTipo2(BuildContext context, ExamenTipo2 examen) async {
     }
   } catch (e) {
     print('Error al enviar los datos del examen: $e');
+  }
+}
+
+Future<UniConst> getUniConst(BuildContext context, String examen) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}getUniConst.php');
+  late final http.Response response;
+  final String bodyData = json.encode({"codexamen": examen});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosUC = json.decode(decodedResponse);
+
+      return UniConst.fromJson(datosUC);
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del examen: $e');
+  }
+  return UniConst(constante: '', unidades: '');
+}
+
+Future<FrotisVaginal> getFrotisVaginal(BuildContext context,
+    {String identificacion = '', String fecha = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getFrotisVaginal.php');
+  final String bodyData =
+      json.encode({'identificacion': identificacion, 'fecha': fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datosFrotis = json.decode(decodedResponse);
+      if (datosFrotis['msg']) {
+        return FrotisVaginal.fromJson(datosFrotis['data']);
+      }
+    } else {
+      return FrotisVaginal(identificacion: 'Error');
+    }
+    return FrotisVaginal(identificacion: 'Error');
+  } catch (e) {
+    return FrotisVaginal(identificacion: 'ErrorInternet');
+  }
+}
+
+Future<void> guardarFrotisVaginal(
+    BuildContext context, FrotisVaginal frotisVaginal) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({...frotisVaginal.toJson(), "tabla": "frotisVaginal"});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
   }
 }

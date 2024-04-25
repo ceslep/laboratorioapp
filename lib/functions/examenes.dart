@@ -7,15 +7,18 @@ import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/examen_tipo2_model.dart';
+import 'package:laboratorioapp/models/frotis_vaginal_model.dart';
 import 'package:laboratorioapp/models/hemograma_rayto.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
+import 'package:laboratorioapp/models/uni_constd.dart';
 import 'package:laboratorioapp/pages/view_examenes/coprologico/coprologico.dart';
 import 'package:laboratorioapp/pages/view_examenes/examenTipo1/view_examen_tipo1.dart';
 import 'package:laboratorioapp/pages/view_examenes/examenTipo2/view_examen_tipo2.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/hemograma_rayto_new.dart';
+import 'package:laboratorioapp/pages/view_examenes/frotisVaginal/frotis_vaginal.dart';
 import 'package:laboratorioapp/pages/view_examenes/parcialOrina/parcial_orina.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -278,6 +281,7 @@ Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
     );
     return true;
   } else if (examen.identificacion == 'Error') {
+    UniConst uniConst = await getUniConst(context, codexamen);
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -290,8 +294,8 @@ Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
               fecha: fecha,
               observaciones: '',
               valoracion: '',
-              unidades: '',
-              constant: ''),
+              unidades: uniConst.unidades,
+              constant: uniConst.constante),
           fecha: fecha,
         ),
       ),
@@ -333,6 +337,7 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
     );
     return true;
   } else if (examen.identificacion == 'Error') {
+    UniConst uniConst = await getUniConst(context, codexamen);
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -345,12 +350,63 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
               fecha: fecha,
               nombreExamen: nombreExamen,
               valoracion: '',
-              unidades: '',
-              constant: ''),
+              unidades: uniConst.unidades,
+              constant: uniConst.constante),
           fecha: fecha,
         ),
       ),
     );
+    return true;
+  } else {
+    showToastB(
+      fToast,
+      'Sin Internet. Ha ocurrido un error obteniendo los datos del servidor',
+      bacgroundColor: Colors.red,
+      frontColor: Colors.yellow,
+      icon: Icon(
+        MdiIcons.networkOff,
+        color: Colors.yellow,
+      ),
+      milliseconds: 10,
+    );
+  }
+  return false;
+}
+
+Future<bool> frotisVaginal(BuildContext context, Paciente paciente,
+    String fecha, FToast fToast) async {
+  FrotisVaginal examen = await getFrotisVaginal(
+    context,
+    identificacion: paciente.identificacion!,
+    fecha: fecha,
+  );
+
+  if (examen.identificacion != '' && examen.identificacion != 'Error') {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewFrotisVaginal(
+          fecha: fecha,
+          paciente: paciente,
+          frotisVaginal: examen,
+        ),
+      ),
+    );
+    return true;
+  } else if (examen.identificacion == 'Error') {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewFrotisVaginal(
+            paciente: paciente,
+            fecha: fecha,
+            frotisVaginal: FrotisVaginal(
+              identificacion: paciente.identificacion,
+              observaciones: '',
+              fecha: fecha,
+            ),
+          ),
+        ));
     return true;
   } else {
     showToastB(

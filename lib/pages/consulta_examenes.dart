@@ -331,6 +331,9 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     } else if (tipo == '4') {
       await coprologico2(context, paciente, fecha, fToast);
       Navigator.pop(keyL.currentState!.context);
+    } else if (tipo == '6') {
+      await frotisVaginal(context, paciente, fecha, fToast);
+      Navigator.pop(keyL.currentState!.context);
     }
   }
 }
