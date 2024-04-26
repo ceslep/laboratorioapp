@@ -99,6 +99,32 @@ Future<List<Examenes>?> examenesPaciente(BuildContext context, FToast fToast,
   }
 }
 
+Future<List<Examenes>?> examenesPacienteFecha(
+    BuildContext context, FToast fToast,
+    {String fecha = '', String identificacion = ''}) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}getExamenesPacienteFecha.php');
+  late final http.Response response;
+  final String bodyData =
+      json.encode({"identificacion": identificacion, "fecha": fecha});
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      List<dynamic> datosPaciente = json.decode(response.body);
+      List<Examenes> result =
+          datosPaciente.map((p) => Examenes.fromJson(p)).toList();
+      return result;
+    } else {
+      throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
+    }
+  } catch (e) {
+    showToastB(fToast, 'Error al Obtener el Listado de Examenes');
+    print('Error al obtener el listado: $e');
+
+    return [];
+  }
+}
+
 Future<HemogramaRayto> getHemogramaRayto(BuildContext context,
     {String identificacion = '', String fecha = ''}) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
@@ -575,6 +601,24 @@ Future<List<Procedimientos>> getSeleccionados(
     if (response.statusCode == 200) {
       procedimientos = jsonDecode(response.body).cast<Map<String, dynamic>>();
       return procedimientos.map((e) => Procedimientos.fromJson(e)).toList();
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
+}
+
+Future<List<Paciente>> getPacientesFecha(
+    BuildContext context, String fecha) async {
+  List<Map<String, dynamic>> pacientes = [];
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getPacientesFecha.php');
+  final String bodyData = json.encode({"fecha": fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      pacientes = jsonDecode(response.body).cast<Map<String, dynamic>>();
+      return pacientes.map((e) => Paciente.fromJson(e)).toList();
     }
     return [];
   } catch (e) {

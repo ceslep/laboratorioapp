@@ -151,8 +151,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ConsultaExamenes(
-                                  paciente: paciente,
-                                ),
+                                    paciente: paciente, fecha: ''),
                               ));
                         },
                         icon: const Icon(Icons.medical_information,

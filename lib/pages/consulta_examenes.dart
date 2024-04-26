@@ -11,10 +11,12 @@ import 'package:laboratorioapp/pages/loading.dart';
 
 class ConsultaExamenes extends StatefulWidget {
   final Paciente paciente;
+  final String fecha;
 
   const ConsultaExamenes({
     super.key,
     required this.paciente,
+    required this.fecha,
   });
 
   @override
@@ -67,59 +69,118 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
     //  pacientes = await getPacientes(context) as List<Paciente>;
     setState(() => mirando = !mirando);
     try {
-      examenesPaciente(context, fToast,
-              criterio: widget.paciente.identificacion!)
-          .then((value) {
-        if (value != null) {
-          examenes = value;
-          examenesFilter = examenes;
-          if (fechae != "") {
-            examenesFilter = examenes
-                .where((Examenes element) => element.fecha!.contains('-')
-                    ? element.fecha == fechae
-                    : element.fecha != '')
-                .toList();
+      if (widget.fecha == '') {
+        examenesPaciente(context, fToast,
+                criterio: widget.paciente.identificacion!)
+            .then((value) {
+          if (value != null) {
+            examenes = value;
+            examenesFilter = examenes;
+            if (fechae != "") {
+              examenesFilter = examenes
+                  .where((Examenes element) => element.fecha!.contains('-')
+                      ? element.fecha == fechae
+                      : element.fecha != '')
+                  .toList();
+            }
+            setState(() {});
+            setState(() => mirando = !mirando);
+            Set<String> listafechas =
+                Set.from(examenes.map((Examenes examen) => examen.fecha));
+            print(listafechas);
+            listaFechas.addAll(listafechas);
+            listaFechas =
+                ['Fecha del o de los examenes', 'Todos'] + listaFechas;
+            int idx = 0;
+            _fechas = listaFechas.map((e) {
+              idx++;
+              return DropdownMenuItem(
+                value: e.contains('Fecha') ? '' : e,
+                enabled: e != '',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      e,
+                      style: TextStyle(
+                        color: e.contains('Fecha') || e.contains('Todos')
+                            ? Colors.grey
+                            : idx % 2 == 0
+                                ? Colors.green
+                                : Colors.amber,
+                      ),
+                    ),
+                    Text(
+                      e.contains('-') ? formatDate(e) : '',
+                      style: const TextStyle(
+                          fontSize: 10, fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
+          } else {
+            showToastB(fToast, 'Error en el sevidor');
           }
           setState(() {});
-          setState(() => mirando = !mirando);
-          Set<String> listafechas =
-              Set.from(examenes.map((Examenes examen) => examen.fecha));
-          print(listafechas);
-          listaFechas.addAll(listafechas);
-          listaFechas = ['Fecha del o de los examenes', 'Todos'] + listaFechas;
-          int idx = 0;
-          _fechas = listaFechas.map((e) {
-            idx++;
-            return DropdownMenuItem(
-              value: e.contains('Fecha') ? '' : e,
-              enabled: e != '',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    e,
-                    style: TextStyle(
-                      color: e.contains('Fecha') || e.contains('Todos')
-                          ? Colors.grey
-                          : idx % 2 == 0
-                              ? Colors.green
-                              : Colors.amber,
+        });
+      } else if (widget.fecha.contains('-')) {
+        examenesPacienteFecha(context, fToast,
+                fecha: widget.fecha,
+                identificacion: widget.paciente.identificacion!)
+            .then((value) {
+          if (value != null) {
+            examenes = value;
+            examenesFilter = examenes;
+            if (fechae != "") {
+              examenesFilter = examenes
+                  .where((Examenes element) => element.fecha!.contains('-')
+                      ? element.fecha == fechae
+                      : element.fecha != '')
+                  .toList();
+            }
+            setState(() {});
+            setState(() => mirando = !mirando);
+            Set<String> listafechas =
+                Set.from(examenes.map((Examenes examen) => examen.fecha));
+            print(listafechas);
+            listaFechas.addAll(listafechas);
+            listaFechas =
+                ['Fecha del o de los examenes', 'Todos'] + listaFechas;
+            int idx = 0;
+            _fechas = listaFechas.map((e) {
+              idx++;
+              return DropdownMenuItem(
+                value: e.contains('Fecha') ? '' : e,
+                enabled: e != '',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      e,
+                      style: TextStyle(
+                        color: e.contains('Fecha') || e.contains('Todos')
+                            ? Colors.grey
+                            : idx % 2 == 0
+                                ? Colors.green
+                                : Colors.amber,
+                      ),
                     ),
-                  ),
-                  Text(
-                    e.contains('-') ? formatDate(e) : '',
-                    style: const TextStyle(
-                        fontSize: 10, fontStyle: FontStyle.italic),
-                  ),
-                ],
-              ),
-            );
-          }).toList();
-        } else {
-          showToastB(fToast, 'Error en el sevidor');
-        }
-        setState(() {});
-      });
+                    Text(
+                      e.contains('-') ? formatDate(e) : '',
+                      style: const TextStyle(
+                          fontSize: 10, fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
+          } else {
+            showToastB(fToast, 'Error en el sevidor');
+          }
+          setState(() {});
+        });
+      }
     } catch (e) {
       showToastB(fToast, 'Error de Conexión a internet');
     }

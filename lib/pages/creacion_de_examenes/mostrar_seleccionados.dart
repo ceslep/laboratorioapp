@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/procedimientos_model.dart';
+import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
+import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 
 class MostrarSeleccionados extends StatefulWidget {
   final Paciente paciente;
@@ -22,7 +23,7 @@ class MostrarSeleccionados extends StatefulWidget {
 
 class _MostrarSeleccionadosState extends State<MostrarSeleccionados> {
   late List<Procedimientos> seleccionadoss;
-
+  bool guardando_ = false;
   @override
   void initState() {
     super.initState();
@@ -48,16 +49,62 @@ class _MostrarSeleccionadosState extends State<MostrarSeleccionados> {
           widget.aguardar
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    onPressed: () {
-                      guardarExamenes(context, seleccionadoss,
-                              widget.paciente.identificacion!, widget.fecha)
-                          .then(
-                        (value) {},
-                      );
-                    },
-                    icon: const Icon(Icons.save),
-                  ),
+                  child: !guardando_
+                      ? IconButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'home');
+                          },
+                          icon: const Icon(Icons.home),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.only(right: 18),
+                          child: SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        ),
+                )
+              : const SizedBox(),
+          widget.aguardar
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: !guardando_
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() => guardando_ = !guardando_);
+                            guardarExamenes(
+                                    context,
+                                    seleccionadoss,
+                                    widget.paciente.identificacion!,
+                                    widget.fecha)
+                                .then(
+                              (value) {
+                                showFloatingModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => const ModalFit(
+                                    title: 'Exámenes almacenados',
+                                    asset: 'images/logo.png',
+                                  ),
+                                );
+                                setState(() => guardando_ = !guardando_);
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.save),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.only(right: 18),
+                          child: SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        ),
                 )
               : const SizedBox(),
         ],
@@ -77,7 +124,9 @@ class _MostrarSeleccionadosState extends State<MostrarSeleccionados> {
                       title: Text(
                         widget.paciente.nombreCompleto,
                       ),
-                      subtitle: Text(widget.paciente.identificacion!),
+                      subtitle: Text(
+                        widget.paciente.identificacion!,
+                      ),
                     ),
                   );
                 } else {

@@ -70,6 +70,7 @@ class _CrearExamenState extends State<CrearExamen> {
                         },
                         autofocus: true,
                         controller: _identificacionController,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Paciente',
                           hintText: 'Identificación del paciente',
@@ -147,7 +148,7 @@ class _CrearExamenState extends State<CrearExamen> {
                                         !cargandoProcedimientos;
                                   });
                                   getProcedimientos(context).then(
-                                    (value) {
+                                    (value) async {
                                       setState(() {
                                         cargandoProcedimientos =
                                             !cargandoProcedimientos;

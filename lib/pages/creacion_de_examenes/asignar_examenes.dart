@@ -100,29 +100,39 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
             padding: const EdgeInsets.only(right: 20.0),
             child: IconButton(
               icon: const Icon(Icons.done),
-              onPressed: () => seleccionados.isNotEmpty
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MostrarSeleccionados(
-                          paciente: widget.paciente,
-                          fecha: widget.fecha,
-                          seleccionados: seleccionados,
-                          aguardar: true,
-                        ),
-                      ),
-                    )
-                  : showToastB(
-                      fToast,
-                      'No ha seleccionado ningún examen',
-                      bacgroundColor: Colors.red,
-                      frontColor: Colors.yellow,
-                      milliseconds: 10,
-                      icon: const Icon(
-                        Icons.error,
-                        color: Colors.yellow,
+              onPressed: () async {
+                if (seleccionados.isNotEmpty) {
+                  String result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MostrarSeleccionados(
+                        paciente: widget.paciente,
+                        fecha: widget.fecha,
+                        seleccionados: seleccionados,
+                        aguardar: true,
                       ),
                     ),
+                  );
+                  if (result == 'home') {
+                    if (mounted) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context, 'home');
+                    }
+                  }
+                } else {
+                  showToastB(
+                    fToast,
+                    'No ha seleccionado ningún examen',
+                    bacgroundColor: Colors.red,
+                    frontColor: Colors.yellow,
+                    milliseconds: 10,
+                    icon: const Icon(
+                      Icons.error,
+                      color: Colors.yellow,
+                    ),
+                  );
+                }
+              },
             ),
           ),
         ],
