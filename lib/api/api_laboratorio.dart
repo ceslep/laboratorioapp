@@ -526,3 +526,58 @@ Future<List<Procedimientos>> getProcedimientos(
     return [];
   }
 }
+
+String procedisToJson(List<Procedimientos> procedimientos) {
+  String json = "[";
+  for (Procedimientos procedimiento in procedimientos) {
+    json += "${procedimientosToJson(procedimiento)},";
+  }
+  json = json.substring(0, json.length - 1);
+  json += "]";
+  return json;
+}
+
+Future<void> guardarExamenes(
+    BuildContext context,
+    List<Procedimientos> procedimientos,
+    String identificacion,
+    String fecha) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}guardarExamenes.php');
+  late final http.Response response;
+  final String bodyData = json.encode({
+    "examenes": procedisToJson(procedimientos),
+    "identificacion": identificacion,
+    "fecha": fecha
+  });
+
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      print("bien");
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
+}
+
+Future<List<Procedimientos>> getSeleccionados(
+    BuildContext context, String identificacion, String fecha) async {
+  List<Map<String, dynamic>> procedimientos = [];
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getSeleccionados.php');
+  final String bodyData =
+      json.encode({"identificacion": identificacion, "fecha": fecha});
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      procedimientos = jsonDecode(response.body).cast<Map<String, dynamic>>();
+      return procedimientos.map((e) => Procedimientos.fromJson(e)).toList();
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
+}

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'dart:core';
 
 Paciente pacienteFromJson(String str) => Paciente.fromJson(json.decode(str));

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/paciente.dart';
-import 'package:laboratorioapp/pages/webview/web_view.dart';
 import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
 import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 import 'package:laboratorioapp/widgets/text_field.dart';

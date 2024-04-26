@@ -18,8 +18,8 @@ class UniConst {
   });
 
   factory UniConst.fromJson(Map<String, dynamic> json) => UniConst(
-        unidades: json["unidades"],
-        constante: json["constante"],
+        unidades: json["unidades"] ? json['unidades'] : '',
+        constante: json["constante"] ? json["constante"] : '',
       );
 
   Map<String, dynamic> toJson() => {

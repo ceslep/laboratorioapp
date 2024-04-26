@@ -1,14 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
-import 'package:laboratorioapp/pages/printpdf/print_pdf.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma_new.dart';
 import 'package:laboratorioapp/providers/hrayto_provider.dart';

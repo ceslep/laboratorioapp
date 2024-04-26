@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:laboratorioapp/pages/creacion_de_examenes/crear_examen.dart';
 import 'package:laboratorioapp/pages/pacientes.dart';
-import 'package:laboratorioapp/widgets/date_picker.dart';
 
 class FloatingActionButtonHome extends StatelessWidget {
   final String fecha;

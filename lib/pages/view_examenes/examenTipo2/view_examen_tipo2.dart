@@ -204,11 +204,15 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                       ),
                       SizedBox(
                         width: 0.2 * MediaQuery.of(context).size.width,
-                        child: Text(widget.examen.unidades!),
+                        child: widget.examen.unidades!.isNotEmpty
+                            ? Text(widget.examen.unidades!)
+                            : const Text(''),
                       ),
                       SizedBox(
                         width: 0.4 * MediaQuery.of(context).size.width,
-                        child: Text('Normal: ${widget.examen.constant!}'),
+                        child: widget.examen.constant!.isNotEmpty
+                            ? Text('Normal: ${widget.examen.constant!}')
+                            : const Text(''),
                       ),
                     ],
                   ),

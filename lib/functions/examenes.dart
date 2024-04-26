@@ -271,6 +271,9 @@ Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
       codexamen: codexamen);
 
   if (examen.identificacion != '' && examen.identificacion != 'Error') {
+    UniConst uniConst = await getUniConst(context, codexamen);
+    examen.unidades = uniConst.unidades;
+    examen.constant = uniConst.constante;
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -327,6 +330,9 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
       codexamen: codexamen);
 
   if (examen.identificacion != '' && examen.identificacion != 'Error') {
+    UniConst uniConst = await getUniConst(context, codexamen);
+    examen.unidades = uniConst.unidades;
+    examen.constant = uniConst.constante;
     await Navigator.push(
       context,
       MaterialPageRoute(

@@ -78,7 +78,9 @@ flutter:
     -  images/hdl.png
     -  images/porina.png
     -  images/coprologico.png
-    -  images/frotis.png 
+    -  images/frotis.png
+    -  images/male.png
+    -  images/female.png 
     -  documents/blank.pdf
 
   # The following line ensures that the Material Icons font is

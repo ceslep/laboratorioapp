@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/procedimientos_model.dart';
-import 'package:laboratorioapp/pages/asignar_examenes.dart';
+import 'package:laboratorioapp/pages/creacion_de_examenes/asignar_examenes.dart';
 import 'package:laboratorioapp/widgets/date_picker.dart';
 
 class CrearExamen extends StatefulWidget {
@@ -31,6 +31,9 @@ class _CrearExamenState extends State<CrearExamen> {
   @override
   void initState() {
     super.initState();
+    _identificacionController.addListener(
+      () {},
+    );
   }
 
   @override
@@ -58,17 +61,26 @@ class _CrearExamenState extends State<CrearExamen> {
                   width: 0.8 * MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        if (value.length < 3) {
-                          setState(() => paciente = Paciente());
-                        }
-                      },
-                      autofocus: true,
-                      controller: _identificacionController,
-                      decoration: const InputDecoration(
+                    child: Form(
+                      child: TextFormField(
+                        onChanged: (value) {
+                          if (value.length < 3) {
+                            setState(() => paciente = Paciente());
+                          }
+                        },
+                        autofocus: true,
+                        controller: _identificacionController,
+                        decoration: InputDecoration(
                           labelText: 'Paciente',
-                          hintText: 'Identificación del paciente'),
+                          hintText: 'Identificación del paciente',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              _identificacionController.clear();
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -76,22 +88,26 @@ class _CrearExamenState extends State<CrearExamen> {
                   width: 0.2 * MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                      onPressed: () async {
-                        setState(() => buscando = !buscando);
-                        paciente = await getInfoPaciente(context,
-                            identificacion: _identificacionController.text);
-                        setState(() => buscando = !buscando);
-                      },
-                      icon: !buscando
-                          ? const Icon(Icons.search)
-                          : const SizedBox(
-                              width: 12,
-                              height: 12,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
+                    child: SizedBox(
+                      width: 44,
+                      height: 44,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          setState(() => buscando = !buscando);
+                          paciente = await getInfoPaciente(context,
+                              identificacion: _identificacionController.text);
+                          setState(() => buscando = !buscando);
+                        },
+                        child: !buscando
+                            ? const Icon(Icons.search)
+                            : const SizedBox(
+                                width: 12,
+                                height: 12,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -112,6 +128,7 @@ class _CrearExamenState extends State<CrearExamen> {
                             Text(paciente.edad),
                             Text(paciente.genero!),
                             Text('Fecha:${_fechaController.text}'),
+                            const SizedBox(height: 10),
                             Center(
                               child: ElevatedButton(
                                 style: ButtonStyle(
@@ -142,6 +159,9 @@ class _CrearExamenState extends State<CrearExamen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 AsignarExamenes(
+                                                    paciente: paciente,
+                                                    fecha:
+                                                        _fechaController.text,
                                                     procedimientos:
                                                         procedimientos)),
                                       );

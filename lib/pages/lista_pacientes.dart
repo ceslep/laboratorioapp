@@ -104,7 +104,6 @@ class _ListaPacientesState extends State<ListaPacientes> {
           late final String? sexo;
           late final String? telefono;
           late final String? correo;
-          late int edad;
           int iindex = index - 1;
           if (index > 0) {
             paciente = pacientes[iindex];
@@ -142,8 +141,9 @@ class _ListaPacientesState extends State<ListaPacientes> {
                   child: Card(
                     child: ListTile(
                       leading: CircleAvatar(
-                        child: Icon(
-                            sexo == 'Masculino' ? Icons.male : Icons.female),
+                        backgroundImage: sexo == 'Masculino'
+                            ? const AssetImage('images/male.png')
+                            : const AssetImage('images/female.png'),
                       ),
                       trailing: IconButton(
                         onPressed: () {
