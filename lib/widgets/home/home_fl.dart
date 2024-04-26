@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:laboratorioapp/pages/crear_examen.dart';
+import 'package:laboratorioapp/pages/creacion_de_examenes/crear_examen.dart';
 import 'package:laboratorioapp/pages/pacientes.dart';
 import 'package:laboratorioapp/widgets/date_picker.dart';
 
 class FloatingActionButtonHome extends StatelessWidget {
+  final String fecha;
   const FloatingActionButtonHome({
     super.key,
+    required this.fecha,
   });
 
   @override
@@ -52,9 +56,7 @@ class BodyHome extends StatelessWidget {
   const BodyHome({
     super.key,
     required TextEditingController fechaController,
-  }) : _fechaController = fechaController;
-
-  final TextEditingController _fechaController;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +64,6 @@ class BodyHome extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child:
-                buildDatePicker(context, _fechaController, 'Fecha de Exámenes'),
-          ),
           Expanded(
             child: SizedBox(
               height: 0.7 * MediaQuery.of(context).size.height,

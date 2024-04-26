@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:laboratorioapp/pages/configuracion/configuracion.dart';
 import 'package:laboratorioapp/pages/lista_pacientes.dart';
-import '../widgets/home/home_fl.dart';
+import 'package:laboratorioapp/widgets/home/home_fl.dart';
+
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Homelaboratorioapp extends StatelessWidget {
@@ -69,7 +70,9 @@ class Homelaboratorioapp extends StatelessWidget {
         ],
       ),
       body: BodyHome(fechaController: _fechaController),
-      floatingActionButton: const FloatingActionButtonHome(),
+      floatingActionButton: FloatingActionButtonHome(
+        fecha: _fechaController.text,
+      ),
     );
   }
 }

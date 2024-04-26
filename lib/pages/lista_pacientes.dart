@@ -115,7 +115,6 @@ class _ListaPacientesState extends State<ListaPacientes> {
             sexo = pacientes[iindex].genero;
             telefono = pacientes[iindex].telefono;
             correo = pacientes[iindex].correo;
-            edad = calcularEdad(fecnac!);
           }
           return index == 0
               ? SizedBox(
@@ -171,8 +170,10 @@ class _ListaPacientesState extends State<ListaPacientes> {
                           Text("Fecha de Nacimiento: $fecnac"),
                           Row(
                             children: [
-                              Text(
-                                "Edad: $edad.",
+                              Expanded(
+                                child: Text(
+                                  "Edad: ${paciente.edad}.",
+                                ),
                               ),
                               const SizedBox(
                                 width: 4,

@@ -1,8 +1,52 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'dart:core';
 
 Paciente pacienteFromJson(String str) => Paciente.fromJson(json.decode(str));
 
 String pacienteToJson(Paciente data) => json.encode(data.toJson());
+
+String calcularEdad(String fechaNacimientoString) {
+  // Convertir la fecha de nacimiento a un objeto 'DateTime'
+  DateTime fechaNacimiento = DateTime.parse(fechaNacimientoString);
+
+  // Obtener la fecha actual
+  DateTime fechaActual = DateTime.now();
+
+  // Calcular la diferencia de años
+  int diferenciaAnios = fechaActual.year - fechaNacimiento.year;
+
+  // Calcular la diferencia de meses (opcional)
+  int diferenciaMeses = fechaActual.month - fechaNacimiento.month;
+
+  // Si la diferencia de meses es negativa, hay que ajustar la diferencia de años
+  if (diferenciaMeses < 0) {
+    diferenciaAnios--;
+    diferenciaMeses += 12;
+  }
+
+  // Calcular la diferencia de días (opcional)
+  int diferenciaDias = fechaActual.day - fechaNacimiento.day;
+
+  // Si la diferencia de días es negativa, hay que ajustar la diferencia de meses
+  if (diferenciaDias < 0) {
+    diferenciaMeses--;
+    if (diferenciaMeses < 0) {
+      diferenciaMeses += 12;
+      diferenciaAnios--;
+    }
+    fechaNacimiento = fechaNacimiento.add(const Duration(days: 30));
+    diferenciaDias += fechaActual.day - fechaNacimiento.day;
+  }
+
+  // Formatear la edad como cadena
+  // ignore: unnecessary_null_comparison
+  String edad =
+      // ignore: unnecessary_null_comparison
+      '$diferenciaAnios años ${diferenciaMeses != null ? '$diferenciaMeses meses' : ''} ${diferenciaDias != null ? '$diferenciaDias días' : ''}';
+
+  return edad;
+}
 
 class Paciente {
   final String? id;
@@ -52,4 +96,5 @@ class Paciente {
       };
 
   String get nombreCompleto => '${nombres ?? ''} ${apellidos ?? ''}';
+  String get edad => calcularEdad(fecnac!);
 }

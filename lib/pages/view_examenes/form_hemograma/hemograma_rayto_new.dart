@@ -71,7 +71,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                 const Text(
                   'Hemograma Rayto 7600',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.brown,
                     fontSize: 16,
                   ),
                 ),
@@ -80,13 +80,18 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      style: const TextStyle(
+                        color: Colors.brown,
+                        fontSize: 10,
+                      ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       widget.fecha,
-                      style:
-                          const TextStyle(color: Colors.yellow, fontSize: 10),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                      ),
                     )
                   ],
                 ),
@@ -104,40 +109,25 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                       setState(() {
                         imprimiendo_ = !imprimiendo_;
                       });
-                      guardarHemograma(context, hraytoProvider.hrayto).then(
-                        (value) async {
-                          setState(() {
-                            imprimiendo_ = !imprimiendo_;
-                          });
-                          if (Platform.isAndroid) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PDFRemoteViewer(
-                                    urlpdf:
-                                        "${urlProvider.url}print_hemograma.php",
-                                    identificacion:
-                                        widget.paciente.identificacion!,
-                                    fecha: widget.fecha,
-                                    nombres: widget.paciente.nombreCompleto),
-                              ),
-                            );
-                          } else if (Platform.isWindows) {
-                            printPDFFile(
-                                context,
-                                "hemogramaRayto",
-                                "Hemograma",
-                                "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                                widget.paciente.identificacion!,
-                                widget.fecha,
-                                widget.paciente.nombreCompleto);
-                          }
-                        },
-                      );
+                      guardarHemograma(context, hraytoProvider.hrayto)
+                          .then((value) async {
+                        setState(() {
+                          imprimiendo_ = !imprimiendo_;
+                        });
+
+                        printPDFFile(
+                            context,
+                            "hemogramaRayto",
+                            "Hemograma",
+                            "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                            widget.paciente.identificacion!,
+                            widget.fecha,
+                            widget.paciente.nombreCompleto);
+                      });
                     },
                     icon: const Icon(
                       Icons.print,
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                     ),
                   )
                 : const Padding(
@@ -147,7 +137,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                       height: 13,
                       child: Center(
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: Colors.lime,
                           strokeWidth: 2,
                         ),
                       ),
@@ -176,7 +166,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                     },
                     icon: const Icon(
                       Icons.save,
-                      color: Colors.lightGreenAccent,
+                      color: Colors.green,
                     ),
                   )
                 : const Padding(
@@ -198,8 +188,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
       body: FormHemogramaNew(
         hemograma: widget.hemograma,
         identificacion: widget.paciente.identificacion!,
-        fecha: widget.hemograma.fecha ??
-            DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        fecha: widget.fecha,
       ),
     );
   }

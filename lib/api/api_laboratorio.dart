@@ -16,6 +16,7 @@ import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
 import 'package:laboratorioapp/models/perfil_lipidico_model.dart';
+import 'package:laboratorioapp/models/procedimientos_model.dart';
 import 'package:laboratorioapp/models/uni_constd.dart';
 
 import 'package:laboratorioapp/providers/url_provider.dart';
@@ -195,6 +196,9 @@ Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      final dynamic datos = json.decode(decodedResponse);
+      print(datos);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -501,5 +505,24 @@ Future<void> guardarPerfilLipidico(
     }
   } catch (e) {
     print('Error al enviar los datos del hemograma: $e');
+  }
+}
+
+Future<List<Procedimientos>> getProcedimientos(
+  BuildContext context,
+) async {
+  List<Map<String, dynamic>> procedimientos = [];
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getProcedimientos.php');
+
+  try {
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      procedimientos = jsonDecode(response.body).cast<Map<String, dynamic>>();
+      return procedimientos.map((e) => Procedimientos.fromJson(e)).toList();
+    }
+    return [];
+  } catch (e) {
+    return [];
   }
 }

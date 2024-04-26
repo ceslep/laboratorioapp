@@ -275,7 +275,10 @@ class _PacientesState extends State<Pacientes> {
               Padding(
                 padding: const EdgeInsets.all(0),
                 child: buildDatePicker(
-                    context, _fecnacController, 'Fecha de Nacimiento'),
+                  context,
+                  _fecnacController,
+                  'Fecha de Nacimiento',
+                ),
               ),
               const SizedBox(
                 height: 18.0,

@@ -75,7 +75,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
           examenesFilter = examenes;
           if (fechae != "") {
             examenesFilter = examenes
-                .where((Examenes element) => element.fecha.contains('-')
+                .where((Examenes element) => element.fecha!.contains('-')
                     ? element.fecha == fechae
                     : element.fecha != '')
                 .toList();
@@ -171,7 +171,11 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
               ),
             ),
             Text(
-              widget.paciente.identificacion!,
+              '${widget.paciente.identificacion!} ${widget.paciente.genero}',
+              style: const TextStyle(fontSize: 10),
+            ),
+            Text(
+              widget.paciente.edad,
               style: const TextStyle(fontSize: 10),
             ),
           ],
@@ -187,8 +191,6 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                     late String examen;
                     late String codexamen;
                     late String fecha;
-                    late String bacteriologo;
-                    late String doctor;
                     late String tipo;
                     int indexx = index - 1;
                     if (index == 0) {
@@ -214,12 +216,10 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                         ),
                       );
                     } else {
-                      examen = examenesFilter[indexx].examen;
-                      codexamen = examenesFilter[indexx].codexamen;
-                      fecha = examenesFilter[indexx].fecha;
-                      bacteriologo = examenesFilter[indexx].bacteriologo;
-                      doctor = examenesFilter[indexx].doctor;
-                      tipo = examenesFilter[indexx].tipo;
+                      examen = examenesFilter[indexx].examen!;
+                      codexamen = examenesFilter[indexx].codexamen!;
+                      fecha = examenesFilter[indexx].fecha!;
+                      tipo = examenesFilter[indexx].tipo!;
                     }
                     return Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -268,14 +268,6 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                              Text(
-                                'Bacteriólogo: $bacteriologo',
-                                style: const TextStyle(
-                                    fontStyle: FontStyle.italic),
-                              ),
-                              Text(
-                                'C.C.: $doctor',
                               ),
                             ],
                           ),
