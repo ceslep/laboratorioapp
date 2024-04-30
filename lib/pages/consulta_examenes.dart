@@ -334,12 +334,26 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                fecha,
-                                style: const TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                    fecha,
+                                    style: const TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '$tipo - $codexamen',
+                                    style: const TextStyle(
+                                      fontSize: 7,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

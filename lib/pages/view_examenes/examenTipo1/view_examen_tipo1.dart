@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/paciente.dart';
@@ -166,11 +167,18 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        nexamen,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              nexamen,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          const Text('', style: TextStyle(fontSize: 6))
+                        ],
                       ),
                       Row(
                         children: [
@@ -181,8 +189,7 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
                               Text(
                                 widget.paciente.nombreCompleto,
                                 style: const TextStyle(
-                                  fontSize: 14,
-                                ),
+                                    fontSize: 14, color: Colors.green),
                               ),
                               Text(
                                 widget.fecha,
