@@ -86,29 +86,30 @@ class _CrearExamenState extends State<CrearExamen> {
                   ),
                 ),
                 SizedBox(
-                  width: 0.2 * MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 44,
-                      height: 44,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          setState(() => buscando = !buscando);
-                          paciente = await getInfoPaciente(context,
-                              identificacion: _identificacionController.text);
-                          setState(() => buscando = !buscando);
-                        },
-                        child: !buscando
-                            ? const Icon(Icons.search)
-                            : const SizedBox(
-                                width: 12,
-                                height: 12,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              ),
+                  width: 0.1 * MediaQuery.of(context).size.width,
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(0.0),
                       ),
+                      onPressed: () async {
+                        setState(() => buscando = !buscando);
+                        paciente = await getInfoPaciente(context,
+                            identificacion: _identificacionController.text);
+                        setState(() => buscando = !buscando);
+                      },
+                      child: !buscando
+                          ? const Icon(Icons.search)
+                          : const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            ),
                     ),
                   ),
                 ),
@@ -155,17 +156,22 @@ class _CrearExamenState extends State<CrearExamen> {
                                       });
                                       List<Procedimientos> procedimientos =
                                           value;
-                                      Navigator.push(
+                                      String result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                AsignarExamenes(
-                                                    paciente: paciente,
-                                                    fecha:
-                                                        _fechaController.text,
-                                                    procedimientos:
-                                                        procedimientos)),
+                                          builder: (context) => AsignarExamenes(
+                                            paciente: paciente,
+                                            fecha: _fechaController.text,
+                                            procedimientos: procedimientos,
+                                          ),
+                                        ),
                                       );
+                                      if (result == 'home') {
+                                        if (mounted) {
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pop(context, 'home');
+                                        }
+                                      }
                                     },
                                   );
                                 },

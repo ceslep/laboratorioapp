@@ -427,7 +427,7 @@ Future<void> guardarTipo2(BuildContext context, ExamenTipo2 examen) async {
       print({"error de response ": response.statusCode});
     }
   } catch (e) {
-    print('Error al enviar los datos del examen: $e');
+    print('Error al enviar los datos del examen tipo 2: $e');
   }
 }
 
@@ -441,13 +441,12 @@ Future<UniConst> getUniConst(BuildContext context, String examen) async {
     if (response.statusCode == 200) {
       final decodedResponse = utf8.decode(response.bodyBytes);
       final dynamic datosUC = json.decode(decodedResponse);
-
-      return UniConst.fromJson(datosUC);
+      return UniConst.fromJson(datosUC['data']);
     } else {
       print({"error de response ": response.statusCode});
     }
   } catch (e) {
-    print('Error al enviar los datos del examen: $e');
+    print('Error al enviar los datos del examen uniconst: $e');
   }
   return UniConst(constante: '', unidades: '');
 }

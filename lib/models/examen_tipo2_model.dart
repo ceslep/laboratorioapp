@@ -15,7 +15,7 @@ class ExamenTipo2 {
   String? examen;
   String? valoracion;
   String? fecha;
-  String? doctor;
+  String? bacteriologo;
   String? exportar;
   String? examenind;
   String? citasind;
@@ -24,7 +24,6 @@ class ExamenTipo2 {
   String? departamento;
   String? hora;
   String? observaciones;
-  String? bacteriologo;
   String? pyp;
   String? nombreExamen;
   String? constant;
@@ -36,7 +35,7 @@ class ExamenTipo2 {
     this.examen,
     this.valoracion,
     this.fecha,
-    this.doctor,
+    this.bacteriologo,
     this.exportar,
     this.examenind,
     this.citasind,
@@ -45,7 +44,6 @@ class ExamenTipo2 {
     this.departamento,
     this.hora,
     this.observaciones,
-    this.bacteriologo,
     this.pyp,
     this.nombreExamen,
     this.constant,
@@ -58,7 +56,7 @@ class ExamenTipo2 {
         examen: json["examen"].toString(),
         valoracion: json["valoracion"].toString(),
         fecha: json["fecha"].toString(),
-        doctor: json["doctor"].toString(),
+        bacteriologo: json["bacteriologo"].toString(),
         exportar: json["exportar"].toString(),
         examenind: json["examenind"].toString(),
         citasind: json["citasind"].toString(),
@@ -67,7 +65,6 @@ class ExamenTipo2 {
         departamento: json["departamento"].toString(),
         hora: json["hora"].toString(),
         observaciones: json["observaciones"].toString(),
-        bacteriologo: json["bacteriologo"].toString(),
         pyp: json["pyp"].toString(),
         nombreExamen: json["nombreExamen"].toString(),
         constant: json["constant"].toString(),
@@ -80,7 +77,7 @@ class ExamenTipo2 {
         "examen": examen,
         "valoracion": valoracion,
         "fecha": fecha,
-        "doctor": doctor,
+        "bacteriologo": bacteriologo,
         "exportar": exportar,
         "examenind": examenind,
         "citasind": citasind,
@@ -89,7 +86,6 @@ class ExamenTipo2 {
         "departamento": departamento,
         "hora": hora,
         "observaciones": observaciones,
-        "bacteriologo": bacteriologo,
         "pyp": pyp,
         "nombreExamen": nombreExamen,
         "constant": constant,

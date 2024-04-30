@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
@@ -66,14 +65,16 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Hemograma Rayto 7600',
+                  'Hemograma',
                   style: TextStyle(
                     color: Colors.brown,
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 5),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       widget.paciente.nombreCompleto,
@@ -89,7 +90,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                         color: Colors.black,
                         fontSize: 10,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

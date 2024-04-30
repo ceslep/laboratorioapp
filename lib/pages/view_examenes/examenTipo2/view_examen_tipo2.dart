@@ -42,6 +42,10 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
 
   @override
   Widget build(BuildContext context) {
+    String nexamen = widget.examen.nombreExamen!;
+    nexamen = nexamen.length > 25
+        ? (widget.examen.nombreExamen!).substring(0, 25)
+        : nexamen;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
@@ -58,9 +62,9 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.examen.nombreExamen!,
+                  nexamen,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
                 Column(
@@ -182,50 +186,47 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
         ],
       ),
       body: Form(
-          onChanged: () {
-            examenS.valoracion = valoracionController.text;
-            examenS.observaciones = observacionesController.text;
-            examenS.identificacion = widget.paciente.identificacion;
-            examenS.fecha = widget.fecha;
-          },
-          child: Expanded(
-            flex: 3,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 0.2 * MediaQuery.of(context).size.width,
-                        child: TextFieldI(
-                            labelText: 'Valoración',
-                            controller: valoracionController),
-                      ),
-                      SizedBox(
-                        width: 0.2 * MediaQuery.of(context).size.width,
-                        child: widget.examen.unidades!.isNotEmpty
-                            ? Text(widget.examen.unidades!)
-                            : const Text(''),
-                      ),
-                      SizedBox(
-                        width: 0.4 * MediaQuery.of(context).size.width,
-                        child: widget.examen.constant!.isNotEmpty
-                            ? Text('Normal: ${widget.examen.constant!}')
-                            : const Text(''),
-                      ),
-                    ],
+        onChanged: () {
+          examenS.valoracion = valoracionController.text;
+          examenS.observaciones = observacionesController.text;
+          examenS.identificacion = widget.paciente.identificacion;
+          examenS.fecha = widget.fecha;
+        },
+        child: Form(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: 0.2 * MediaQuery.of(context).size.width,
+                    child: TextFieldI(
+                        labelText: 'Valoración',
+                        controller: valoracionController),
                   ),
-                ),
-                SizedBox(
-                  width: 0.95 * MediaQuery.of(context).size.width,
-                  child: TextFieldI(
-                      labelText: 'Observaciones',
-                      controller: observacionesController),
-                ),
-              ],
-            ),
-          )),
+                  SizedBox(
+                    width: 0.2 * MediaQuery.of(context).size.width,
+                    child: widget.examen.unidades!.isNotEmpty
+                        ? Text(widget.examen.unidades!)
+                        : const Text(''),
+                  ),
+                  SizedBox(
+                    width: 0.4 * MediaQuery.of(context).size.width,
+                    child: widget.examen.constant!.isNotEmpty
+                        ? Text('Normal: ${widget.examen.constant!}')
+                        : const Text(''),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 0.95 * MediaQuery.of(context).size.width,
+                child: TextFieldI(
+                    labelText: 'Observaciones',
+                    controller: observacionesController),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -36,7 +36,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -52,7 +52,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 2.0, right: 2),
             child: !listando
                 ? IconButton(
                     onPressed: () {
@@ -84,10 +84,10 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
                     ),
                   )
                 : const Padding(
-                    padding: EdgeInsets.only(left: 18, right: 18),
+                    padding: EdgeInsets.only(left: 2, right: 2),
                     child: SizedBox(
-                      width: 12,
-                      height: 12,
+                      width: 28,
+                      height: 28,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                       ),
@@ -95,7 +95,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
                   ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -111,7 +111,7 @@ class _HomelaboratorioappState extends State<Homelaboratorioapp> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: IconButton(
               onPressed: () {
                 exit(0);

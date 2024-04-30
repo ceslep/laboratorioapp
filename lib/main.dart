@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: colorTheme),
         useMaterial3: true,
       ),
-      home: Homelaboratorioapp(
+      home: const Homelaboratorioapp(
         title: titleApp,
       ),
       localizationsDelegates: const [

@@ -45,6 +45,10 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
 
   @override
   Widget build(BuildContext context) {
+    String nexamen = widget.examen.nombreExamen!;
+    nexamen = nexamen.length > 25
+        ? (widget.examen.nombreExamen!).substring(0, 25)
+        : nexamen;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
@@ -61,9 +65,9 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.examen.nombreExamen!,
+                  nexamen,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 10,
                   ),
                 ),
                 Row(
@@ -189,46 +193,47 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
         ],
       ),
       body: Form(
-          onChanged: () {
-            examenS.valoracion = valoracionController.text;
-            examenS.observaciones = observacionesController.text;
-            examenS.identificacion = widget.paciente.identificacion;
-            examenS.fecha = widget.fecha;
-          },
-          child: Expanded(
-            flex: 3,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 0.2 * MediaQuery.of(context).size.width,
-                        child: TextFieldI(
-                            labelText: 'Valoración',
-                            controller: valoracionController),
-                      ),
-                      SizedBox(
-                        width: 0.2 * MediaQuery.of(context).size.width,
-                        child: Text(widget.examen.unidades!),
-                      ),
-                      SizedBox(
-                        width: 0.4 * MediaQuery.of(context).size.width,
-                        child: Text('Normal: ${widget.examen.constant!}'),
-                      ),
-                    ],
-                  ),
+        onChanged: () {
+          examenS.valoracion = valoracionController.text;
+          examenS.observaciones = observacionesController.text;
+          examenS.identificacion = widget.paciente.identificacion;
+          examenS.fecha = widget.fecha;
+        },
+        child: Expanded(
+          flex: 3,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 0.2 * MediaQuery.of(context).size.width,
+                      child: TextFieldI(
+                          labelText: 'Valoración',
+                          controller: valoracionController),
+                    ),
+                    SizedBox(
+                      width: 0.2 * MediaQuery.of(context).size.width,
+                      child: Text(widget.examen.unidades!),
+                    ),
+                    SizedBox(
+                      width: 0.4 * MediaQuery.of(context).size.width,
+                      child: Text('Normal: ${widget.examen.constant!}'),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 0.95 * MediaQuery.of(context).size.width,
-                  child: TextFieldI(
-                      labelText: 'Observaciones',
-                      controller: observacionesController),
-                ),
-              ],
-            ),
-          )),
+              ),
+              SizedBox(
+                width: 0.95 * MediaQuery.of(context).size.width,
+                child: TextFieldI(
+                    labelText: 'Observaciones',
+                    controller: observacionesController),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
