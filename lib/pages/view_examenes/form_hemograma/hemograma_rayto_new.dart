@@ -55,47 +55,11 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/hemat.png'),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Hemograma',
-                  style: TextStyle(
-                    color: Colors.brown,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.paciente.nombreCompleto,
-                      style: const TextStyle(
-                        color: Colors.brown,
-                        fontSize: 10,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      widget.fecha,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+        title: Text(
+          'Registro de Exámenes',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
         actions: [
           Padding(
@@ -183,10 +147,61 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
           ),
         ],
       ),
-      body: FormHemogramaNew(
-        hemograma: widget.hemograma,
-        identificacion: widget.paciente.identificacion!,
-        fecha: widget.fecha,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/hemat.png'),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Hemograma',
+                        style: TextStyle(
+                          color: Colors.brown,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.paciente.nombreCompleto,
+                            style: const TextStyle(
+                              color: Colors.brown,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            widget.fecha,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              FormHemogramaNew(
+                hemograma: widget.hemograma,
+                identificacion: widget.paciente.identificacion!,
+                fecha: widget.fecha,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

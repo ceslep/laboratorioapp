@@ -83,8 +83,8 @@ class _VerPorFechaState extends State<VerPorFecha> {
                       : const AssetImage('images/female.png'),
                 ),
                 trailing: IconButton(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    var result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ConsultaExamenes(
@@ -93,6 +93,12 @@ class _VerPorFechaState extends State<VerPorFecha> {
                         ),
                       ),
                     );
+                    if (result == 'home') {
+                      if (mounted) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context, 'home');
+                      }
+                    }
                   },
                   icon: const Icon(Icons.remove_red_eye, color: Colors.blue),
                 ),

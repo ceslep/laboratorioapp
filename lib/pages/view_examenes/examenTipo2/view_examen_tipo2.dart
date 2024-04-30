@@ -43,55 +43,18 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
   @override
   Widget build(BuildContext context) {
     String nexamen = widget.examen.nombreExamen!;
-    nexamen = nexamen.length > 25
+    /*  nexamen = nexamen.length > 25
         ? (widget.examen.nombreExamen!).substring(0, 25)
-        : nexamen;
+        : nexamen; */
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         foregroundColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/lab.png'),
-            ),
-            const SizedBox(width: 2),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nexamen,
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.paciente.nombreCompleto,
-                      style: const TextStyle(
-                        fontSize: 10,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      widget.fecha,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.blueGrey,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ],
+        title: const Text(
+          'Registro de Exámenes',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
         actions: [
           /*  IconButton(
@@ -185,47 +148,102 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
           ),
         ],
       ),
-      body: Form(
-        onChanged: () {
-          examenS.valoracion = valoracionController.text;
-          examenS.observaciones = observacionesController.text;
-          examenS.identificacion = widget.paciente.identificacion;
-          examenS.fecha = widget.fecha;
-        },
-        child: Form(
-          child: Column(
-            children: [
-              Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  backgroundImage: AssetImage('images/lab.png'),
+                ),
+                const SizedBox(width: 2),
+                Container(
+                  constraints: const BoxConstraints(
+                      maxWidth: 250), // Define una altura máxima
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nexamen,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.paciente.nombreCompleto,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            widget.fecha,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.blueGrey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Form(
+            onChanged: () {
+              examenS.valoracion = valoracionController.text;
+              examenS.observaciones = observacionesController.text;
+              examenS.identificacion = widget.paciente.identificacion;
+              examenS.fecha = widget.fecha;
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 0.2 * MediaQuery.of(context).size.width,
+                        child: TextFieldI(
+                            labelText: 'Valoración',
+                            controller: valoracionController),
+                      ),
+                      SizedBox(
+                        width: 0.2 * MediaQuery.of(context).size.width,
+                        child: widget.examen.unidades!.isNotEmpty
+                            ? Text(widget.examen.unidades!)
+                            : const Text(''),
+                      ),
+                      SizedBox(
+                        width: 0.4 * MediaQuery.of(context).size.width,
+                        child: widget.examen.constant!.isNotEmpty
+                            ? Text('Normal: ${widget.examen.constant!}')
+                            : const Text(''),
+                      ),
+                    ],
+                  ),
                   SizedBox(
-                    width: 0.2 * MediaQuery.of(context).size.width,
+                    width: 0.95 * MediaQuery.of(context).size.width,
                     child: TextFieldI(
-                        labelText: 'Valoración',
-                        controller: valoracionController),
-                  ),
-                  SizedBox(
-                    width: 0.2 * MediaQuery.of(context).size.width,
-                    child: widget.examen.unidades!.isNotEmpty
-                        ? Text(widget.examen.unidades!)
-                        : const Text(''),
-                  ),
-                  SizedBox(
-                    width: 0.4 * MediaQuery.of(context).size.width,
-                    child: widget.examen.constant!.isNotEmpty
-                        ? Text('Normal: ${widget.examen.constant!}')
-                        : const Text(''),
+                        labelText: 'Observaciones',
+                        controller: observacionesController),
                   ),
                 ],
               ),
-              SizedBox(
-                width: 0.95 * MediaQuery.of(context).size.width,
-                child: TextFieldI(
-                    labelText: 'Observaciones',
-                    controller: observacionesController),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

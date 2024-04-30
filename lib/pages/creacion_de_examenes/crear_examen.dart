@@ -156,7 +156,7 @@ class _CrearExamenState extends State<CrearExamen> {
                                       });
                                       List<Procedimientos> procedimientos =
                                           value;
-                                      String result = await Navigator.push(
+                                      var result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => AsignarExamenes(

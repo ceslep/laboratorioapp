@@ -241,6 +241,17 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
             ),
           ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context, 'home');
+              },
+              icon: const Icon(Icons.home),
+            ),
+          ),
+        ],
       ),
       body: examenes.isEmpty
           ? const Center(child: CircularProgressIndicator())

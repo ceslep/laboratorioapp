@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/parcial_orina.dart';
@@ -135,40 +135,11 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        title: Row(
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/porina.png'),
-            ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Parcial de Orina',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      widget.paciente.nombreCompleto,
-                      style: const TextStyle(
-                        fontSize: 8,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      widget.fecha,
-                      style: const TextStyle(
-                          fontSize: 10, color: Colors.yellowAccent),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ],
+        title: const Text(
+          'Registro de Exámenes',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
         actions: [
           Padding(
@@ -252,77 +223,134 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
           ),
         ],
       ),
-      body: Form(
-        autovalidateMode: AutovalidateMode.always,
-        onChanged: () {
-          parcialOrinaS.densidad = densidadController.text;
-          parcialOrinaS.color = colorController.text;
-          parcialOrinaS.aspecto = aspectoController.text;
-          parcialOrinaS.color = colorController.text;
-          parcialOrinaS.aspecto = aspectoController.text;
-          parcialOrinaS.ph = phController.text;
-          parcialOrinaS.olor = olorController.text;
-          parcialOrinaS.proteinas = proteinasController.text;
-          parcialOrinaS.glucosa = glucosaController.text;
-          parcialOrinaS.cuerposCetonicos = cuerposCetonicosController.text;
-          parcialOrinaS.sangreHemolizada = sangreHemolizadaController.text;
-          parcialOrinaS.sangreNoHemolizada = sangrenoHemolizadaController.text;
-          parcialOrinaS.bilirrubina = bilirrubinaController.text;
-          parcialOrinaS.urobilinogeno = urobilinogenoController.text;
-          parcialOrinaS.nitritos = nitritosController.text;
-          parcialOrinaS.leucocitos = leucocitosController.text;
-          parcialOrinaS.leucocitosm = leucocitosmController.text;
-          parcialOrinaS.moco = mocoController.text;
-          parcialOrinaS.eritrocitos = eritrocitosController.text;
-          parcialOrinaS.levaduras = levadurasController.text;
-          parcialOrinaS.piocitos = piocitosController.text;
-          parcialOrinaS.celulasEpiteliales = celulasEpitelialesController.text;
-          parcialOrinaS.uratosAmorfos = uratosAmorfosController.text;
-          parcialOrinaS.fosfatosAmorfos = fosfatosAmorfosController.text;
-          parcialOrinaS.oxalatoDeCalcio = oxalatoDeCalcioController.text;
-          parcialOrinaS.bacterias = bacteriasController.text;
-          parcialOrinaS.cilindrosHialinos = cilindrosHialinosController.text;
-          parcialOrinaS.cilindrosGranulosos =
-              cilindrosGranulososController.text;
-          parcialOrinaS.observaciones = observacionesController.text;
-          parcialOrinaS.identificacion = widget.paciente.identificacion;
-          parcialOrinaS.fecha = widget.fecha;
-        },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              _buildTextField('Densidad', densidadController),
-              _buildTextField('Color', colorController),
-              _buildTextField('Aspecto', aspectoController),
-              _buildTextField('PH', phController),
-              _buildTextField('olor', olorController),
-              _buildTextField('Proteinas', proteinasController),
-              _buildTextField('Glucosa', glucosaController),
-              _buildTextField('Cuerpos Cetónicos', cuerposCetonicosController),
-              _buildTextField('Sangre Hemolizada', sangreHemolizadaController),
-              _buildTextField(
-                  'Sangre No Hemolizada', sangrenoHemolizadaController),
-              _buildTextField('Bilirrubina', bilirrubinaController),
-              _buildTextField('Urobilinogeno', urobilinogenoController),
-              _buildTextField('Nitritos', nitritosController),
-              _buildTextField('Leucocitos', leucocitosController),
-              _buildTextField('leucocitos m', leucocitosmController),
-              _buildTextField('Moco', mocoController),
-              _buildTextField('Eritrocitos', eritrocitosController),
-              _buildTextField('Levaduras', levadurasController),
-              _buildTextField('Piocitos', piocitosController),
-              _buildTextField(
-                  'Celulas Epiteliales', celulasEpitelialesController),
-              _buildTextField('Uratos Amorfos', uratosAmorfosController),
-              _buildTextField('Fosfatos Amorfos', fosfatosAmorfosController),
-              _buildTextField('Oxalato de Caalcio', oxalatoDeCalcioController),
-              _buildTextField('Bacterias', bacteriasController),
-              _buildTextField(
-                  'Cilindros Hialinos', cilindrosHialinosController),
-              _buildTextField(
-                  'Cilindros Granulosos', cilindrosGranulososController),
-              _buildTextField('Observaciones', observacionesController),
+              Row(
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/porina.png'),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Parcial de Orina',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.paciente.nombreCompleto,
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            widget.fecha,
+                            style: const TextStyle(
+                                fontSize: 10, color: Colors.blueGrey),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Form(
+                autovalidateMode: AutovalidateMode.always,
+                onChanged: () {
+                  parcialOrinaS.densidad = densidadController.text;
+                  parcialOrinaS.color = colorController.text;
+                  parcialOrinaS.aspecto = aspectoController.text;
+                  parcialOrinaS.color = colorController.text;
+                  parcialOrinaS.aspecto = aspectoController.text;
+                  parcialOrinaS.ph = phController.text;
+                  parcialOrinaS.olor = olorController.text;
+                  parcialOrinaS.proteinas = proteinasController.text;
+                  parcialOrinaS.glucosa = glucosaController.text;
+                  parcialOrinaS.cuerposCetonicos =
+                      cuerposCetonicosController.text;
+                  parcialOrinaS.sangreHemolizada =
+                      sangreHemolizadaController.text;
+                  parcialOrinaS.sangreNoHemolizada =
+                      sangrenoHemolizadaController.text;
+                  parcialOrinaS.bilirrubina = bilirrubinaController.text;
+                  parcialOrinaS.urobilinogeno = urobilinogenoController.text;
+                  parcialOrinaS.nitritos = nitritosController.text;
+                  parcialOrinaS.leucocitos = leucocitosController.text;
+                  parcialOrinaS.leucocitosm = leucocitosmController.text;
+                  parcialOrinaS.moco = mocoController.text;
+                  parcialOrinaS.eritrocitos = eritrocitosController.text;
+                  parcialOrinaS.levaduras = levadurasController.text;
+                  parcialOrinaS.piocitos = piocitosController.text;
+                  parcialOrinaS.celulasEpiteliales =
+                      celulasEpitelialesController.text;
+                  parcialOrinaS.uratosAmorfos = uratosAmorfosController.text;
+                  parcialOrinaS.fosfatosAmorfos =
+                      fosfatosAmorfosController.text;
+                  parcialOrinaS.oxalatoDeCalcio =
+                      oxalatoDeCalcioController.text;
+                  parcialOrinaS.bacterias = bacteriasController.text;
+                  parcialOrinaS.cilindrosHialinos =
+                      cilindrosHialinosController.text;
+                  parcialOrinaS.cilindrosGranulosos =
+                      cilindrosGranulososController.text;
+                  parcialOrinaS.observaciones = observacionesController.text;
+                  parcialOrinaS.identificacion = widget.paciente.identificacion;
+                  parcialOrinaS.fecha = widget.fecha;
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      _buildTextField('Densidad', densidadController),
+                      _buildTextField('Color', colorController),
+                      _buildTextField('Aspecto', aspectoController),
+                      _buildTextField('PH', phController),
+                      _buildTextField('olor', olorController),
+                      _buildTextField('Proteinas', proteinasController),
+                      _buildTextField('Glucosa', glucosaController),
+                      _buildTextField(
+                          'Cuerpos Cetónicos', cuerposCetonicosController),
+                      _buildTextField(
+                          'Sangre Hemolizada', sangreHemolizadaController),
+                      _buildTextField(
+                          'Sangre No Hemolizada', sangrenoHemolizadaController),
+                      _buildTextField('Bilirrubina', bilirrubinaController),
+                      _buildTextField('Urobilinogeno', urobilinogenoController),
+                      _buildTextField('Nitritos', nitritosController),
+                      _buildTextField('Leucocitos', leucocitosController),
+                      _buildTextField('leucocitos m', leucocitosmController),
+                      _buildTextField('Moco', mocoController),
+                      _buildTextField('Eritrocitos', eritrocitosController),
+                      _buildTextField('Levaduras', levadurasController),
+                      _buildTextField('Piocitos', piocitosController),
+                      _buildTextField(
+                          'Celulas Epiteliales', celulasEpitelialesController),
+                      _buildTextField(
+                          'Uratos Amorfos', uratosAmorfosController),
+                      _buildTextField(
+                          'Fosfatos Amorfos', fosfatosAmorfosController),
+                      _buildTextField(
+                          'Oxalato de Caalcio', oxalatoDeCalcioController),
+                      _buildTextField('Bacterias', bacteriasController),
+                      _buildTextField(
+                          'Cilindros Hialinos', cilindrosHialinosController),
+                      _buildTextField('Cilindros Granulosos',
+                          cilindrosGranulososController),
+                      _buildTextField('Observaciones', observacionesController),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

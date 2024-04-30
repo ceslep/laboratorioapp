@@ -108,52 +108,11 @@ class _ViewFrotisVaginalState extends State<ViewFrotisVaginal> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         foregroundColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/frotis.png'),
-            ),
-            const SizedBox(width: 2),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Frotis Vaginal',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.paciente.nombreCompleto,
-                          style: const TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        Text(
-                          widget.fecha,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.brown,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+        title: const Text(
+          'Registro de Exámenes',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
         actions: [
           Padding(
@@ -238,53 +197,124 @@ class _ViewFrotisVaginalState extends State<ViewFrotisVaginal> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Form(
-          onChanged: () {
-            frotisVaginalS.identificacion = widget.paciente.identificacion;
-            frotisVaginalS.fecha = widget.fecha;
-            frotisVaginalS.otrosFresco = _otrosFrescoController.text;
-            frotisVaginalS.pruebaDeAminas = _pruebaDeAminasController.text;
-            frotisVaginalS.celulasGuia1 = _celulasGuia1Controller.text;
-            frotisVaginalS.ph = _phController.text;
-            frotisVaginalS.trichonomasVaginales =
-                _trichonomasVaginalesController.text;
-            frotisVaginalS.pmn = _pmnController.text;
-            frotisVaginalS.celulasGuia2 = _celulasGuia2Controller.text;
-            frotisVaginalS.blastoconidias = _blastoconidiasController.text;
-            frotisVaginalS.seudomicelios = _seudomiceliosController.text;
-            frotisVaginalS.lactobacillus = _lactobacillusController.text;
-            frotisVaginalS.gardnerellaSp = _gardnerellaSpController.text;
-            frotisVaginalS.bacteroidesSp = _bacteroidesSpController.text;
-            frotisVaginalS.mobilluncusSp = _mobilluncusSpController.text;
-            frotisVaginalS.pmnx = _pmnxController.text;
-            frotisVaginalS.intracelulares = _intracelularesController.text;
-            frotisVaginalS.extracelulares = _extracelularesController.text;
-            frotisVaginalS.observaciones = _observacionesController.text;
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                _buildTextField('Otros Fresco ', _otrosFrescoController),
-                _buildTextField('Prueba De Aminas ', _pruebaDeAminasController),
-                _buildTextField('Celulas Guia 1 ', _celulasGuia1Controller),
-                _buildTextField('Ph ', _phController),
-                _buildTextField(
-                    'Trichonomas Vaginales ', _trichonomasVaginalesController),
-                _buildTextField('Pmn ', _pmnController),
-                _buildTextField('Celulas Guia 2 ', _celulasGuia2Controller),
-                _buildTextField('Blastoconidias ', _blastoconidiasController),
-                _buildTextField('Seudomicelios ', _seudomiceliosController),
-                _buildTextField('Lactobacillus ', _lactobacillusController),
-                _buildTextField('GardnerellaSp ', _gardnerellaSpController),
-                _buildTextField('BacteroidesSp ', _bacteroidesSpController),
-                _buildTextField('MobilluncusSp ', _mobilluncusSpController),
-                _buildTextField('Pmnx ', _pmnxController),
-                _buildTextField('Intracelulares ', _intracelularesController),
-                _buildTextField('Extracelulares ', _extracelularesController),
-                _buildTextField('Observaciones ', _observacionesController),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/frotis.png'),
+                  ),
+                  const SizedBox(width: 2),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Frotis Vaginal',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.paciente.nombreCompleto,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                widget.fecha,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.brown,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Form(
+                onChanged: () {
+                  frotisVaginalS.identificacion =
+                      widget.paciente.identificacion;
+                  frotisVaginalS.fecha = widget.fecha;
+                  frotisVaginalS.otrosFresco = _otrosFrescoController.text;
+                  frotisVaginalS.pruebaDeAminas =
+                      _pruebaDeAminasController.text;
+                  frotisVaginalS.celulasGuia1 = _celulasGuia1Controller.text;
+                  frotisVaginalS.ph = _phController.text;
+                  frotisVaginalS.trichonomasVaginales =
+                      _trichonomasVaginalesController.text;
+                  frotisVaginalS.pmn = _pmnController.text;
+                  frotisVaginalS.celulasGuia2 = _celulasGuia2Controller.text;
+                  frotisVaginalS.blastoconidias =
+                      _blastoconidiasController.text;
+                  frotisVaginalS.seudomicelios = _seudomiceliosController.text;
+                  frotisVaginalS.lactobacillus = _lactobacillusController.text;
+                  frotisVaginalS.gardnerellaSp = _gardnerellaSpController.text;
+                  frotisVaginalS.bacteroidesSp = _bacteroidesSpController.text;
+                  frotisVaginalS.mobilluncusSp = _mobilluncusSpController.text;
+                  frotisVaginalS.pmnx = _pmnxController.text;
+                  frotisVaginalS.intracelulares =
+                      _intracelularesController.text;
+                  frotisVaginalS.extracelulares =
+                      _extracelularesController.text;
+                  frotisVaginalS.observaciones = _observacionesController.text;
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      _buildTextField('Otros Fresco ', _otrosFrescoController),
+                      _buildTextField(
+                          'Prueba De Aminas ', _pruebaDeAminasController),
+                      _buildTextField(
+                          'Celulas Guia 1 ', _celulasGuia1Controller),
+                      _buildTextField('Ph ', _phController),
+                      _buildTextField('Trichonomas Vaginales ',
+                          _trichonomasVaginalesController),
+                      _buildTextField('Pmn ', _pmnController),
+                      _buildTextField(
+                          'Celulas Guia 2 ', _celulasGuia2Controller),
+                      _buildTextField(
+                          'Blastoconidias ', _blastoconidiasController),
+                      _buildTextField(
+                          'Seudomicelios ', _seudomiceliosController),
+                      _buildTextField(
+                          'Lactobacillus ', _lactobacillusController),
+                      _buildTextField(
+                          'GardnerellaSp ', _gardnerellaSpController),
+                      _buildTextField(
+                          'BacteroidesSp ', _bacteroidesSpController),
+                      _buildTextField(
+                          'MobilluncusSp ', _mobilluncusSpController),
+                      _buildTextField('Pmnx ', _pmnxController),
+                      _buildTextField(
+                          'Intracelulares ', _intracelularesController),
+                      _buildTextField(
+                          'Extracelulares ', _extracelularesController),
+                      _buildTextField(
+                          'Observaciones ', _observacionesController),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

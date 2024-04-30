@@ -46,59 +46,16 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
   @override
   Widget build(BuildContext context) {
     String nexamen = widget.examen.nombreExamen!;
-    nexamen = nexamen.length > 25
+    /*  nexamen = nexamen.length > 25
         ? (widget.examen.nombreExamen!).substring(0, 25)
-        : nexamen;
+        : nexamen; */
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         foregroundColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/lab.png'),
-            ),
-            const SizedBox(width: 2),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nexamen,
-                  style: const TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.paciente.nombreCompleto,
-                          style: const TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        Text(
-                          widget.fecha,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.blueGrey,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+        title: const Text(
+          'Registro de Exámenes',
+          style: TextStyle(fontSize: 14),
         ),
         actions: [
           /*  IconButton(
@@ -192,47 +149,101 @@ class _ViewExamenTipo1State extends State<ViewExamenTipo1> {
           ),
         ],
       ),
-      body: Form(
-        onChanged: () {
-          examenS.valoracion = valoracionController.text;
-          examenS.observaciones = observacionesController.text;
-          examenS.identificacion = widget.paciente.identificacion;
-          examenS.fecha = widget.fecha;
-        },
-        child: Expanded(
-          flex: 3,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 0.2 * MediaQuery.of(context).size.width,
-                      child: TextFieldI(
-                          labelText: 'Valoración',
-                          controller: valoracionController),
-                    ),
-                    SizedBox(
-                      width: 0.2 * MediaQuery.of(context).size.width,
-                      child: Text(widget.examen.unidades!),
-                    ),
-                    SizedBox(
-                      width: 0.4 * MediaQuery.of(context).size.width,
-                      child: Text('Normal: ${widget.examen.constant!}'),
-                    ),
-                  ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  backgroundImage: AssetImage('images/lab.png'),
                 ),
-              ),
-              SizedBox(
-                width: 0.95 * MediaQuery.of(context).size.width,
-                child: TextFieldI(
-                    labelText: 'Observaciones',
-                    controller: observacionesController),
-              ),
-            ],
+                const SizedBox(width: 2),
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 250),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nexamen,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.paciente.nombreCompleto,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                widget.fecha,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.blueGrey,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+          Form(
+            onChanged: () {
+              examenS.valoracion = valoracionController.text;
+              examenS.observaciones = observacionesController.text;
+              examenS.identificacion = widget.paciente.identificacion;
+              examenS.fecha = widget.fecha;
+            },
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 0.2 * MediaQuery.of(context).size.width,
+                        child: TextFieldI(
+                            labelText: 'Valoración',
+                            controller: valoracionController),
+                      ),
+                      SizedBox(
+                        width: 0.2 * MediaQuery.of(context).size.width,
+                        child: Text(widget.examen.unidades!),
+                      ),
+                      SizedBox(
+                        width: 0.4 * MediaQuery.of(context).size.width,
+                        child: Text('Normal: ${widget.examen.constant!}'),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 0.95 * MediaQuery.of(context).size.width,
+                  child: TextFieldI(
+                      labelText: 'Observaciones',
+                      controller: observacionesController),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -42,10 +42,13 @@ class ModalFit extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text(
-                    'Aceptar',
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text(
+                      'Aceptar',
+                    ),
                   ),
                 )
               ],

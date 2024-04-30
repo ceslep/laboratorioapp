@@ -14,52 +14,11 @@ PreferredSizeWidget appBarExam(
   return AppBar(
     backgroundColor: backgroundColor,
     foregroundColor: frontColor,
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CircleAvatar(
-          backgroundImage: AssetImage('images/hdl.png'),
-        ),
-        const SizedBox(width: 2),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Perfil Lipídico',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      paciente.nombreCompleto,
-                      style: const TextStyle(
-                        fontSize: 10,
-                      ),
-                    ),
-                    Text(
-                      fecha,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.brown,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
+    title: Text(
+      'Registro de Exámenes',
+      style: TextStyle(
+        fontSize: 14,
+      ),
     ),
     actions: [
       Padding(

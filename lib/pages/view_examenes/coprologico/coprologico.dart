@@ -189,46 +189,11 @@ class _CoprologicoState extends State<ViewCoprologico> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inverseSurface,
         foregroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('images/coprologico.png'),
-            ),
-            const SizedBox(width: 2),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Exámen Coprológico',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      widget.paciente.nombreCompleto,
-                      style: const TextStyle(
-                        fontSize: 8,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      widget.fecha,
-                      style: const TextStyle(
-                        fontSize: 8,
-                        color: Colors.yellow,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ],
+        title: const Text(
+          'Registro de Exámenes',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
         actions: [
           Padding(
@@ -312,120 +277,184 @@ class _CoprologicoState extends State<ViewCoprologico> {
           ),
         ],
       ),
-      body: Form(
-        autovalidateMode: AutovalidateMode.always,
-        onChanged: () {
-          coprologicoS.consistencia = _consistenciaController.text;
-          coprologicoS.color = _colorController.text;
-          coprologicoS.sangre = _sangreController.text;
-          coprologicoS.moco = _mocoController.text;
-          coprologicoS.otrosMacroscopicos = _otrosMacroscopicosController.text;
-          coprologicoS.ph = _phController.text;
-          coprologicoS.endamoebaHistoliticaQuistes =
-              _endamoebaHistoliticaQuistesController.text;
-          coprologicoS.endamoebaColiQuistes =
-              _endamoebaColiQuistesController.text;
-          coprologicoS.endolimaxQuistes = _endolimaxQuistesController.text;
-          coprologicoS.iodamoebaQuistes = _iodamoebaQuistesController.text;
-          coprologicoS.giardaLambliaQuistes =
-              _giardaLambliaQuistesController.text;
-          coprologicoS.chilomastixMesniliQuistes =
-              _chilomastixMesniliQuistesController.text;
-          coprologicoS.trichomonaHominisQuistes =
-              _trichomonaHominisQuistesController.text;
-          coprologicoS.balantidiumColiQuistes =
-              _balantidiumColiQuistesController.text;
-          coprologicoS.endamoebaHistoliticaTrofozoitos =
-              _endamoebaHistoliticaTrofozoitosController.text;
-          coprologicoS.endamoebaColiTrofozoitos =
-              _endamoebaColiTrofozoitosController.text;
-          coprologicoS.endolimaxTrofozoitos =
-              _endolimaxTrofozoitosController.text;
-          coprologicoS.iodamoebaTrofozoitos =
-              _iodamoebaTrofozoitosController.text;
-          coprologicoS.giardaLambliaTrofozoitos =
-              _giardaLambliaTrofozoitosController.text;
-          coprologicoS.chilomastixMesniliTrofozoitos =
-              _chilomastixMesniliTrofozoitosController.text;
-          coprologicoS.trichomonaHominisTrofozoitos =
-              _trichomonaHominisTrofozoitosController.text;
-          coprologicoS.balantidiumColiTrofozoitos =
-              _balantidiumColiTrofozoitosController.text;
-          coprologicoS.blastocystisHominisQuistes =
-              _blastocystisHominisQuistesController.text;
-          coprologicoS.blastocystisHominisTrofozoitos =
-              _blastocystisHominisTrofozoitosController.text;
-          coprologicoS.ascaris = _ascarisController.text;
-          coprologicoS.tricocefalos = _tricocefalosController.text;
-          coprologicoS.uncinaria = _uncinariaController.text;
-          coprologicoS.teniaSaginata = _teniaSaginataController.text;
-          coprologicoS.teniaSolium = _teniaSoliumController.text;
-          coprologicoS.himenolepsis = _himenolepsisController.text;
-          coprologicoS.strongiloidesLarva = _strongiloidesLarvaController.text;
-          coprologicoS.oxiurosHuevos = _oxiurosHuevosController.text;
-          coprologicoS.sangreOculta = _sangreOcultaController.text;
-          coprologicoS.lecucocitos = _leucocitosController.text;
-          coprologicoS.observaciones = _observacionesController.text;
-          coprologicoS.identificacion = widget.paciente.identificacion;
-          coprologicoS.fecha = widget.fecha;
-        },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              _buildTextField('Consistencia', _consistenciaController),
-              _buildTextField('Color', _colorController),
-              _buildTextField('Sangre', _sangreController),
-              _buildTextField('Moco', _mocoController),
-              _buildTextField(
-                  'Otros Macroscopicos', _otrosMacroscopicosController),
-              _buildTextField('Ph', _phController),
-              _buildTextField('Endamoeba Histolitica Quistes',
-                  _endamoebaHistoliticaQuistesController),
-              _buildTextField(
-                  'Endamoeba Coli Quistes', _endamoebaColiQuistesController),
-              _buildTextField('Endolimax Quistes', _endolimaxQuistesController),
-              _buildTextField('Iodamoeba Quistes', _iodamoebaQuistesController),
-              _buildTextField(
-                  'Giarda Lamblia Quistes', _giardaLambliaQuistesController),
-              _buildTextField('Chilomastix Mesnili Quistes',
-                  _chilomastixMesniliQuistesController),
-              _buildTextField('Trichomona Hominis Quistes',
-                  _trichomonaHominisQuistesController),
-              _buildTextField('Balantidium Coli Quistes ',
-                  _balantidiumColiQuistesController),
-              _buildTextField('Endamoeba Histolitica Trofozoitos',
-                  _endamoebaHistoliticaTrofozoitosController),
-              _buildTextField('Endamoeba Coli Trofozoitos',
-                  _endamoebaColiTrofozoitosController),
-              _buildTextField(
-                  'Endolimax Trofozoitos', _endolimaxTrofozoitosController),
-              _buildTextField(
-                  'Iodamoeba Trofozoitos', _iodamoebaTrofozoitosController),
-              _buildTextField('Giarda Lamblia Trofozoitos',
-                  _giardaLambliaTrofozoitosController),
-              _buildTextField('Chilomastix Mesnili Trofozoitos',
-                  _chilomastixMesniliTrofozoitosController),
-              _buildTextField('Trichomona Hominis Trofozoitos',
-                  _trichomonaHominisTrofozoitosController),
-              _buildTextField('Balantidium Coli Trofozoitos',
-                  _balantidiumColiTrofozoitosController),
-              _buildTextField('Blastocystis Hominis Quistes',
-                  _blastocystisHominisQuistesController),
-              _buildTextField('Blastocystis Hominis Trofozoitos',
-                  _blastocystisHominisTrofozoitosController),
-              _buildTextField('Ascaris Controller', _ascarisController),
-              _buildTextField('Tricocefalos', _tricocefalosController),
-              _buildTextField('Uncinaria', _uncinariaController),
-              _buildTextField('Tenia Saginata', _teniaSaginataController),
-              _buildTextField('Tenia Solium', _teniaSoliumController),
-              _buildTextField('Himenolepsis', _himenolepsisController),
-              _buildTextField(
-                  'Strongiloides Larva', _strongiloidesLarvaController),
-              _buildTextField('Oxiuros Huevos', _oxiurosHuevosController),
-              _buildTextField('sangre Oculta', _sangreOcultaController),
-              _buildTextField('leucocitos', _leucocitosController),
-              _buildTextField('observaciones', _observacionesController),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/coprologico.png'),
+                  ),
+                  const SizedBox(width: 2),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Exámen Coprológico',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.paciente.nombreCompleto,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.fecha,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.blueGrey,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Form(
+                autovalidateMode: AutovalidateMode.always,
+                onChanged: () {
+                  coprologicoS.consistencia = _consistenciaController.text;
+                  coprologicoS.color = _colorController.text;
+                  coprologicoS.sangre = _sangreController.text;
+                  coprologicoS.moco = _mocoController.text;
+                  coprologicoS.otrosMacroscopicos =
+                      _otrosMacroscopicosController.text;
+                  coprologicoS.ph = _phController.text;
+                  coprologicoS.endamoebaHistoliticaQuistes =
+                      _endamoebaHistoliticaQuistesController.text;
+                  coprologicoS.endamoebaColiQuistes =
+                      _endamoebaColiQuistesController.text;
+                  coprologicoS.endolimaxQuistes =
+                      _endolimaxQuistesController.text;
+                  coprologicoS.iodamoebaQuistes =
+                      _iodamoebaQuistesController.text;
+                  coprologicoS.giardaLambliaQuistes =
+                      _giardaLambliaQuistesController.text;
+                  coprologicoS.chilomastixMesniliQuistes =
+                      _chilomastixMesniliQuistesController.text;
+                  coprologicoS.trichomonaHominisQuistes =
+                      _trichomonaHominisQuistesController.text;
+                  coprologicoS.balantidiumColiQuistes =
+                      _balantidiumColiQuistesController.text;
+                  coprologicoS.endamoebaHistoliticaTrofozoitos =
+                      _endamoebaHistoliticaTrofozoitosController.text;
+                  coprologicoS.endamoebaColiTrofozoitos =
+                      _endamoebaColiTrofozoitosController.text;
+                  coprologicoS.endolimaxTrofozoitos =
+                      _endolimaxTrofozoitosController.text;
+                  coprologicoS.iodamoebaTrofozoitos =
+                      _iodamoebaTrofozoitosController.text;
+                  coprologicoS.giardaLambliaTrofozoitos =
+                      _giardaLambliaTrofozoitosController.text;
+                  coprologicoS.chilomastixMesniliTrofozoitos =
+                      _chilomastixMesniliTrofozoitosController.text;
+                  coprologicoS.trichomonaHominisTrofozoitos =
+                      _trichomonaHominisTrofozoitosController.text;
+                  coprologicoS.balantidiumColiTrofozoitos =
+                      _balantidiumColiTrofozoitosController.text;
+                  coprologicoS.blastocystisHominisQuistes =
+                      _blastocystisHominisQuistesController.text;
+                  coprologicoS.blastocystisHominisTrofozoitos =
+                      _blastocystisHominisTrofozoitosController.text;
+                  coprologicoS.ascaris = _ascarisController.text;
+                  coprologicoS.tricocefalos = _tricocefalosController.text;
+                  coprologicoS.uncinaria = _uncinariaController.text;
+                  coprologicoS.teniaSaginata = _teniaSaginataController.text;
+                  coprologicoS.teniaSolium = _teniaSoliumController.text;
+                  coprologicoS.himenolepsis = _himenolepsisController.text;
+                  coprologicoS.strongiloidesLarva =
+                      _strongiloidesLarvaController.text;
+                  coprologicoS.oxiurosHuevos = _oxiurosHuevosController.text;
+                  coprologicoS.sangreOculta = _sangreOcultaController.text;
+                  coprologicoS.lecucocitos = _leucocitosController.text;
+                  coprologicoS.observaciones = _observacionesController.text;
+                  coprologicoS.identificacion = widget.paciente.identificacion;
+                  coprologicoS.fecha = widget.fecha;
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      _buildTextField('Consistencia', _consistenciaController),
+                      _buildTextField('Color', _colorController),
+                      _buildTextField('Sangre', _sangreController),
+                      _buildTextField('Moco', _mocoController),
+                      _buildTextField(
+                          'Otros Macroscopicos', _otrosMacroscopicosController),
+                      _buildTextField('Ph', _phController),
+                      _buildTextField('Endamoeba Histolitica Quistes',
+                          _endamoebaHistoliticaQuistesController),
+                      _buildTextField('Endamoeba Coli Quistes',
+                          _endamoebaColiQuistesController),
+                      _buildTextField(
+                          'Endolimax Quistes', _endolimaxQuistesController),
+                      _buildTextField(
+                          'Iodamoeba Quistes', _iodamoebaQuistesController),
+                      _buildTextField('Giarda Lamblia Quistes',
+                          _giardaLambliaQuistesController),
+                      _buildTextField('Chilomastix Mesnili Quistes',
+                          _chilomastixMesniliQuistesController),
+                      _buildTextField('Trichomona Hominis Quistes',
+                          _trichomonaHominisQuistesController),
+                      _buildTextField('Balantidium Coli Quistes ',
+                          _balantidiumColiQuistesController),
+                      _buildTextField('Endamoeba Histolitica Trofozoitos',
+                          _endamoebaHistoliticaTrofozoitosController),
+                      _buildTextField('Endamoeba Coli Trofozoitos',
+                          _endamoebaColiTrofozoitosController),
+                      _buildTextField('Endolimax Trofozoitos',
+                          _endolimaxTrofozoitosController),
+                      _buildTextField('Iodamoeba Trofozoitos',
+                          _iodamoebaTrofozoitosController),
+                      _buildTextField('Giarda Lamblia Trofozoitos',
+                          _giardaLambliaTrofozoitosController),
+                      _buildTextField('Chilomastix Mesnili Trofozoitos',
+                          _chilomastixMesniliTrofozoitosController),
+                      _buildTextField('Trichomona Hominis Trofozoitos',
+                          _trichomonaHominisTrofozoitosController),
+                      _buildTextField('Balantidium Coli Trofozoitos',
+                          _balantidiumColiTrofozoitosController),
+                      _buildTextField('Blastocystis Hominis Quistes',
+                          _blastocystisHominisQuistesController),
+                      _buildTextField('Blastocystis Hominis Trofozoitos',
+                          _blastocystisHominisTrofozoitosController),
+                      _buildTextField('Ascaris Controller', _ascarisController),
+                      _buildTextField('Tricocefalos', _tricocefalosController),
+                      _buildTextField('Uncinaria', _uncinariaController),
+                      _buildTextField(
+                          'Tenia Saginata', _teniaSaginataController),
+                      _buildTextField('Tenia Solium', _teniaSoliumController),
+                      _buildTextField('Himenolepsis', _himenolepsisController),
+                      _buildTextField(
+                          'Strongiloides Larva', _strongiloidesLarvaController),
+                      _buildTextField(
+                          'Oxiuros Huevos', _oxiurosHuevosController),
+                      _buildTextField('sangre Oculta', _sangreOcultaController),
+                      _buildTextField('leucocitos', _leucocitosController),
+                      _buildTextField(
+                          'observaciones', _observacionesController),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

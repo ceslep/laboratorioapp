@@ -119,31 +119,94 @@ class _ViewPerfilLipidicoState extends State<ViewPerfilLipidico> {
           Colors.black,
         ),
         body: SingleChildScrollView(
-            child: Form(
-          onChanged: () {
-            perfilLipidicoS.colesterolTotal = colesterolTotalController.text;
-            perfilLipidicoS.colesterolHdl = colesterolHdlController.text;
-            perfilLipidicoS.colesterolVldl = colesterolVldlController.text;
-            perfilLipidicoS.colesterolLdl = colesterolLdlController.text;
-            perfilLipidicoS.trigliceridos = trigliceridosController.text;
-            perfilLipidicoS.indiceArterial = indiceArterialController.text;
-            perfilLipidicoS.observaciones = observacionesController.text;
-            perfilLipidicoS.identificacion = widget.paciente.identificacion;
-            perfilLipidicoS.fecha = widget.fecha;
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                _buildTextField('Colesterol Total', colesterolTotalController),
-                _buildTextField('Colesterol Hdl', colesterolHdlController),
-                _buildTextField('Colesterol Vldl', colesterolVldlController),
-                _buildTextField('Colesterol Ldl', colesterolLdlController),
-                _buildTextField('Trigliceridos', trigliceridosController),
-                _buildTextField('Indice Arterial', indiceArterialController),
-                _buildTextField('Observaciones', observacionesController),
-              ],
-            ),
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/hdl.png'),
+                  ),
+                  const SizedBox(width: 2),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Perfil Lipídico',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.paciente.nombreCompleto,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                              Text(
+                                widget.fecha,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.brown,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Form(
+                onChanged: () {
+                  perfilLipidicoS.colesterolTotal =
+                      colesterolTotalController.text;
+                  perfilLipidicoS.colesterolHdl = colesterolHdlController.text;
+                  perfilLipidicoS.colesterolVldl =
+                      colesterolVldlController.text;
+                  perfilLipidicoS.colesterolLdl = colesterolLdlController.text;
+                  perfilLipidicoS.trigliceridos = trigliceridosController.text;
+                  perfilLipidicoS.indiceArterial =
+                      indiceArterialController.text;
+                  perfilLipidicoS.observaciones = observacionesController.text;
+                  perfilLipidicoS.identificacion =
+                      widget.paciente.identificacion;
+                  perfilLipidicoS.fecha = widget.fecha;
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      _buildTextField(
+                          'Colesterol Total', colesterolTotalController),
+                      _buildTextField(
+                          'Colesterol Hdl', colesterolHdlController),
+                      _buildTextField(
+                          'Colesterol Vldl', colesterolVldlController),
+                      _buildTextField(
+                          'Colesterol Ldl', colesterolLdlController),
+                      _buildTextField('Trigliceridos', trigliceridosController),
+                      _buildTextField(
+                          'Indice Arterial', indiceArterialController),
+                      _buildTextField('Observaciones', observacionesController),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         )));
   }

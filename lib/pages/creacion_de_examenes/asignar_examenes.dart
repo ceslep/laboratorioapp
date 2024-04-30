@@ -102,7 +102,7 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
               icon: const Icon(Icons.done),
               onPressed: () async {
                 if (seleccionados.isNotEmpty) {
-                  String result = await Navigator.push(
+                  var result = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MostrarSeleccionados(
