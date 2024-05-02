@@ -87,12 +87,13 @@ class _PacientesState extends State<Pacientes> {
         Paciente paciente = await getInfoPaciente(context,
             identificacion: _identificacionController.text);
 
-        print(paciente.toJson());
+        //    print(paciente.toJson());
         if (paciente.identificacion != null) {
-          identificacionValida = _identificacionController.text.length >= 6;
           id = '';
           if (paciente.identificacion != 'Error') {
             id = paciente.id!;
+            identificacionValida = _identificacionController.text.length >= 6;
+            identificaCount = paciente.identificacion!.length;
             _nombresController.text = paciente.nombres!;
             _nombresfieldiCount = _nombresController.text.length;
             nombresValido = _nombresController.text.length >= 3;
@@ -101,7 +102,7 @@ class _PacientesState extends State<Pacientes> {
             apellidosValido = _apellidosController.text.length >= 5;
             _apellidosFieldiCount = _apellidosController.text.length;
             _fecnacController.text = paciente.fecnac!;
-            _genero = paciente.genero!;
+            _genero = paci<ente.genero!;
             _telefonoController.text = paciente.telefono!;
             telefonoValido = _telefonoController.text.length >= 10;
             _telefonofieldiCount = _telefonoController.text.length;
@@ -184,6 +185,11 @@ class _PacientesState extends State<Pacientes> {
               _telefonoController.clear();
               _correoController.clear();
               _entidadController.clear();
+              identificaCount = 0;
+              _nombresfieldiCount = 0;
+              _apellidosFieldiCount = 0;
+              _telefonofieldiCount = 0;
+              _correofieldiCount = 0;
               setState(() {});
             },
             icon: const Icon(
