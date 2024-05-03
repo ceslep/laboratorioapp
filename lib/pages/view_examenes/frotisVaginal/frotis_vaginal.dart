@@ -125,13 +125,15 @@ class _ViewFrotisVaginalState extends State<ViewFrotisVaginal> {
                         (value) {
                           if (true) {
                             printPDFFile(
-                                context,
-                                "frotisVaginal",
-                                "Frotis Vaginal",
-                                "frotis_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                                widget.paciente.identificacion!,
-                                widget.fecha,
-                                widget.paciente.nombreCompleto);
+                              context,
+                              "frotisVaginal",
+                              "Frotis Vaginal",
+                              "frotis_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                              widget.paciente.identificacion!,
+                              widget.fecha,
+                              widget.paciente.nombreCompleto,
+                              widget.paciente.edad,
+                            );
                           }
                           setState(() => guardando_ = !guardando_);
                         },

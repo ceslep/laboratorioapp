@@ -152,13 +152,15 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                         (value) {
                           if (true) {
                             printPDFFile(
-                                context,
-                                "parcialOrina",
-                                "Parcial de Orina",
-                                "parcialOrina_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                                widget.paciente.identificacion!,
-                                widget.fecha,
-                                widget.paciente.nombreCompleto);
+                              context,
+                              "parcialOrina",
+                              "Parcial de Orina",
+                              "parcialOrina_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                              widget.paciente.identificacion!,
+                              widget.fecha,
+                              widget.paciente.nombreCompleto,
+                              widget.paciente.edad,
+                            );
                           }
                           setState(() => guardando_ = !guardando_);
                         },

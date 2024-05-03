@@ -78,13 +78,15 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                         });
 
                         printPDFFile(
-                            context,
-                            "hemogramaRayto",
-                            "Hemograma",
-                            "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                            widget.paciente.identificacion!,
-                            widget.fecha,
-                            widget.paciente.nombreCompleto);
+                          context,
+                          "hemogramaRayto",
+                          "Hemograma",
+                          "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                          widget.paciente.identificacion!,
+                          widget.fecha,
+                          widget.paciente.nombreCompleto,
+                          widget.paciente.edad,
+                        );
                       });
                     },
                     icon: const Icon(

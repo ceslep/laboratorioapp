@@ -212,7 +212,8 @@ class _CoprologicoState extends State<ViewCoprologico> {
                                 "coprologico_${widget.paciente.identificacion}_${widget.fecha}.pdf",
                                 widget.paciente.identificacion!,
                                 widget.fecha,
-                                widget.paciente.nombreCompleto);
+                                widget.paciente.nombreCompleto,
+                                widget.paciente.edad);
                           }
                           setState(() => guardando_ = !guardando_);
                         },

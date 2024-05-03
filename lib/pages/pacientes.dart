@@ -102,7 +102,7 @@ class _PacientesState extends State<Pacientes> {
             apellidosValido = _apellidosController.text.length >= 5;
             _apellidosFieldiCount = _apellidosController.text.length;
             _fecnacController.text = paciente.fecnac!;
-            _genero = paci<ente.genero!;
+            _genero = paciente.genero!;
             _telefonoController.text = paciente.telefono!;
             telefonoValido = _telefonoController.text.length >= 10;
             _telefonofieldiCount = _telefonoController.text.length;

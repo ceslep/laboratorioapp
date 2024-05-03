@@ -21,16 +21,22 @@ class _VerPorFechaState extends State<VerPorFecha> {
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
   List<Paciente> pacientess = [];
+  bool consultando = false;
   @override
   void initState() {
     super.initState();
     _fechaController.addListener(
       () {
         print(_fechaController.text);
+        setState(() {
+          consultando = !consultando;
+        });
         getPacientesFecha(context, _fechaController.text).then(
           (value) {
             pacientess = value;
-            setState(() {});
+            setState(() {
+              consultando = !consultando;
+            });
           },
         );
       },
@@ -56,57 +62,62 @@ class _VerPorFechaState extends State<VerPorFecha> {
           ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: pacientess.length + 1,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: buildDatePicker(
-                  context,
-                  _fechaController,
-                  'Fecha de Exámenes',
-                ));
-          } else {
-            int indexx = index - 1;
-            String nombreCompleto = pacientess[indexx].nombreCompleto;
-            String identificacion = pacientess[indexx].identificacion!;
-            String sexo = pacientess[indexx].genero!;
-            Paciente paciente = pacientess[indexx];
-            return Card(
-              child: ListTile(
-                title: Text(nombreCompleto),
-                subtitle: Text(identificacion),
-                leading: CircleAvatar(
-                  backgroundImage: sexo == 'Masculino'
-                      ? const AssetImage('images/male.png')
-                      : const AssetImage('images/female.png'),
-                ),
-                trailing: IconButton(
-                  onPressed: () async {
-                    var result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ConsultaExamenes(
-                          paciente: paciente,
-                          fecha: _fechaController.text,
-                        ),
+      body: !consultando
+          ? ListView.builder(
+              itemCount: pacientess.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: buildDatePicker(
+                        context,
+                        _fechaController,
+                        'Fecha de Exámenes',
+                      ));
+                } else {
+                  int indexx = index - 1;
+                  String nombreCompleto = pacientess[indexx].nombreCompleto;
+                  String identificacion = pacientess[indexx].identificacion!;
+                  String sexo = pacientess[indexx].genero!;
+                  Paciente paciente = pacientess[indexx];
+                  return Card(
+                    child: ListTile(
+                      title: Text(nombreCompleto),
+                      subtitle: Text(identificacion),
+                      leading: CircleAvatar(
+                        backgroundImage: sexo == 'Masculino'
+                            ? const AssetImage('images/male.png')
+                            : const AssetImage('images/female.png'),
                       ),
-                    );
-                    if (result == 'home') {
-                      if (mounted) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pop(context, 'home');
-                      }
-                    }
-                  },
-                  icon: const Icon(Icons.remove_red_eye, color: Colors.blue),
-                ),
-              ),
-            );
-          }
-        },
-      ),
+                      trailing: IconButton(
+                        onPressed: () async {
+                          var result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ConsultaExamenes(
+                                paciente: paciente,
+                                fecha: _fechaController.text,
+                              ),
+                            ),
+                          );
+                          if (result == 'home') {
+                            if (mounted) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context, 'home');
+                            }
+                          }
+                        },
+                        icon: const Icon(Icons.remove_red_eye,
+                            color: Colors.blue),
+                      ),
+                    ),
+                  );
+                }
+              },
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

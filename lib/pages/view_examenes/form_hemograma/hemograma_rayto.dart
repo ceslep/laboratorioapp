@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -167,13 +166,15 @@ class _ViewHemogramaRaytoState extends State<ViewHemogramaRayto> {
                           } else  */
                           if (true) {
                             printPDFFile(
-                                context,
-                                "hemogramaRayto",
-                                "Hemograma Sistematizado",
-                                "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                                widget.paciente.identificacion!,
-                                widget.fecha,
-                                widget.paciente.nombreCompleto);
+                              context,
+                              "hemogramaRayto",
+                              "Hemograma Sistematizado",
+                              "hemograma_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                              widget.paciente.identificacion!,
+                              widget.fecha,
+                              widget.paciente.nombreCompleto,
+                              widget.paciente.edad,
+                            );
                           }
                         },
                       );

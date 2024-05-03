@@ -76,13 +76,15 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                         (value) {
                           if (true) {
                             printPDFFile(
-                                context,
-                                "examen_tipo_2",
-                                widget.examen.nombreExamen!,
-                                "${widget.examen.nombreExamen!}_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                                widget.paciente.identificacion!,
-                                widget.fecha,
-                                widget.paciente.nombreCompleto);
+                              context,
+                              "examen_tipo_2",
+                              widget.examen.nombreExamen!,
+                              "${widget.examen.nombreExamen!}_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                              widget.paciente.identificacion!,
+                              widget.fecha,
+                              widget.paciente.nombreCompleto,
+                              widget.paciente.edad,
+                            );
                           }
                           setState(() => guardando_ = !guardando_);
                         },

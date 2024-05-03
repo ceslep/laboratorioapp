@@ -87,13 +87,15 @@ class _ViewPerfilLipidicoState extends State<ViewPerfilLipidico> {
               (value) {
                 if (true) {
                   printPDFFile(
-                      context,
-                      "perfilLipidico",
-                      "Perfil Lipídico",
-                      "perfil_${widget.paciente.identificacion}_${widget.fecha}.pdf",
-                      widget.paciente.identificacion!,
-                      widget.fecha,
-                      widget.paciente.nombreCompleto);
+                    context,
+                    "perfilLipidico",
+                    "Perfil Lipídico",
+                    "perfil_${widget.paciente.identificacion}_${widget.fecha}.pdf",
+                    widget.paciente.identificacion!,
+                    widget.fecha,
+                    widget.paciente.nombreCompleto,
+                    widget.paciente.edad,
+                  );
                 }
                 setState(() => guardando_ = !guardando_);
               },

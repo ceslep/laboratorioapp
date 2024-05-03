@@ -284,18 +284,20 @@ Future<bool> _launchInBrowser(Uri url) async {
 }
 
 Future<void> printPDFFile(
-    BuildContext context,
-    String tabla,
-    String info,
-    String fileName,
-    String identificacion,
-    String fecha,
-    String nombres) async {
+  BuildContext context,
+  String tabla,
+  String info,
+  String fileName,
+  String identificacion,
+  String fecha,
+  String nombres,
+  String edad,
+) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   /* final Uri url = Uri.parse(
       '${urlProvider.url}printphp/print_examen.php?identificacion=$identificacion&fecha=$fecha&nombres=$nombres&tabla=$tabla&info=$info'); */
   String ile =
-      '${urlProvider.url}listaExamenes.php?identificacion=$identificacion&fecha=$fecha&tabla=$tabla&info=$info&embedido=1&nombres=$nombres';
+      '${urlProvider.url}listaExamenes.php?identificacion=$identificacion&fecha=$fecha&tabla=$tabla&info=$info&embedido=1&nombres=$nombres&edad=$edad';
   print(ile);
   final Uri url = Uri.parse(ile);
   print(url);
