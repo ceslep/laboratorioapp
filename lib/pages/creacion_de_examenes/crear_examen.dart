@@ -62,23 +62,31 @@ class _CrearExamenState extends State<CrearExamen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Form(
-                      child: TextFormField(
-                        onChanged: (value) {
-                          if (value.length < 3) {
-                            setState(() => paciente = Paciente());
+                      child: Focus(
+                        onKeyEvent: (node, event) {
+                          if (event.logicalKey.keyLabel == 'Enter') {
+                            getInfoPac(context);
                           }
+                          return KeyEventResult.ignored;
                         },
-                        autofocus: true,
-                        controller: _identificacionController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Paciente',
-                          hintText: 'Identificación del paciente',
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              _identificacionController.clear();
-                            },
-                            icon: const Icon(Icons.clear),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            if (value.length < 3) {
+                              setState(() => paciente = Paciente());
+                            }
+                          },
+                          autofocus: true,
+                          controller: _identificacionController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Paciente',
+                            hintText: 'Identificación del paciente',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                _identificacionController.clear();
+                              },
+                              icon: const Icon(Icons.clear),
+                            ),
                           ),
                         ),
                       ),
@@ -96,10 +104,7 @@ class _CrearExamenState extends State<CrearExamen> {
                         padding: const EdgeInsets.all(0.0),
                       ),
                       onPressed: () async {
-                        setState(() => buscando = !buscando);
-                        paciente = await getInfoPaciente(context,
-                            identificacion: _identificacionController.text);
-                        setState(() => buscando = !buscando);
+                        await getInfoPac(context);
                       },
                       child: !buscando
                           ? const Icon(Icons.search)
@@ -206,5 +211,12 @@ class _CrearExamenState extends State<CrearExamen> {
         ),
       ),
     );
+  }
+
+  Future<void> getInfoPac(BuildContext context) async {
+    setState(() => buscando = !buscando);
+    paciente = await getInfoPaciente(context,
+        identificacion: _identificacionController.text);
+    setState(() => buscando = !buscando);
   }
 }

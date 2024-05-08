@@ -11,7 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:desktop_window/desktop_window.dart';
 
 const String titleApp = 'Laboratorio';
-const Color colorTheme = Colors.purple;
+const Color colorTheme = Color.fromARGB(255, 34, 170, 140);
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(

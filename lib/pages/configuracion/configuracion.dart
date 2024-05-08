@@ -231,7 +231,7 @@ class _ConfiguracionState extends State<Configuracion> {
                     ),
                   ],
                 ),
-                SizedBox(
+                /* SizedBox(
                   width: 0.95 * MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -252,7 +252,7 @@ class _ConfiguracionState extends State<Configuracion> {
                       colort: colort,
                     ),
                   ),
-                ),
+                ), */
               ],
             ),
           ),

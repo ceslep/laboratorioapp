@@ -626,3 +626,11 @@ Future<List<Paciente>> getPacientesFecha(
     return [];
   }
 }
+
+Image imagenet(BuildContext context, String image) {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  return Image.network(
+    "${urlProvider.url}logo.png",
+    scale: 0.5,
+  );
+}

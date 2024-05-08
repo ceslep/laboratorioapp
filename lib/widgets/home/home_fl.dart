@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/pages/creacion_de_examenes/crear_examen.dart';
 import 'package:laboratorioapp/pages/pacientes.dart';
 
@@ -72,10 +73,7 @@ class BodyHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Image.asset(
-                        'images/logo.png',
-                        scale: 0.5,
-                      ),
+                      child: imagenet(context, "logo.png"),
                     ),
                   ],
                 ),
