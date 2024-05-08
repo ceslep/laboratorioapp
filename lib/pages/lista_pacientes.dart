@@ -19,8 +19,7 @@ class _ListaPacientesState extends State<ListaPacientes> {
   List<Paciente> pacientes = [];
   FToast fToast = FToast();
   bool cargado = false;
-  final TextEditingController _controller =
-      TextEditingController(text: '24397418');
+  final TextEditingController _controller = TextEditingController(text: '');
   bool buscando = false;
   @override
   void initState() {
