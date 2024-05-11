@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
+import 'package:laboratorioapp/models/data-hemat.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/examen_tipo2_model.dart';
 import 'package:laboratorioapp/models/examenes.dart';
@@ -633,4 +634,28 @@ Image imagenet(BuildContext context, String image) {
     "${urlProvider.url}logo.png",
     scale: 0.5,
   );
+}
+
+Future<DataHemat> getDataHemat(
+    BuildContext context, String identificacion, String fecha) async {
+  Map<String, dynamic> dataHemat;
+  Uri url = Uri.parse('http://10.0.2.2:3000/dataHemat');
+  final String bodyData =
+      json.encode({"identificacion": identificacion, "fecha": fecha});
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: bodyData,
+    );
+    if (response.statusCode == 200) {
+      dataHemat = jsonDecode(response.body);
+      return DataHemat.fromJson(dataHemat);
+    } else {
+      return DataHemat();
+    }
+  } catch (e) {
+    print(e);
+    return DataHemat();
+  }
 }

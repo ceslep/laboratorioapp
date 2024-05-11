@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
+import 'package:laboratorioapp/models/data-hemat.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma.dart';
@@ -55,13 +56,27 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: Text(
+        title: const Text(
           'Registro de Exámenes',
           style: TextStyle(
             fontSize: 14,
           ),
         ),
         actions: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: IconButton(
+              onPressed: () async {
+                DataHemat dataHemat = await getDataHemat(
+                    context, widget.paciente.identificacion!, widget.fecha);
+                print(dataHemat.toJson());
+              },
+              icon: const Icon(
+                Icons.lan,
+                color: Colors.green,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8),
             child: !imprimiendo_
@@ -76,7 +91,6 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                         setState(() {
                           imprimiendo_ = !imprimiendo_;
                         });
-
                         printPDFFile(
                           context,
                           "hemogramaRayto",
