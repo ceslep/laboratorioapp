@@ -32,8 +32,9 @@ class ViewHemogramaRaytoNew extends StatefulWidget {
 }
 
 class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
+  DataHemat dataHemat = DataHemat();
+  late HRayto hraytoLan;
   void onFormHemogramaChange(FormHemograma formState) {}
-
   bool imprimiendo_ = false;
   bool guardando_ = false;
   FToast fToast = FToast();
@@ -48,6 +49,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
 
     hraytoProvider = Provider.of<HRaytoProvider>(context, listen: false);
     urlProvider = Provider.of<UrlProvider>(context, listen: false);
+    hraytoLan = widget.hemograma;
     fToast.init(context);
   }
 
@@ -67,9 +69,34 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
             padding: const EdgeInsets.all(8),
             child: IconButton(
               onPressed: () async {
-                DataHemat dataHemat = await getDataHemat(
-                    context, widget.paciente.identificacion!, widget.fecha);
-                print(dataHemat.toJson());
+                dataHemat = await getDataHemat(
+                  context,
+                  widget.paciente.identificacion!,
+                  widget.fecha,
+                );
+                hraytoLan.identificacion = widget.paciente.identificacion;
+                hraytoLan.fecha = widget.fecha;
+                hraytoLan.wBC = dataHemat.wbc;
+                hraytoLan.lYMn = dataHemat.lyMn;
+                hraytoLan.mIDn = dataHemat.miDn;
+                hraytoLan.gRAn = dataHemat.grAn;
+                hraytoLan.lYMp = dataHemat.lyMp;
+                hraytoLan.mIDp = dataHemat.miDp;
+                hraytoLan.gRAp = dataHemat.grAp;
+                hraytoLan.rBC = dataHemat.rbc;
+                hraytoLan.hGB = dataHemat.hgb;
+                hraytoLan.mCHC = dataHemat.mchc;
+                hraytoLan.mCH = dataHemat.mch;
+                hraytoLan.mCV = dataHemat.mcv;
+                hraytoLan.rDWCV = dataHemat.rdwcv;
+                hraytoLan.rDWSD = dataHemat.rdwsd;
+                hraytoLan.hCT = dataHemat.hct;
+                hraytoLan.pLT = dataHemat.plt;
+                hraytoLan.mPV = dataHemat.mpv;
+                hraytoLan.pDW = dataHemat.pdw;
+                hraytoLan.pCT = dataHemat.pct;
+                hraytoLan.pLCR = dataHemat.plcr;
+                setState(() {});
               },
               icon: const Icon(
                 Icons.lan,
@@ -211,7 +238,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                 ],
               ),
               FormHemogramaNew(
-                hemograma: widget.hemograma,
+                hemograma: hraytoLan,
                 identificacion: widget.paciente.identificacion!,
                 fecha: widget.fecha,
               ),

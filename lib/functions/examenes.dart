@@ -1,10 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/coprologico.dart';
+import 'package:laboratorioapp/models/data-hemat.dart';
 import 'package:laboratorioapp/models/examen_tipo1_model.dart';
 import 'package:laboratorioapp/models/examen_tipo2_model.dart';
 import 'package:laboratorioapp/models/frotis_vaginal_model.dart';
@@ -97,7 +98,36 @@ Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
   } else if (hemograma.identificacion == 'Error') {
     HRayto hemograma = await getHemogramaRaytoNew(context,
         identificacion: paciente.identificacion!, fecha: fecha);
-
+    print({"e": hemograma.toJson()});
+    if (hemograma.identificacion == 'Error') {
+      DataHemat dataHemat = await getDataHemat(
+        context,
+        paciente.identificacion!,
+        fecha,
+      );
+      hemograma.identificacion = paciente.identificacion;
+      hemograma.fecha = fecha;
+      hemograma.wBC = dataHemat.wbc;
+      hemograma.lYMn = dataHemat.lyMn;
+      hemograma.mIDn = dataHemat.miDn;
+      hemograma.gRAn = dataHemat.grAn;
+      hemograma.lYMp = dataHemat.lyMp;
+      hemograma.mIDp = dataHemat.miDp;
+      hemograma.gRAp = dataHemat.grAp;
+      hemograma.rBC = dataHemat.rbc;
+      hemograma.hGB = dataHemat.hgb;
+      hemograma.mCHC = dataHemat.mchc;
+      hemograma.mCH = dataHemat.mch;
+      hemograma.mCV = dataHemat.mcv;
+      hemograma.rDWCV = dataHemat.rdwcv;
+      hemograma.rDWSD = dataHemat.rdwsd;
+      hemograma.hCT = dataHemat.hct;
+      hemograma.pLT = dataHemat.plt;
+      hemograma.mPV = dataHemat.mpv;
+      hemograma.pDW = dataHemat.pdw;
+      hemograma.pCT = dataHemat.pct;
+      hemograma.pLCR = dataHemat.plcr;
+    }
     await Navigator.push(
       context,
       MaterialPageRoute(
