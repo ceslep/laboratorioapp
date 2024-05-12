@@ -6,6 +6,7 @@ import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/data-hemat.dart';
 import 'package:laboratorioapp/models/hg_rayto.dart';
 import 'package:laboratorioapp/models/paciente.dart';
+import 'package:laboratorioapp/pages/importacion/ver_importacion.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma.dart';
 import 'package:laboratorioapp/pages/view_examenes/form_hemograma/form_hemograma_new.dart';
 import 'package:laboratorioapp/providers/hrayto_provider.dart';
@@ -69,33 +70,24 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
             padding: const EdgeInsets.all(8),
             child: IconButton(
               onPressed: () async {
-                dataHemat = await getDataHemat(
+                getDataHemat(
                   context,
                   widget.paciente.identificacion!,
                   widget.fecha,
+                ).then(
+                  (DataHemat value) {
+                    DataHemat dataHemat = value;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VerImportacion(
+                          data: dataHemat,
+                        ),
+                      ),
+                    );
+                  },
                 );
-                hraytoLan.identificacion = widget.paciente.identificacion;
-                hraytoLan.fecha = widget.fecha;
-                hraytoLan.wBC = dataHemat.wbc;
-                hraytoLan.lYMn = dataHemat.lyMn;
-                hraytoLan.mIDn = dataHemat.miDn;
-                hraytoLan.gRAn = dataHemat.grAn;
-                hraytoLan.lYMp = dataHemat.lyMp;
-                hraytoLan.mIDp = dataHemat.miDp;
-                hraytoLan.gRAp = dataHemat.grAp;
-                hraytoLan.rBC = dataHemat.rbc;
-                hraytoLan.hGB = dataHemat.hgb;
-                hraytoLan.mCHC = dataHemat.mchc;
-                hraytoLan.mCH = dataHemat.mch;
-                hraytoLan.mCV = dataHemat.mcv;
-                hraytoLan.rDWCV = dataHemat.rdwcv;
-                hraytoLan.rDWSD = dataHemat.rdwsd;
-                hraytoLan.hCT = dataHemat.hct;
-                hraytoLan.pLT = dataHemat.plt;
-                hraytoLan.mPV = dataHemat.mpv;
-                hraytoLan.pDW = dataHemat.pdw;
-                hraytoLan.pCT = dataHemat.pct;
-                hraytoLan.pLCR = dataHemat.plcr;
+
                 setState(() {});
               },
               icon: const Icon(
