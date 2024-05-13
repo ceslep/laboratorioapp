@@ -37,6 +37,7 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
   late HRayto hraytoLan;
   void onFormHemogramaChange(FormHemograma formState) {}
   bool imprimiendo_ = false;
+  bool importando = false;
   bool guardando_ = false;
   FToast fToast = FToast();
   List<Map<String, dynamic>> dataHemograma = List.empty();
@@ -68,33 +69,41 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8),
-            child: IconButton(
-              onPressed: () async {
-                getDataHemat(
-                  context,
-                  widget.paciente.identificacion!,
-                  widget.fecha,
-                ).then(
-                  (DataHemat value) {
-                    DataHemat dataHemat = value;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VerImportacion(
-                          data: dataHemat,
-                        ),
-                      ),
-                    );
-                  },
-                );
+            child: !importando
+                ? IconButton(
+                    onPressed: () async {
+                      setState(() {
+                        importando = !importando;
+                      });
+                      getDataHemat(
+                        context,
+                        widget.paciente.identificacion!,
+                        widget.fecha,
+                      ).then(
+                        (DataHemat value) {
+                          setState(() {
+                            importando = !importando;
+                          });
+                          DataHemat dataHemat = value;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VerImportacion(
+                                data: dataHemat,
+                              ),
+                            ),
+                          );
+                        },
+                      );
 
-                setState(() {});
-              },
-              icon: const Icon(
-                Icons.lan,
-                color: Colors.green,
-              ),
-            ),
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.lan,
+                      color: Colors.green,
+                    ),
+                  )
+                : const CircularProgressIndicator(),
           ),
           Padding(
             padding: const EdgeInsets.all(8),

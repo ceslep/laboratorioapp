@@ -194,6 +194,7 @@ class _FormHemogramaState extends State<FormHemogramaNew> {
       hraytoProvider.hrayto.pLCR = pLcrController.text;
       hraytoProvider.hrayto.identificacion = widget.identificacion;
       hraytoProvider.hrayto.fecha = widget.fecha;
+      observacionesController.text = widget.hemograma.observaciones!;
       hraytoProvider.hrayto.observaciones = observacionesController.text;
     }
   }
