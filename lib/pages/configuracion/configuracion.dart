@@ -1,7 +1,10 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
@@ -9,6 +12,12 @@ import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
 import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 import 'package:laboratorioapp/widgets/text_field.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+class Fimage {
+  final File fileImg;
+  final String fileImgStr64;
+  const Fimage(this.fileImg, this.fileImgStr64);
+}
 
 class Configuracion extends StatefulWidget {
   const Configuracion({super.key});
@@ -46,6 +55,14 @@ class _ConfiguracionState extends State<Configuracion> {
   late final TextEditingController urlLogoLaboratorioController =
       TextEditingController();
 
+  String imageFirma = '';
+  String imageLogo = '';
+
+  File? fimageFirma;
+
+  Fimage fimage = Fimage(File(''), '');
+  Fimage fimageLogo = Fimage(File(''), '');
+
   @override
   void initState() {
     super.initState();
@@ -82,6 +99,18 @@ class _ConfiguracionState extends State<Configuracion> {
           icon: Icon(MdiIcons.alert));
       print('Error: $e');
     }
+  }
+
+  Future<Fimage> _getFirmaImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickImage(source: ImageSource.gallery);
+    print(pickedImage?.path);
+    File xfile = File(pickedImage!.path);
+    List<int> imageBytes = xfile.readAsBytesSync();
+    String base64Image = base64Encode(imageBytes);
+    Fimage fimage = Fimage(xfile, base64Image);
+    return fimage;
   }
 
   @override
@@ -231,28 +260,75 @@ class _ConfiguracionState extends State<Configuracion> {
                     ),
                   ],
                 ),
-                /* SizedBox(
-                  width: 0.95 * MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFieldI(
-                      labelText: 'URL Firma Bacteriólogo Laboratorio',
-                      controller: urlFirmaLaboratorioController,
-                      colort: colort,
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: 0.95 * MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFieldI(
+                          labelText: 'Firma Bacteriólogo Laboratorio (400x120)',
+                          controller: urlFirmaLaboratorioController,
+                          colort: colort,
+                          minLines: 4,
+                          maxLines: 3,
+                        ),
+                      ),
                     ),
-                  ),
+                    fimage.fileImgStr64 != ''
+                        ? Image.file(fimage.fileImg)
+                        : const SizedBox(),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          fimage = await _getFirmaImageFromGallery();
+                          imageFirma = fimage.fileImgStr64;
+                          urlFirmaLaboratorioController.text =
+                              imageFirma.substring(0, 180);
+                          print(fimage.fileImg.path);
+                          setState(() {});
+                        },
+                        child: const Text('Cargar firma'),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 0.95 * MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFieldI(
-                      labelText: 'URL Logo Laboratorio',
-                      controller: urlLogoLaboratorioController,
-                      colort: colort,
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: 0.95 * MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFieldI(
+                          labelText: 'Logo Laboratorio (500x500)',
+                          controller: urlLogoLaboratorioController,
+                          colort: colort,
+                          minLines: 4,
+                        ),
+                      ),
                     ),
-                  ),
-                ), */
+                    fimageLogo.fileImgStr64 != ''
+                        ? Image.file(fimageLogo.fileImg)
+                        : const SizedBox(),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          fimageLogo = await _getFirmaImageFromGallery();
+                          imageLogo = fimageLogo.fileImgStr64;
+                          urlLogoLaboratorioController.text =
+                              imageLogo.substring(0, 180);
+                          print(fimageLogo.fileImg.path);
+                          setState(() {});
+                        },
+                        child: const Text('Cargar Logo'),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

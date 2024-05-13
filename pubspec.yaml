@@ -51,6 +51,7 @@ dependencies:
   desktop_window: ^0.4.0
   webview_flutter_web: ^0.2.2+4
   webview_flutter_platform_interface: ^2.10.0
+  image_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:
