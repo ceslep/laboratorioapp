@@ -2,6 +2,8 @@
 
 import 'dart:io';
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,9 +16,27 @@ import 'package:laboratorioapp/widgets/text_field.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Fimage {
-  final File fileImg;
-  final String fileImgStr64;
-  const Fimage(this.fileImg, this.fileImgStr64);
+  File fileImg;
+  String fileImgStr64;
+  Fimage(
+    this.fileImg,
+    this.fileImgStr64,
+  );
+
+  ImageProvider<Object>? get imageProvider {
+    if (fileImgStr64 != '') {
+      try {
+        final bytes =
+            base64Decode(fileImgStr64); // Use ! for non-null assertion
+        return MemoryImage(bytes);
+      } catch (error) {
+        print('Error decoding image: $error');
+        return null; // Or return a default image provider
+      }
+    } else {
+      return null; // Or return a default image provider
+    }
+  }
 }
 
 class Configuracion extends StatefulWidget {
@@ -59,7 +79,7 @@ class _ConfiguracionState extends State<Configuracion> {
   String imageLogo = '';
 
   File? fimageFirma;
-
+  Uint8List uil = Uint8List(0);
   Fimage fimage = Fimage(File(''), '');
   Fimage fimageLogo = Fimage(File(''), '');
 
@@ -84,8 +104,13 @@ class _ConfiguracionState extends State<Configuracion> {
         bacteriologoLaboratorioController.text =
             configuracion.bacteriologoLaboratorio!;
         tarjetaPLaboratorioController.text = configuracion.tarjetaPLaboratorio!;
-        urlFirmaLaboratorioController.text = configuracion.urlFirmaLaboratorio!;
-        urlLogoLaboratorioController.text = configuracion.urlLogoLaboratorio!;
+
+        urlFirmaLaboratorioController.text =
+            configuracion.urlFirmaLaboratorio!.substring(0, 180);
+        urlLogoLaboratorioController.text =
+            configuracion.urlLogoLaboratorio!.substring(0, 180);
+        fimage.fileImgStr64 = configuracion.urlFirmaLaboratorio!;
+        fimageLogo.fileImgStr64 = configuracion.urlLogoLaboratorio!;
 
         setState(
           () => cargando = !cargando,
@@ -127,6 +152,8 @@ class _ConfiguracionState extends State<Configuracion> {
                 setState(() {
                   guardando = !guardando;
                 });
+                configuracion.urlFirmaLaboratorio = fimage.fileImgStr64;
+                configuracion.urlLogoLaboratorio = fimageLogo.fileImgStr64;
                 guardarConfiguracion(context, configuracion).then(
                   (value) {
                     showFloatingModalBottomSheet(
@@ -170,6 +197,8 @@ class _ConfiguracionState extends State<Configuracion> {
                     urlFirmaLaboratorioController.text;
                 configuracion.urlLogoLaboratorio =
                     urlLogoLaboratorioController.text;
+                configuracion.urlFirmaLaboratorio = fimage.fileImgStr64;
+                configuracion.urlLogoLaboratorio = fimageLogo.fileImgStr64;
               }
             },
             child: Column(
@@ -276,7 +305,7 @@ class _ConfiguracionState extends State<Configuracion> {
                       ),
                     ),
                     fimage.fileImgStr64 != ''
-                        ? Image.file(fimage.fileImg)
+                        ? Image(image: fimage.imageProvider!)
                         : const SizedBox(),
                     Positioned(
                       top: 0,
@@ -310,7 +339,7 @@ class _ConfiguracionState extends State<Configuracion> {
                       ),
                     ),
                     fimageLogo.fileImgStr64 != ''
-                        ? Image.file(fimageLogo.fileImg)
+                        ? Image(image: fimageLogo.imageProvider!)
                         : const SizedBox(),
                     Positioned(
                       top: 0,
