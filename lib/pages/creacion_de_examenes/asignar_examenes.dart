@@ -6,6 +6,7 @@ import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/paciente.dart';
 import 'package:laboratorioapp/models/procedimientos_model.dart';
+import 'package:laboratorioapp/pages/configuracion/procedimientos.dart';
 import 'package:laboratorioapp/pages/creacion_de_examenes/mostrar_seleccionados.dart';
 
 class AsignarExamenes extends StatefulWidget {
@@ -169,6 +170,7 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
             } else {
               int indexx = index - 2;
               String nombreExamen = procedimientoss[indexx].nombre!;
+              String codigoExamen = procedimientoss[indexx].codigo!;
               bool seleccionado = siselect(nombreExamen);
               MaterialStateProperty<Color> bgColorn =
                   MaterialStateProperty.resolveWith(
@@ -186,6 +188,22 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
                   title: Text(
                     nombreExamen,
                     style: const TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  leading: IconButton(
+                    onPressed: () {
+                      getProcedimiento(context, codigoExamen).then(
+                        (Procedimientos value) {
+                          Procedimientos procedimiento = value;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProcedimientosPage(
+                                    procedimiento: procedimiento)),
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.settings_applications_rounded),
                   ),
                   trailing: ElevatedButton(
                     style: ButtonStyle(

@@ -555,6 +555,26 @@ Future<List<Procedimientos>> getProcedimientos(
   }
 }
 
+Future<Procedimientos> getProcedimiento(
+    BuildContext context, String codigo) async {
+  Map<String, dynamic> procedimiento;
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}getProcedimiento.php');
+  final String bodyData = json.encode({"codigo": codigo});
+
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      procedimiento = jsonDecode(response.body);
+      return Procedimientos.fromJson(procedimiento);
+    }
+    return Procedimientos();
+  } catch (e) {
+    print(e);
+    return Procedimientos();
+  }
+}
+
 String procedisToJson(List<Procedimientos> procedimientos) {
   String json = "[";
   for (Procedimientos procedimiento in procedimientos) {
@@ -631,7 +651,7 @@ Future<List<Paciente>> getPacientesFecha(
 Image imagenet(BuildContext context, String image) {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   return Image.network(
-    "${urlProvider.url}logo.png",
+    "${urlProvider.url}printphp/$image",
     scale: 0.5,
   );
 }

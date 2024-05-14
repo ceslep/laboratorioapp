@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/functions/show_toast.dart';
 import 'package:laboratorioapp/models/configuracion_model.dart';
+import 'package:laboratorioapp/models/procedimientos_model.dart';
+import 'package:laboratorioapp/pages/configuracion/procedimientos.dart';
 import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
 import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 import 'package:laboratorioapp/widgets/text_field.dart';
@@ -145,6 +147,14 @@ class _ConfiguracionState extends State<Configuracion> {
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         title: const Text('Configuración'),
         actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 3.0),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.settings_applications,
+                  color: Colors.blueGrey),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
