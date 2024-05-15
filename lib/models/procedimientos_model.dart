@@ -10,17 +10,17 @@ Procedimientos procedimientosFromJson(String str) =>
 String procedimientosToJson(Procedimientos data) => json.encode(data.toJson());
 
 class Procedimientos {
-  final String? ind;
-  final String? codigo;
-  final String? nombre;
-  final String? tabla;
-  final String? info;
-  final String? color;
-  final String? constante;
-  final String? unidades;
-  final String? tipo;
-  final String? tipoprocedimiento;
-  final String? abreviatura;
+  String? ind;
+  String? codigo;
+  String? nombre;
+  String? tabla;
+  String? info;
+  String? color;
+  String? constante;
+  String? unidades;
+  String? tipo;
+  String? tipoprocedimiento;
+  String? abreviatura;
 
   Procedimientos({
     this.ind,

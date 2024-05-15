@@ -1,5 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:laboratorioapp/api/api_laboratorio.dart';
 import 'package:laboratorioapp/models/procedimientos_model.dart';
+import 'package:laboratorioapp/widgets/modals/floating_modal.dart';
+import 'package:laboratorioapp/widgets/modals/modal_fit.dart';
 
 class ProcedimientosPage extends StatefulWidget {
   final Procedimientos procedimiento;
@@ -10,6 +15,7 @@ class ProcedimientosPage extends StatefulWidget {
 }
 
 class _ProcedimientosPageState extends State<ProcedimientosPage> {
+  bool guardando_ = false;
   final TextEditingController nombreController = TextEditingController();
   final TextEditingController tablaController = TextEditingController();
   final TextEditingController infoController = TextEditingController();
@@ -20,7 +26,10 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
   final TextEditingController tipoProcedimientoController =
       TextEditingController();
   final TextEditingController abreviaturaController = TextEditingController();
-
+  late Procedimientos procedimientoss;
+  String color = "";
+  List<String> colores = [];
+  Color colc = Colors.white;
   @override
   void initState() {
     super.initState();
@@ -33,6 +42,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
     tipoController.text = widget.procedimiento.tipo!;
     tipoProcedimientoController.text = widget.procedimiento.tipoprocedimiento!;
     abreviaturaController.text = widget.procedimiento.abreviatura!;
+    procedimientoss = widget.procedimiento;
   }
 
   @override
@@ -45,10 +55,34 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.save),
-            ),
+            child: !guardando_
+                ? IconButton(
+                    onPressed: () async {
+                      setState(() => guardando_ = !guardando_);
+                      guardarProcedimiento(context, procedimientoss)
+                          .then((value) {
+                        showFloatingModalBottomSheet(
+                          context: context,
+                          builder: (context) => const ModalFit(
+                            title: 'Exámen actualizado',
+                            asset: 'images/logo.png',
+                          ),
+                        );
+                        setState(() => guardando_ = !guardando_);
+                      });
+                    },
+                    icon: const Icon(Icons.save),
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(right: 14),
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -56,11 +90,36 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Form(
+            autovalidateMode: AutovalidateMode.always,
+            onChanged: () => {
+              procedimientoss.color = colorController.text,
+              procedimientoss.unidades = unidadesController.text,
+              procedimientoss.constante = constanteController.text,
+              procedimientoss.info = infoController.text,
+              procedimientoss.tipoprocedimiento =
+                  tipoProcedimientoController.text,
+              procedimientoss.abreviatura = abreviaturaController.text,
+              print(procedimientoss.toJson()),
+              color = colorController.text,
+              if (color.isNotEmpty)
+                {
+                  colores = color.split(";"),
+                  if (colores.length == 3)
+                    {
+                      colc = Color.fromARGB(0, int.parse(colores[0]),
+                          int.parse(colores[1]), int.parse(colores[2])),
+                      setState(() {})
+                    }
+                }
+            },
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    readOnly: true,
+                    minLines: 1,
+                    maxLines: 3,
                     controller: nombreController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -71,6 +130,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    readOnly: true,
                     controller: tablaController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -81,6 +141,8 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    minLines: 1,
+                    maxLines: 3,
                     controller: infoController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -91,9 +153,11 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    onChanged: (value) {},
                     controller: colorController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      fillColor: colc,
+                      border: const OutlineInputBorder(),
                       labelText: 'Color',
                     ),
                   ),
@@ -121,6 +185,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    readOnly: true,
                     controller: tipoController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),

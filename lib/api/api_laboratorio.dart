@@ -575,6 +575,20 @@ Future<Procedimientos> getProcedimiento(
   }
 }
 
+Future<void> guardarProcedimiento(
+    BuildContext context, Procedimientos procedimiento) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  Uri url = Uri.parse('${urlProvider.url}guardarProcedimiento.php');
+  final String bodyData = json.encode(procedimiento.toJson());
+
+  try {
+    final response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {}
+  } catch (e) {
+    print(e);
+  }
+}
+
 String procedisToJson(List<Procedimientos> procedimientos) {
   String json = "[";
   for (Procedimientos procedimiento in procedimientos) {
