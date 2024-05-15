@@ -30,6 +30,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
   String color = "";
   List<String> colores = [];
   Color colc = Colors.white;
+  bool nuevo = false;
   @override
   void initState() {
     super.initState();
@@ -53,6 +54,21 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
         foregroundColor: Colors.lightGreenAccent,
         title: Text('Editar Exámen ${widget.procedimiento.codigo}'),
         actions: [
+          IconButton(
+            onPressed: () {
+              nuevo = true;
+              procedimientoss = Procedimientos();
+              nombreController.text = '';
+              tablaController.text = '';
+              infoController.text = '';
+              unidadesController.text = '';
+              tipoController.text = '';
+              tipoProcedimientoController.text = '';
+              abreviaturaController.text = '';
+              colorController.text = '';
+            },
+            icon: const Icon(Icons.new_releases, color: Colors.white),
+          ),
           Padding(
             padding: const EdgeInsets.all(8),
             child: !guardando_
@@ -117,7 +133,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    readOnly: true,
+                    readOnly: true && !nuevo,
                     minLines: 1,
                     maxLines: 3,
                     controller: nombreController,
@@ -130,7 +146,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    readOnly: true,
+                    readOnly: true && !nuevo,
                     controller: tablaController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -185,7 +201,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    readOnly: true,
+                    readOnly: true && !nuevo,
                     controller: tipoController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),

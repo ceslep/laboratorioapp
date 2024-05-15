@@ -31,6 +31,8 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
   final TextEditingController busquedaController = TextEditingController();
   List<Procedimientos> seleccionados = [];
   FToast fToast = FToast();
+  bool editando = false;
+  int seleccionadox = -1;
   @override
   void initState() {
     super.initState();
@@ -189,22 +191,44 @@ class _AsignarExamenesState extends State<AsignarExamenes> {
                     nombreExamen,
                     style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
-                  leading: IconButton(
-                    onPressed: () {
-                      getProcedimiento(context, codigoExamen).then(
-                        (Procedimientos value) {
-                          Procedimientos procedimiento = value;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProcedimientosPage(
-                                    procedimiento: procedimiento)),
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.settings_applications_rounded),
-                  ),
+                  leading: !editando && seleccionadox == -1
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              seleccionadox = indexx;
+                              editando = !editando;
+                            });
+                            getProcedimiento(context, codigoExamen).then(
+                              (Procedimientos value) {
+                                setState(() {
+                                  editando = !editando;
+                                  seleccionadox = -1;
+                                });
+                                Procedimientos procedimiento = value;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProcedimientosPage(
+                                          procedimiento: procedimiento)),
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.settings_applications_rounded),
+                        )
+                      : indexx == seleccionadox
+                          ? const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  color: Colors.blue,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                          : const Icon(Icons.settings_applications_rounded),
                   trailing: ElevatedButton(
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.resolveWith(
