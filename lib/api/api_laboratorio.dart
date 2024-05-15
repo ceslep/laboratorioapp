@@ -24,7 +24,6 @@ import 'package:laboratorioapp/providers/url_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 Future<Paciente> getInfoPaciente(
   BuildContext context, {
@@ -674,8 +673,7 @@ Image imagenet(BuildContext context, String image) {
 Future<DataHemat> getDataHemat(
     BuildContext context, String identificacion, String fecha) async {
   Map<String, dynamic> dataHemat;
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
   Uri url = Uri.parse('http://127.0.0.1:3000/dataHemat');
   /* if (!androidInfo.isPhysicalDevice) {
     url = Uri.parse('http://10.0.2.2:3000/dataHemat');
