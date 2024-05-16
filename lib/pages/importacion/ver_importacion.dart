@@ -28,8 +28,12 @@ class VerImportacion extends StatelessWidget {
     for (var entry in dataH.entries) {
       String title = entry.key;
       String values = entry.value;
-      String value = values.split('Ref.')[0];
-      String referenceRange = values.split('Ref.')[1];
+      String value = '';
+      String referenceRange = '';
+      if (values != '') {
+        value = values.split('Ref.')[0];
+        referenceRange = values.split('Ref.')[1];
+      }
       hemogramas.add(Hemograma.fromJson(
           {'title': title, 'value': value, 'referenceRange': referenceRange}));
     }

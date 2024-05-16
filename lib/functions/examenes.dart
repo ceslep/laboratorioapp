@@ -127,6 +127,7 @@ Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
       hemograma.pDW = dataHemat.pdw;
       hemograma.pCT = dataHemat.pct;
       hemograma.pLCR = dataHemat.plcr;
+      hemograma.observaciones = '';
     }
     await Navigator.push(
       context,
