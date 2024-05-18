@@ -74,6 +74,7 @@ class _ProcedimientosPageState extends State<ProcedimientosPage> {
             child: !guardando_
                 ? IconButton(
                     onPressed: () async {
+                      if (nombreController.text.isEmpty) return;
                       setState(() => guardando_ = !guardando_);
                       guardarProcedimiento(context, procedimientoss)
                           .then((value) {

@@ -27,7 +27,7 @@ class VerImportacion extends StatelessWidget {
     Map<String, dynamic> dataH = data.toJson();
     for (var entry in dataH.entries) {
       String title = entry.key;
-      String values = entry.value;
+      String values = entry.value ?? '';
       String value = '';
       String referenceRange = '';
       if (values != '') {
