@@ -412,19 +412,19 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
           context, paciente, fecha, codexamen, nombreExamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '5') {
-      await hemogramas2(context, paciente, fecha, fToast);
+      await hemogramas2(context, paciente, fecha, codexamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '3') {
-      await parcialOrina2(context, paciente, fecha, fToast);
+      await parcialOrina2(context, paciente, fecha, codexamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '4') {
-      await coprologico2(context, paciente, fecha, fToast);
+      await coprologico2(context, paciente, fecha, codexamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '6') {
-      await frotisVaginal(context, paciente, fecha, fToast);
+      await frotisVaginal(context, paciente, fecha, codexamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     } else if (tipo == '8') {
-      await perfilLipidico(context, paciente, fecha, fToast);
+      await perfilLipidico(context, paciente, fecha, codexamen, fToast);
       Navigator.pop(keyL.currentState!.context);
     }
   }

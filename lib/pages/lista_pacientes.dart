@@ -168,10 +168,8 @@ class _ListaPacientesState extends State<ListaPacientes> {
                           Text("Fecha de Nacimiento: $fecnac"),
                           Row(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  "Edad: ${paciente.edad}.",
-                                ),
+                              Text(
+                                "Edad: ${paciente.edadY}.",
                               ),
                               const SizedBox(
                                 width: 4,

@@ -26,7 +26,7 @@ import 'package:laboratorioapp/pages/view_examenes/perfilLipidico/perfil_lipidic
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 Future<void> hemogramas(BuildContext context, Paciente paciente, String fecha,
-    FToast fToast) async {
+    String codexamen, FToast fToast) async {
   getHemogramaRayto(context,
           identificacion: paciente.identificacion!, fecha: fecha)
       .then((HemogramaRayto value) async {
@@ -39,6 +39,7 @@ Future<void> hemogramas(BuildContext context, Paciente paciente, String fecha,
             hemograma: hemograma,
             fecha: fecha,
             paciente: paciente,
+            codexamen: codexamen,
           ),
         ),
       );
@@ -56,6 +57,7 @@ Future<void> hemogramas(BuildContext context, Paciente paciente, String fecha,
                 paciente: paciente,
                 hemograma: hemograma,
                 fecha: fecha,
+                codexamen: codexamen,
               ),
             ),
           );
@@ -79,7 +81,7 @@ Future<void> hemogramas(BuildContext context, Paciente paciente, String fecha,
 }
 
 Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
-    FToast fToast) async {
+    String codexamen, FToast fToast) async {
   HemogramaRayto hemograma = await getHemogramaRayto(context,
       identificacion: paciente.identificacion!, fecha: fecha);
 
@@ -91,6 +93,7 @@ Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
           hemograma: hemograma,
           fecha: fecha,
           paciente: paciente,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -136,6 +139,7 @@ Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
           paciente: paciente,
           hemograma: hemograma,
           fecha: fecha,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -158,7 +162,7 @@ Future<bool> hemogramas2(BuildContext context, Paciente paciente, String fecha,
 }
 
 Future<void> parcialOrina(BuildContext context, Paciente paciente, String fecha,
-    FToast fToast) async {
+    String codexamen, FToast fToast) async {
   getParcialOrina(context,
           identificacion: paciente.identificacion!, fecha: fecha)
       .then((ParcialOrina value) async {
@@ -172,6 +176,7 @@ Future<void> parcialOrina(BuildContext context, Paciente paciente, String fecha,
             parcialOrina: parcialOrina,
             fecha: fecha,
             paciente: paciente,
+            codexamen: codexamen,
           ),
         ),
       );
@@ -183,6 +188,7 @@ Future<void> parcialOrina(BuildContext context, Paciente paciente, String fecha,
             paciente: paciente,
             parcialOrina: ParcialOrina(),
             fecha: fecha,
+            codexamen: codexamen,
           ),
         ),
       );
@@ -203,7 +209,7 @@ Future<void> parcialOrina(BuildContext context, Paciente paciente, String fecha,
 }
 
 Future<bool> parcialOrina2(BuildContext context, Paciente paciente,
-    String fecha, FToast fToast) async {
+    String fecha, String codexamen, FToast fToast) async {
   ParcialOrina parcialOrina = await getParcialOrina(context,
       identificacion: paciente.identificacion!, fecha: fecha);
 
@@ -216,6 +222,7 @@ Future<bool> parcialOrina2(BuildContext context, Paciente paciente,
           parcialOrina: parcialOrina,
           fecha: fecha,
           paciente: paciente,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -228,6 +235,7 @@ Future<bool> parcialOrina2(BuildContext context, Paciente paciente,
           paciente: paciente,
           parcialOrina: ParcialOrina(),
           fecha: fecha,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -249,7 +257,7 @@ Future<bool> parcialOrina2(BuildContext context, Paciente paciente,
 }
 
 Future<bool> coprologico2(BuildContext context, Paciente paciente, String fecha,
-    FToast fToast) async {
+    String codexamen, FToast fToast) async {
   Coprologico coprologico = await getCoprologico(context,
       identificacion: paciente.identificacion!, fecha: fecha);
 
@@ -262,6 +270,7 @@ Future<bool> coprologico2(BuildContext context, Paciente paciente, String fecha,
           coprologico: coprologico,
           fecha: fecha,
           paciente: paciente,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -274,6 +283,7 @@ Future<bool> coprologico2(BuildContext context, Paciente paciente, String fecha,
           paciente: paciente,
           coprologico: Coprologico(),
           fecha: fecha,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -312,6 +322,7 @@ Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
           examen: examen,
           fecha: fecha,
           paciente: paciente,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -333,6 +344,7 @@ Future<bool> examentipo_1(BuildContext context, Paciente paciente, String fecha,
               unidades: uniConst.unidades,
               constant: uniConst.constante),
           fecha: fecha,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -371,6 +383,7 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
           examen: examen,
           fecha: fecha,
           paciente: paciente,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -392,6 +405,7 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
               unidades: uniConst.unidades,
               constant: uniConst.constante),
           fecha: fecha,
+          codexamen: codexamen,
         ),
       ),
     );
@@ -413,7 +427,7 @@ Future<bool> examentipo_2(BuildContext context, Paciente paciente, String fecha,
 }
 
 Future<bool> frotisVaginal(BuildContext context, Paciente paciente,
-    String fecha, FToast fToast) async {
+    String fecha, String codexamen, FToast fToast) async {
   FrotisVaginal examen = await getFrotisVaginal(
     context,
     identificacion: paciente.identificacion!,
@@ -428,24 +442,27 @@ Future<bool> frotisVaginal(BuildContext context, Paciente paciente,
           fecha: fecha,
           paciente: paciente,
           frotisVaginal: examen,
+          codexamen: codexamen,
         ),
       ),
     );
     return true;
   } else if (examen.identificacion == 'Error') {
     await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ViewFrotisVaginal(
-            paciente: paciente,
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewFrotisVaginal(
+          paciente: paciente,
+          fecha: fecha,
+          frotisVaginal: FrotisVaginal(
+            identificacion: paciente.identificacion,
+            observaciones: '',
             fecha: fecha,
-            frotisVaginal: FrotisVaginal(
-              identificacion: paciente.identificacion,
-              observaciones: '',
-              fecha: fecha,
-            ),
           ),
-        ));
+          codexamen: codexamen,
+        ),
+      ),
+    );
     return true;
   } else {
     showToastB(
@@ -464,7 +481,7 @@ Future<bool> frotisVaginal(BuildContext context, Paciente paciente,
 }
 
 Future<bool> perfilLipidico(BuildContext context, Paciente paciente,
-    String fecha, FToast fToast) async {
+    String fecha, String codexamen, FToast fToast) async {
   PerfilLipidico examen = await getPerfilLipidico(
     context,
     identificacion: paciente.identificacion!,
@@ -479,24 +496,27 @@ Future<bool> perfilLipidico(BuildContext context, Paciente paciente,
           fecha: fecha,
           paciente: paciente,
           perfilLipidico: examen,
+          codexamen: codexamen,
         ),
       ),
     );
     return true;
   } else if (examen.identificacion == 'Error') {
     await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ViewPerfilLipidico(
-            paciente: paciente,
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewPerfilLipidico(
+          paciente: paciente,
+          fecha: fecha,
+          perfilLipidico: PerfilLipidico(
+            identificacion: paciente.identificacion,
+            observaciones: '',
             fecha: fecha,
-            perfilLipidico: PerfilLipidico(
-              identificacion: paciente.identificacion,
-              observaciones: '',
-              fecha: fecha,
-            ),
           ),
-        ));
+          codexamen: codexamen,
+        ),
+      ),
+    );
     return true;
   } else {
     showToastB(

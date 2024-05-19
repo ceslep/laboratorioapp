@@ -9,11 +9,13 @@ class ViewCoprologico extends StatefulWidget {
   final Coprologico coprologico;
   final Paciente paciente;
   final String fecha;
+  final String codexamen;
   const ViewCoprologico(
       {super.key,
       required this.coprologico,
       required this.paciente,
-      required this.fecha});
+      required this.fecha,
+      required this.codexamen});
 
   @override
   State<ViewCoprologico> createState() => _CoprologicoState();
@@ -202,7 +204,9 @@ class _CoprologicoState extends State<ViewCoprologico> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarCoprologico(context, coprologicoS).then(
+                      guardarCoprologico(
+                              context, coprologicoS, widget.codexamen)
+                          .then(
                         (value) {
                           if (true) {
                             printPDFFile(
@@ -244,7 +248,9 @@ class _CoprologicoState extends State<ViewCoprologico> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarCoprologico(context, coprologicoS).then(
+                      guardarCoprologico(
+                              context, coprologicoS, widget.codexamen)
+                          .then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,

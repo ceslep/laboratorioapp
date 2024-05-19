@@ -10,11 +10,13 @@ class ViewPerfilLipidico extends StatefulWidget {
   final PerfilLipidico perfilLipidico;
   final Paciente paciente;
   final String fecha;
+  final String codexamen;
   const ViewPerfilLipidico(
       {super.key,
       required this.perfilLipidico,
       required this.paciente,
-      required this.fecha});
+      required this.fecha,
+      required this.codexamen});
 
   @override
   State<ViewPerfilLipidico> createState() => _ViewPerfilLipidicoState();
@@ -83,7 +85,8 @@ class _ViewPerfilLipidicoState extends State<ViewPerfilLipidico> {
           widget.fecha,
           () {
             setState(() => guardando_ = !guardando_);
-            guardarPerfilLipidico(context, perfilLipidicoS).then(
+            guardarPerfilLipidico(context, perfilLipidicoS, widget.codexamen)
+                .then(
               (value) {
                 if (true) {
                   printPDFFile(
@@ -103,7 +106,8 @@ class _ViewPerfilLipidicoState extends State<ViewPerfilLipidico> {
           },
           () {
             setState(() => guardando_ = !guardando_);
-            guardarPerfilLipidico(context, perfilLipidicoS).then(
+            guardarPerfilLipidico(context, perfilLipidicoS, widget.codexamen)
+                .then(
               (value) {
                 showFloatingModalBottomSheet(
                   context: context,

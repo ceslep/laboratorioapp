@@ -9,12 +9,14 @@ class ViewFrotisVaginal extends StatefulWidget {
   final FrotisVaginal frotisVaginal;
   final Paciente paciente;
   final String fecha;
+  final String codexamen;
 
   const ViewFrotisVaginal(
       {super.key,
       required this.paciente,
       required this.frotisVaginal,
-      required this.fecha});
+      required this.fecha,
+      required this.codexamen});
 
   @override
   State<ViewFrotisVaginal> createState() => _ViewFrotisVaginalState();
@@ -121,7 +123,9 @@ class _ViewFrotisVaginalState extends State<ViewFrotisVaginal> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarFrotisVaginal(context, frotisVaginalS).then(
+                      guardarFrotisVaginal(
+                              context, frotisVaginalS, widget.codexamen)
+                          .then(
                         (value) {
                           if (true) {
                             printPDFFile(
@@ -164,7 +168,9 @@ class _ViewFrotisVaginalState extends State<ViewFrotisVaginal> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarFrotisVaginal(context, frotisVaginalS).then(
+                      guardarFrotisVaginal(
+                              context, frotisVaginalS, widget.codexamen)
+                          .then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,

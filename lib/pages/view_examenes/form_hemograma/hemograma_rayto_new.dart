@@ -20,12 +20,14 @@ class ViewHemogramaRaytoNew extends StatefulWidget {
   final HRayto hemograma;
   final Paciente paciente;
   final String fecha;
+  final String codexamen;
 
   const ViewHemogramaRaytoNew({
     super.key,
     required this.hemograma,
     required this.fecha,
     required this.paciente,
+    required this.codexamen,
   });
 
   @override
@@ -114,7 +116,8 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                       setState(() {
                         imprimiendo_ = !imprimiendo_;
                       });
-                      guardarHemograma(context, hraytoProvider.hrayto)
+                      guardarHemograma(
+                              context, hraytoProvider.hrayto, widget.codexamen)
                           .then((value) async {
                         setState(() {
                           imprimiendo_ = !imprimiendo_;
@@ -157,7 +160,9 @@ class _ViewHemogramaRaytoNewState extends State<ViewHemogramaRaytoNew> {
                     tooltip: 'Guardar',
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarHemograma(context, hraytoProvider.hrayto).then(
+                      guardarHemograma(
+                              context, hraytoProvider.hrayto, widget.codexamen)
+                          .then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,

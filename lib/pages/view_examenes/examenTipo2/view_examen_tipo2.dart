@@ -10,11 +10,13 @@ class ViewExamenTipo2 extends StatefulWidget {
   final ExamenTipo2 examen;
   final Paciente paciente;
   final String fecha;
+  final String codexamen;
   const ViewExamenTipo2({
     super.key,
     required this.examen,
     required this.paciente,
     required this.fecha,
+    required this.codexamen,
   });
 
   @override
@@ -72,7 +74,7 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarTipo2(context, examenS).then(
+                      guardarTipo2(context, examenS, widget.codexamen).then(
                         (value) {
                           if (true) {
                             printPDFFile(
@@ -115,7 +117,7 @@ class _ViewExamenTipo2State extends State<ViewExamenTipo2> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarTipo2(context, examenS).then(
+                      guardarTipo2(context, examenS, widget.codexamen).then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,

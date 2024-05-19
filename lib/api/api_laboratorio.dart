@@ -214,7 +214,8 @@ Future<Coprologico> getCoprologico(BuildContext context,
   }
 }
 
-Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
+Future<void> guardarHemograma(
+    BuildContext context, HRayto hrayto, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -235,7 +236,7 @@ Future<void> guardarHemograma(BuildContext context, HRayto hrayto) async {
 }
 
 Future<void> guardarParcialOrina(
-    BuildContext context, ParcialOrina parcialOrina) async {
+    BuildContext context, ParcialOrina parcialOrina, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -253,7 +254,7 @@ Future<void> guardarParcialOrina(
 }
 
 Future<void> guardarCoprologico(
-    BuildContext context, Coprologico coprologico) async {
+    BuildContext context, Coprologico coprologico, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -400,7 +401,8 @@ Future<ExamenTipo2> getTipo2(BuildContext context,
   return ExamenTipo2(identificacion: 'Error');
 }
 
-Future<void> guardarTipo1(BuildContext context, ExamenTipo1 examen) async {
+Future<void> guardarTipo1(
+    BuildContext context, ExamenTipo1 examen, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -417,7 +419,8 @@ Future<void> guardarTipo1(BuildContext context, ExamenTipo1 examen) async {
   }
 }
 
-Future<void> guardarTipo2(BuildContext context, ExamenTipo2 examen) async {
+Future<void> guardarTipo2(
+    BuildContext context, ExamenTipo2 examen, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -478,7 +481,7 @@ Future<FrotisVaginal> getFrotisVaginal(BuildContext context,
 }
 
 Future<void> guardarFrotisVaginal(
-    BuildContext context, FrotisVaginal frotisVaginal) async {
+    BuildContext context, FrotisVaginal frotisVaginal, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -518,8 +521,8 @@ Future<PerfilLipidico> getPerfilLipidico(BuildContext context,
   }
 }
 
-Future<void> guardarPerfilLipidico(
-    BuildContext context, PerfilLipidico perfilLipidico) async {
+Future<void> guardarPerfilLipidico(BuildContext context,
+    PerfilLipidico perfilLipidico, String codexamen) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
   final Uri url = Uri.parse('${urlProvider.url}guardarExamen.php');
   late final http.Response response;
@@ -642,6 +645,11 @@ Future<List<Procedimientos>> getSeleccionados(
   } catch (e) {
     return [];
   }
+}
+
+Future<void> updateExamen(BuildContext context, String codexamen,
+    String identificacion, String fecha) async {
+  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
 }
 
 Future<List<Paciente>> getPacientesFecha(

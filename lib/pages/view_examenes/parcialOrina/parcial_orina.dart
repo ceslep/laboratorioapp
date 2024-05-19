@@ -10,11 +10,13 @@ class ViewParcialOrina extends StatefulWidget {
   final Paciente paciente;
   final ParcialOrina parcialOrina;
   final String fecha;
+  final String codexamen;
   const ViewParcialOrina(
       {super.key,
       required this.paciente,
       required this.parcialOrina,
-      required this.fecha});
+      required this.fecha,
+      required this.codexamen});
 
   @override
   State<ViewParcialOrina> createState() => _ParcialOrinaState();
@@ -148,7 +150,9 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarParcialOrina(context, parcialOrinaS).then(
+                      guardarParcialOrina(
+                              context, parcialOrinaS, widget.codexamen)
+                          .then(
                         (value) {
                           if (true) {
                             printPDFFile(
@@ -191,7 +195,9 @@ class _ParcialOrinaState extends State<ViewParcialOrina> {
                 ? IconButton(
                     onPressed: () async {
                       setState(() => guardando_ = !guardando_);
-                      guardarParcialOrina(context, parcialOrinaS).then(
+                      guardarParcialOrina(
+                              context, parcialOrinaS, widget.codexamen)
+                          .then(
                         (value) {
                           showFloatingModalBottomSheet(
                             context: context,
