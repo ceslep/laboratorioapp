@@ -650,6 +650,23 @@ Future<List<Procedimientos>> getSeleccionados(
 Future<void> updateExamen(BuildContext context, String codexamen,
     String identificacion, String fecha) async {
   final urlProvider = Provider.of<UrlProvider>(context, listen: false);
+  final Uri url = Uri.parse('${urlProvider.url}updateExamen.php');
+  late final http.Response response;
+  final String bodyData = json.encode({
+    "codexamen": codexamen,
+    "identificacion": identificacion,
+    "fecha": fecha,
+  });
+  try {
+    response = await http.post(url, body: bodyData);
+    if (response.statusCode == 200) {
+      print("bien");
+    } else {
+      print({"error de response ": response.statusCode});
+    }
+  } catch (e) {
+    print('Error al enviar los datos del hemograma: $e');
+  }
 }
 
 Future<List<Paciente>> getPacientesFecha(
