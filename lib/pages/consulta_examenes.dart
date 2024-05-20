@@ -264,6 +264,7 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                     late String codexamen;
                     late String fecha;
                     late String tipo;
+                    late bool realizado;
                     int indexx = index - 1;
                     if (index == 0) {
                       return SizedBox(
@@ -292,14 +293,27 @@ class _ConsultaExamenesState extends State<ConsultaExamenes> {
                       codexamen = examenesFilter[indexx].codexamen!;
                       fecha = examenesFilter[indexx].fecha!;
                       tipo = examenesFilter[indexx].tipo!;
+                      realizado = examenesFilter[indexx].realizado! == 'S';
                     }
                     return Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
                       child: Card(
                         child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 25, // Ajusta el tamaño del avatar
-                            backgroundImage: AssetImage(imageLab(examen)),
+                          leading: Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 25, // Ajusta el tamaño del avatar
+                                backgroundImage: AssetImage(imageLab(examen)),
+                              ),
+                              realizado
+                                  ? SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: Image.asset('images/check.png',
+                                          scale: 0.5),
+                                    )
+                                  : const SizedBox(),
+                            ],
                           ),
                           trailing: IconButton(
                             onPressed: () async {

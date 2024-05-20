@@ -227,6 +227,8 @@ Future<void> guardarHemograma(
       final decodedResponse = utf8.decode(response.bodyBytes);
       final dynamic datos = json.decode(decodedResponse);
       print(datos);
+      await updateExamen(
+          urlProvider.url, codexamen, hrayto.identificacion!, hrayto.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -245,6 +247,8 @@ Future<void> guardarParcialOrina(
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(urlProvider.url, codexamen,
+          parcialOrina.identificacion!, parcialOrina.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -263,6 +267,8 @@ Future<void> guardarCoprologico(
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(urlProvider.url, codexamen,
+          coprologico.identificacion!, coprologico.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -411,6 +417,8 @@ Future<void> guardarTipo1(
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(
+          urlProvider.url, codexamen, examen.identificacion!, examen.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -429,6 +437,8 @@ Future<void> guardarTipo2(
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(
+          urlProvider.url, codexamen, examen.identificacion!, examen.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -490,6 +500,8 @@ Future<void> guardarFrotisVaginal(
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(urlProvider.url, codexamen,
+          frotisVaginal.identificacion!, frotisVaginal.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -531,6 +543,8 @@ Future<void> guardarPerfilLipidico(BuildContext context,
   try {
     response = await http.post(url, body: bodyData);
     if (response.statusCode == 200) {
+      await updateExamen(urlProvider.url, codexamen,
+          perfilLipidico.identificacion!, perfilLipidico.fecha!);
     } else {
       print({"error de response ": response.statusCode});
     }
@@ -647,10 +661,9 @@ Future<List<Procedimientos>> getSeleccionados(
   }
 }
 
-Future<void> updateExamen(BuildContext context, String codexamen,
-    String identificacion, String fecha) async {
-  final urlProvider = Provider.of<UrlProvider>(context, listen: false);
-  final Uri url = Uri.parse('${urlProvider.url}updateExamen.php');
+Future<void> updateExamen(
+    String Url, String codexamen, String identificacion, String fecha) async {
+  final Uri url = Uri.parse('${Url}updateExamen.php');
   late final http.Response response;
   final String bodyData = json.encode({
     "codexamen": codexamen,

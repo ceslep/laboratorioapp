@@ -80,6 +80,7 @@ flutter:
     -  images/frotis.png
     -  images/male.png
     -  images/female.png 
+    -  images/check.png 
     -  documents/blank.pdf
 
   # The following line ensures that the Material Icons font is
