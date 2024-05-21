@@ -675,7 +675,7 @@ Future<void> updateExamen(
     if (response.statusCode == 200) {
       print("bien");
     } else {
-      print({"error de response ": response.statusCode});
+      print({"error de response upd ": response.statusCode});
     }
   } catch (e) {
     print('Error al enviar los datos del hemograma: $e');
